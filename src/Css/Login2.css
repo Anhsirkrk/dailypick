@@ -1,0 +1,117 @@
+.signinwithemailbutton{
+    font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background: none;
+    color:#024172;
+    padding-top: '40px';
+     fontSize: 15px;
+     font-weight: 600;
+    }
+.otpverifyBtn{
+    margin-top: 10px;
+    width:280px;
+    height: 40px;
+    padding: 10px 0px;
+    border-radius:5px;
+    outline: none;
+    background:none;
+    background:#024172;
+    color: #fff;
+    cursor: pointer;
+    font-size: medium;
+}.otpinput{
+    border: 1px solid #ccc; /* Customize the input border */
+    border-radius: 5px; /* Customize border radius */
+    padding: 10px; /* Customize padding */
+    margin: 5px 0px 15px 5px;
+    display: flex;
+    align-self: flex-start;
+  width: 250px; /* Customize the width of the input */
+  height: 25px;
+  font-size:medium;
+  font-weight: 600;
+
+}.LoginConatiner_Bottomdiv{
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+    justify-content: center;
+
+}
+.countrycodeinput{
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    width: 25px;
+    margin: 5px 0px 15px 5px;
+    display: flex;
+    align-self: flex-start;
+    font-size: medium;
+    font-weight: 600;
+    height: 25px;
+  }
+.PhoneInputInput {
+    border: 1px solid #ccc; /* Customize the input border */
+    border-radius: 5px; /* Customize border radius */
+    padding: 10px; /* Customize padding */
+    margin: 5px 0px 15px 5px;
+    display: flex;
+    align-self: flex-start;
+  width: 250px; /* Customize the width of the input */
+  height: 25px;
+  font-size:medium;
+  font-weight: 600;
+}
+.Login2-form{
+    padding: 20px;
+}.LoginContainerHeader{
+    font-size: larger;
+    font-weight: 500;
+    padding-top: 10px;
+    display: flex;
+  margin-right: 30px;
+  align-items: center;
+  justify-content: center;
+}
+.Login_contant{
+    height:400px ;
+    padding: 10px;
+}
+.LoginBox_container{
+    background: rgba(255, 255, 255, 0.30);
+    width: 400px;
+    height: 600px;
+    max-width: 500px;
+    max-height: 800px;
+    margin-left: 100px;
+      align-self: flex-end;
+      border-radius: 8%;
+      margin-top: 80px;
+  }
+  .Login2-container{
+    width: 1536px;
+    height:753px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+   background: linear-gradient(90deg, #62E2FB 0.01%, #49C5DD 100%);
+}
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    max-height: 753px;
+    flex-direction: column;
+  }
+  
+  .col-4 {
+    flex: 0 0 33.33%;
+    max-width: 33.33%;
+    padding: 10px;
+  }
+  
+  .col-8 {
+    flex: 0 0 66.66%;
+    max-width: 66.66%;
+    padding: 10px;
+  }
+ 

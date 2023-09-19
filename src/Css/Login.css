@@ -6,7 +6,7 @@
   height: 350px;
   margin-left: 20px;
 }
-.container {
+.LGpage-container {
  width: 1536px;
  height:753px;
  display: flex;
@@ -35,6 +35,7 @@ line-height:80px;
   flex-wrap: wrap;
   margin-bottom: 20px;
   max-height: 753px;
+  flex-direction: column;
 }
 
 .col-4 {
@@ -51,12 +52,14 @@ line-height:80px;
 
 
 .row {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
+ 
 }
 
+
+.phonenumberinput{
+  font-size: small;
+  font-weight: 700;
+}
 
 .Login_container{
   background: rgba(255, 255, 255, 0.30);
@@ -64,13 +67,26 @@ max-width: 500px;
 max-height: 500px;
 margin-left: 100px;
   align-self: flex-end;
+  border-radius: 8%;
+  margin-top: 80px;
 
 }
-.MobileLoginForm{
-  width: 500px;
-  height: 500px;
-  padding-left: 40px;
+.MobileLoginForm p{
+  padding: 0;
+  margin:0px 0px 0px 5px;
+  font-size: small;
 }
+/* .Login_contant h3{
+  font-size: larger;
+  font-weight: 500;
+  padding-top: 50px;
+  margin-left: 125px;
+} */
+/* .MobileLoginForm{
+  width: 500px;
+  height: 100px;
+  padding-left: 40px;
+} */
 /* .Login_contant{
   margin: 10px;
 } */
@@ -79,13 +95,21 @@ margin-left: 100px;
 #recaptcha-container {
   display: flex;
   align-items: center;
-  justify-content: center;
+
   margin-top: 20px;
 }
 #formBasicotp{
   margin: auto;
   height: 25px;
 
+}
+.otpinput{
+  border: 1px solid #ccc; /* Customize the input border */
+  border-radius: 5px; /* Customize border radius */
+  padding: 10px; /* Customize padding */
+  margin: 5px 0px 15px 5px;
+  display: flex;
+  align-self: flex-start;
 }
 .EnterOtp-div{
   display: flex;
@@ -96,7 +120,7 @@ margin-left: 100px;
   margin: auto;
   height: 25px;
 }
-.Login-form form button
+/* .Login-form form button
 {
     margin-top: 10px;
     width: 80px;
@@ -108,7 +132,7 @@ margin-left: 100px;
     background: #010f1c;
     color: #fff;
     cursor: pointer;
-}
+} */
 .button-right{
   display: flex;
   align-items: center;
@@ -118,7 +142,7 @@ margin-left: 100px;
   display: flex; 
   flex-direction: column;
   align-items: center;
-  margin-top: 20px;
+  margin-top: 0px;
   width: 50%;
   
 }
@@ -133,14 +157,7 @@ margin-left: 100px;
 }
 
 /* Style the input element */
-.PhoneInputInput {
-  width: 250px; /* Customize the width of the input */
-  border: 1px solid #ccc; /* Customize the input border */
-  border-radius: 5px; /* Customize border radius */
-  padding: 10px; /* Customize padding */
-  margin-top: 15px;
-  margin-right: 30px;
-}
+
 
 .PhoneInputCountry{
   display: flex;
@@ -155,14 +172,33 @@ margin-left: 100px;
   padding: 10px; /* Customize padding */
   width:max-content;
 }
-.PhoneInputInput {
-  /*width: 20%;  Customize the width of the input */
-  border: 1px solid #ccc; /* Customize the input border */
-  border-radius: 5px; /* Customize border radius */
-  padding: 10px; /* Customize padding */
-  margin: 15px 0px 15px 0px;
+.phoneinputdiv{
+  display: flex;
+}
+.phoneinputdiv-countrycode{
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 5px 0px 15px 0px;
   display: flex;
   align-self: flex-start;
+  width: 25px;
+}
+.PhoneInputInput {
+
+}
+.sendOtpButton {
+  margin-top: 10px;
+    width:320px;
+    height: 40px;
+    padding: 10px 0px;
+    border-radius:5px;
+    outline: none;
+    background:none;
+    background:#024172;
+    color: #fff;
+    cursor: pointer;
+    font-size: medium;
 }
 /* Style the country image container */
 .PhoneInputCountryIcon {/* Remove border around the country image container */
