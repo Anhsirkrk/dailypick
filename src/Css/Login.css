@@ -51,10 +51,6 @@ line-height:80px;
 }
 
 
-.row {
- 
-}
-
 
 .phonenumberinput{
   font-size: small;
@@ -69,7 +65,6 @@ margin-left: 100px;
   align-self: flex-end;
   border-radius: 8%;
   margin-top: 80px;
-
 }
 .MobileLoginForm p{
   padding: 0;
@@ -103,14 +98,7 @@ margin-left: 100px;
   height: 25px;
 
 }
-.otpinput{
-  border: 1px solid #ccc; /* Customize the input border */
-  border-radius: 5px; /* Customize border radius */
-  padding: 10px; /* Customize padding */
-  margin: 5px 0px 15px 5px;
-  display: flex;
-  align-self: flex-start;
-}
+
 .EnterOtp-div{
   display: flex;
   justify-content: center;
@@ -159,62 +147,6 @@ margin-left: 100px;
 /* Style the input element */
 
 
-.PhoneInputCountry{
-  display: flex;
-  align-items: center;
-  flex-direction: row-reverse;
-  display: none;
-}
-.PhoneInputCountrySelect {
-  flex-grow: 1; /* Allow the dropdown to take remaining horizontal space */
-  border: 1px solid #ccc; /* Customize the dropdown border */
-  border-radius: 5px; /* Customize border radius */
-  padding: 10px; /* Customize padding */
-  width:max-content;
-}
-.phoneinputdiv{
-  display: flex;
-}
-.phoneinputdiv-countrycode{
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 10px;
-  margin: 5px 0px 15px 0px;
-  display: flex;
-  align-self: flex-start;
-  width: 25px;
-}
-.PhoneInputInput {
-
-}
-.sendOtpButton {
-  margin-top: 10px;
-    width:320px;
-    height: 40px;
-    padding: 10px 0px;
-    border-radius:5px;
-    outline: none;
-    background:none;
-    background:#024172;
-    color: #fff;
-    cursor: pointer;
-    font-size: medium;
-}
-/* Style the country image container */
-.PhoneInputCountryIcon {/* Remove border around the country image container */
-  /*margin-right: 10px;  Add margin to separate it from the input */
-}
-
-/* Style the country image */
-.PhoneInputCountryIconImg {
-  width: 50px; /*   Customize the width of the country image */
-  height: 30px; /*  Customize the height of the country image */
-}
-
-/* Style the select arrow (if needed) */
-.PhoneInputCountrySelectArrow {
-  /* Customize the style of the select arrow */
-}
 
 
 
@@ -243,7 +175,7 @@ margin-left: 100px;
     margin-bottom: 20px;
   }
   
- 
+/*  
   
   button {
     width: 100%;
@@ -258,11 +190,11 @@ margin-left: 100px;
     font-weight: 700;
     cursor: pointer;
     transition: background-color 0.3s;
-  }
+  } */
   
-  button:hover {
+  /* button:hover {
     background-color: #01305b;
-  }
+  } */
   
   .otp-input {
     display: flex;

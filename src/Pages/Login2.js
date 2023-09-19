@@ -19,6 +19,8 @@ import PhoneInput from "react-phone-number-input";
 import axios, { formToJSON } from 'axios';
 import {ToastContainer,toast } from 'react-toastify';
 import logocover from '../Images/logocover.png';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 
 
@@ -29,10 +31,50 @@ const Login = () => {
 
   const [error, setError] = useState("");
   const [number, setNumber] = useState("");
+  const [email, setEmail] = useState("");
+  const [password,setPassword]=useState("");
   const [flag, setFlag] = useState(false);
   const [otp, setOtp] = useState('');
   const [result, setResult] = useState("");
   const { setUpRecaptha } = useUserAuth();
+
+  const [timer, setTimer] = useState(5);
+  const [timerActive, setTimerActive] = useState(true);
+
+  useEffect(() => {
+    let interval;
+    if (timer > 0) {
+      interval = setInterval(() => {
+        setTimer(prevTimer => prevTimer - 1);
+      }, 1000);
+    }
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [timer]);
+
+  useEffect(() => {
+    if (timer === 0) {
+      setTimerActive(false);
+    }
+  }, [timer]);
+
+  const resendOTP = () => {
+    alert("hitted");
+    console.log(timerActive)
+    if (!timerActive) {
+      setTimer(5);
+      setTimerActive(true);
+      getresendOtp(number);
+    }
+  };
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  
+
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
 
   const [loginwithotpshow,setloginwithotpshow]= useState(true);
   const [loginwithemail,setloginwithemailshow]= useState(false);
@@ -56,6 +98,25 @@ setNumber(e.target.value);
           const response = await setUpRecaptha(number);
           setResult(response);
           setFlag(true);
+          setTimer(5);
+          setTimerActive(true);
+        } catch (err) {
+          setError(err.message);
+        }
+      };
+
+      const getresendOtp = async (e) => {
+        alert("getresendOtp");
+        console.log(number);
+        setError("");
+        if (number === "" || number === undefined)
+          return setError("Please enter a valid phone number!");
+        try {
+          const response = await setUpRecaptha(number);
+          setResult(response);
+          setFlag(true);
+          setTimer(5);
+          setTimerActive(true);
         } catch (err) {
           setError(err.message);
         }
@@ -363,6 +424,10 @@ setNumber(e.target.value);
               onChange={e=>setOtp(e.target.value)}/>
             
           </Form.Group>
+          <div className='didntrecivedotp'>
+            <p>Didn't recived OTP?</p>
+            <Button id='resendOTPbtn' onClick={resendOTP} className={timerActive ? 'active' : 'inactive' }>Resend OTP in <span style={{color: 'var(--P01, #024172)',fontWeight:'600'}}>{timer}</span> seconds </Button>
+          </div>
           <div className="button-right">
           
    
@@ -381,7 +446,6 @@ setNumber(e.target.value);
           </div>
           <div className='alternatePageDiv'>
           <Button className='signinwithemailbutton' onClick={showloginwithEmail}> Sign in with E@Mail</Button>
-          <p style={{marginTop:'10px'}}><a style={{ fontFamily:'system-ui' ,color:'#024172',paddingTop: '40px', fontSize: '15px',fontWeight: '600'}} onClick={showloginwithEmail}>Sign in with E@Mail</a></p>
           </div>
           
           <p style={{marginTop:'20px'}}><a>Don't have an account yet?</a>&nbsp; &nbsp;<a style={{ color:'#024172',textDecoration:'underline', fontWeight:'bold'}}>Register for Free</a></p>
@@ -404,22 +468,33 @@ setNumber(e.target.value);
         {error && <Alert variant="danger">{error}</Alert>}
           <div>
             <Form className='MobileLoginForm' onSubmit={getOtp} style={{ display: !flag ? "block" : "none" }}>
-              <p>Phone No</p>
+              <p>Enter Email</p>
               <div style={{display:'flex'}}>
-              <div>
-              <input className='countrycodeinput' type='text' value={'+91'}/>
-              </div>
+              
              
               <div className='phoneinputdiv'>
                 <div className=''>
-                <PhoneInput 
-                className='phonenumberinput'
-                defaultCountry="IN"
-                placeholder="Enter phone number"
-                value={number}
-                onChange={setNumber}
+                <input
+                type='email'
+                className='emailinput'
+                placeholder="Enter registered MailID"
+                value={email}
+                onChange={e=>setEmail(e.target.value)}
                  />
-          
+                 <p>Enter Password</p>
+                 <div className="password-input-container">
+                 <input
+                 type={passwordVisible ? "text" : "password"}
+                 className='password-input'
+                 placeholder="Enter password "
+                 value={password}
+                 onChange={e=>setPassword(e.target.value)}
+                  />
+                  <span onClick={togglePasswordVisibility} className="password-icon">
+                  <FontAwesomeIcon icon={passwordVisible ? faEye : faEyeSlash} />
+                  </span>
+                  </div>
+                
                 </div>
               </div>
               </div>
@@ -427,7 +502,7 @@ setNumber(e.target.value);
             
             <div >
               <Button className='sendOtpButton' type="submit" variant="primary">
-                Get OTP
+                Login
               </Button>
             </div>
           </Form>
@@ -444,6 +519,10 @@ setNumber(e.target.value);
               onChange={e=>setOtp(e.target.value)}/>
             
           </Form.Group>
+          <div className='didntrecivedotp'>
+          <p>Didn't recived OTP?</p>
+          <a>Resend OTP in 0:25</a>
+          </div>
           <div className="button-right">
           
    
@@ -462,7 +541,6 @@ setNumber(e.target.value);
           </div>
           <div className='alternatePageDiv'>
           <Button className='signinwithemailbutton' onClick={showloginwithOTp}> Sign in with OTP</Button>
-          <p style={{marginTop:'10px'}}><a style={{ fontFamily:'system-ui' ,color:'#024172',paddingTop: '40px', fontSize: '15px',fontWeight: '600'}} onClick={showloginwithEmail}>Sign in with E@Mail</a></p>
           </div>
           
           <p style={{marginTop:'20px'}}><a>Don't have an account yet?</a>&nbsp; &nbsp;<a style={{ color:'#024172',textDecoration:'underline', fontWeight:'bold'}}>Register for Free</a></p>
