@@ -1,0 +1,324 @@
+/* Add this to your CSS */
+.password-input-container {
+  position: relative;
+}
+.password-input {
+  border: 1px solid #ccc; /* Customize the input border */
+  border-radius: 5px; /* Customize border radius */
+  padding: 10px; /* Customize padding */
+  margin: 5px 0px 15px 5px;
+  display: flex;
+  align-self: flex-start;
+width: 300px; /* Customize the width of the input */
+height: 25px;
+font-size:medium;
+font-weight: 600;
+ /* padding-right: 40px;  Adjust the padding as needed */
+}
+.password-icon {
+  position: absolute;
+  top: 50%;
+  right: 10px; /* Adjust the position as needed */
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.emailinput{
+  border: 1px solid #ccc; /* Customize the input border */
+  border-radius: 5px; /* Customize border radius */
+  padding: 10px; /* Customize padding */
+  margin: 5px 0px 15px 5px;
+  display: flex;
+  align-self: flex-start;
+width: 300px; /* Customize the width of the input */
+height: 25px;
+font-size:medium;
+font-weight: 600;
+
+}
+
+#resendOTPbtn.inactive {
+  pointer-events: auto;
+  opacity: 1;
+}
+
+#resendOTPbtn.active {
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+#resendOTPbtn{
+  font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background: none;
+color:#024172;
+  font-size: x-small;
+    margin-left: 50px;
+   font-weight: 600;
+   cursor:grabbing;
+   border: none;
+   transition: background-color 0.3s;
+   text-decoration: underline;
+
+}
+.didntrecivedotp a{
+  padding-left: 20px;
+  margin-left: 50px;
+  font-size: small;
+  padding-top: 5px;
+  color: var(--P01, #024172);;
+  
+}.didntrecivedotp p{
+  padding-left: 20px;
+  margin-left: 20px;
+  font-size: x-small;
+
+}
+.didntrecivedotp{
+  display: flex;
+  flex-direction: row;
+
+}.signinwithemailbutton{
+    font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background: none;
+  color:#024172;
+    padding-top: 20px;
+     font-size: 15px;
+     font-weight: 600;
+     cursor:grabbing;
+     border: none;
+     transition: background-color 0.3s;
+     text-decoration: underline;
+    }
+    /* .signinwithemailbutton :hover{
+      background-color: #FFF;
+    cursor: pointer;
+    } */
+.otpverifyBtn{
+    margin-top: 10px;
+    width:280px;
+    height: 40px;
+    padding: 10px 0px;
+    border-radius:5px;
+    outline: none;
+    background:none;
+    background:#024172;
+    color: #fff;
+    cursor: pointer;
+    font-size: medium;
+}
+
+
+.EnterOtp-div{
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+.EnterOtp-input{
+  margin: auto;
+  height: 25px;
+}
+.otpinput{
+    border: 1px solid #ccc; /* Customize the input border */
+    border-radius: 5px; /* Customize border radius */
+    padding: 10px; /* Customize padding */
+    margin: 5px 0px 15px 5px;
+    display: flex;
+    align-self: flex-start;
+  width: 250px; /* Customize the width of the input */
+  height: 25px;
+  font-size:medium;
+  font-weight: 600;
+
+}.LoginConatiner_Bottomdiv{
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+    justify-content: center;
+
+}
+#recaptcha-container {
+  display: flex;
+  align-items: center;
+
+  margin-top: 20px;
+}
+#formBasicotp{
+  margin: auto;
+  height: 25px;
+
+}
+.sendOtpButton {
+  margin-top: 10px;
+    width:320px;
+    height: 40px;
+    padding: 10px 0px;
+    border-radius:5px;
+    outline: none;
+    background:none;
+    background:#024172;
+    color: #fff;
+    cursor: pointer;
+    font-size: medium;
+}
+.countrycodeinput{
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    width: 25px;
+    margin: 5px 0px 15px 5px;
+    display: flex;
+    align-self: flex-start;
+    font-size: medium;
+    font-weight: 600;
+    height: 25px;
+  }
+.PhoneInputInput {
+    border: 1px solid #ccc; /* Customize the input border */
+    border-radius: 5px; /* Customize border radius */
+    padding: 10px; /* Customize padding */
+    margin: 5px 0px 15px 5px;
+    display: flex;
+    align-self: flex-start;
+  width: 250px; /* Customize the width of the input */
+  height: 25px;
+  font-size:medium;
+  font-weight: 600;
+}
+.phonenumberinput{
+  font-size: small;
+  font-weight: 700;
+}
+.PhoneInput {
+  display: flex; 
+  flex-direction: column;
+  align-items: center;
+  margin-top: 0px;
+  width: 50%;
+  
+}
+.MobileLoginForm p{
+  padding: 0;
+  margin:0px 0px 0px 5px;
+  font-size: small;
+}
+.Login2-form{
+    padding: 20px;
+}.LoginContainerHeader{
+    font-size: larger;
+    font-weight: 500;
+    padding-top: 10px;
+    display: flex;
+  margin-right: 30px;
+  align-items: center;
+  justify-content: center;
+}
+.Login_contant{
+    height:400px ;
+    padding: 10px;
+}
+.LoginBox_container{
+    background: rgba(255, 255, 255, 0.30);
+    width: 400px;
+    height: 600px;
+    max-width: 500px;
+    max-height: 800px;
+    margin-left: 100px;
+      align-self: flex-end;
+      border-radius: 8%;
+      margin-top: 80px;
+  }
+  .Login2-container{
+    width: 1536px;
+    height:753px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+   background: linear-gradient(90deg, #62E2FB 0.01%, #49C5DD 100%);
+}
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    max-height: 753px;
+    flex-direction: column;
+  }
+  
+  .col-4 {
+    flex: 0 0 33.33%;
+    max-width: 33.33%;
+    padding: 10px;
+  }
+  
+  .col-8 {
+    flex: 0 0 66.66%;
+    max-width: 66.66%;
+    padding: 10px;
+  }
+  .logocover{
+    width:max-content 
+  }
+  .logocover-img{
+    width:650px;
+    height: 350px;
+    margin-left: 20px;
+  }
+  .login-h2-div{
+    width: 300px;
+    height: auto;
+    margin-left: 80px;
+    padding: 1px;
+  }
+  .login-h2-div h1
+  {
+    color: #FFF;
+  font-family: Poppins;
+  font-size: 50px;
+  font-style: normal;
+  font-weight: 800;
+  line-height:80px;
+  }
+  
+.PhoneInputCountry{
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+  display: none;
+}
+.PhoneInputCountrySelect {
+  flex-grow: 1; /* Allow the dropdown to take remaining horizontal space */
+  border: 1px solid #ccc; /* Customize the dropdown border */
+  border-radius: 5px; /* Customize border radius */
+  padding: 10px; /* Customize padding */
+  width:max-content;
+}
+.phoneinputdiv{
+  display: flex;
+}
+.phoneinputdiv-countrycode{
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 5px 0px 15px 0px;
+  display: flex;
+  align-self: flex-start;
+  width: 25px;
+}
+.PhoneInputInput {
+
+}
+
+/* Style the country image container */
+.PhoneInputCountryIcon {/* Remove border around the country image container */
+  /*margin-right: 10px;  Add margin to separate it from the input */
+}
+
+/* Style the country image */
+.PhoneInputCountryIconImg {
+  width: 50px; /*   Customize the width of the country image */
+  height: 30px; /*  Customize the height of the country image */
+}
+
+/* Style the select arrow (if needed) */
+.PhoneInputCountrySelectArrow {
+  /* Customize the style of the select arrow */
+}
