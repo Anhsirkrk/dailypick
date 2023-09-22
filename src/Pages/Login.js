@@ -1,5 +1,5 @@
 import React from 'react';
-import '../Css/Login.css';
+// import '../Css/Login.css';
 import { useState,useEffect } from 'react';
 import { Link, useAsyncError, useNavigate } from "react-router-dom";
 import { Form, Alert } from "react-bootstrap";
@@ -25,8 +25,6 @@ import logocover from '../Images/logocover.png';
 
 
 const Login = () => {
-
-
 
   const [error, setError] = useState("");
   const [number, setNumber] = useState("");
