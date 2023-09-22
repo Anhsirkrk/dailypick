@@ -1,0 +1,109 @@
+.top-bar{
+    border-radius: 10px;
+    flex-shrink: 0;
+    background: var(--p-01, #024172);
+    display: flex;  
+}
+.logo{
+    color: #ffffff;
+    text-align: left;
+    font: 700 50px 'Poppins', sans-serif;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start
+}
+.banner{
+   margin-top: 10px;
+   margin-left: 20px;
+}
+.banner .bannner-img{
+    width:1080px;
+    border-radius: 20px;
+    
+}
+.Button-Fields{
+    margin-top: 10px;   
+}
+.Button-Fields .fields{
+    display: flex;
+    justify-content: space-between;
+    column-gap: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.Button-Fields .fields .field{
+    background: #ebe9e9;
+    border-radius: 30.29px;
+    border-style: solid;
+    border-color: rgba(2, 65, 114, 0.22);
+    border-width: 3px;
+    padding: 12.12px 48.46px 12.12px 48.46px;
+    display: flex;
+    flex-direction: row;
+    gap: 12.12px;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+}
+.daily-needs{
+    margin-top: 10px;
+}
+.daily-needs .group {
+    display: flex;
+    justify-content: space-between;
+    column-gap: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.daily-needs .group .rectangle{
+    border-radius: 30px;
+border-style: solid;
+border-color: rgba(105, 105, 105, 0.30);
+border-width: 1px;
+flex-shrink: 0;
+width: 344px;
+height: 238px;
+position: relative;
+box-shadow: 2px 2px 4px 0px rgba(76, 76, 76, 0.25);
+}
+.Best-Sellers{
+    margin-top: 10px;
+}
+.Best-Sellers .group {
+    display: flex;
+    justify-content: space-between;
+    column-gap: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.Best-Sellers .group .rectangle{
+    border-radius: 30px;
+border-style: solid;
+border-color: rgba(105, 105, 105, 0.30);
+border-width: 1px;
+flex-shrink: 0;
+width: 344px;
+height: 238px;
+position: relative;
+box-shadow: 2px 2px 4px 0px rgba(76, 76, 76, 0.25);
+}
+.Brands .group {
+    display: flex;
+    justify-content: space-between;
+    column-gap: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.Brands .group .rectangle{
+    border-radius: 30px;
+border-style: solid;
+border-color: rgba(105, 105, 105, 0.30);
+border-width: 1px;
+flex-shrink: 0;
+width: 344px;
+height: 238px;
+position: relative;
+box-shadow: 2px 2px 4px 0px rgba(76, 76, 76, 0.25);
+}

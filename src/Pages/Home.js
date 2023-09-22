@@ -1,13 +1,13 @@
 import React from 'react'
-import '../Css/Home.css'
-import veg from '../Images/Home/Rectangle 1403.png'
+//import '../Css/Home.css'
+import diwali from '../Images/Home/Rectangle 1403.png'
 
 const Home = () => {
   return (
     <>
       <div className="home">
   <div className="group-2227">
-    <img className="rectangle-1403" src={veg}/>
+    <img className="rectangle-1403" src={diwali}/>
   </div>
   <div className="frame-19">
     <div className="frame-20">
@@ -15,7 +15,7 @@ const Home = () => {
       <div className="group-2225">
         <div className="rectangle-1410">
           <div className="frame-30">
-            <img className="rectangle-14102" src="rectangle-14102.png" />
+            <img className="rectangle-14102" src='../Images/Home/Rectangle 1410.png' />
             <div className="name">Vegetables</div>
           </div>
         </div>
