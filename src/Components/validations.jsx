@@ -15,7 +15,6 @@ function validation(values) {
         errors.name = "*Name should not be empty";
       }
 
-
     if (values.mobilenumber === undefined) {
       errors.mobilenumber = "* Enter Mobile Number";
     }
@@ -38,16 +37,16 @@ function validation(values) {
      {
       errors.password = "Password should not be empty";
     }
-    alert(values.confirmpassword);
+  
 
     if (values.confirmpassword !== values.password)
     {
        errors.confirmpassword = "Passwords don't match";
    }
-   else if(!/^(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/.test(values.password))
-  {
-    errors.confirmpassword="password must contain at least 8 characters,one number, one lowercase letter, and one special character";
-  }
+  //  else if(!/^(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/.test(values.password))
+  // {
+  //   errors.confirmpassword="password must contain at least 8 characters,one number, one lowercase letter, and one special character";
+  // }
 
  
     return errors;
