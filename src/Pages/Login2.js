@@ -148,7 +148,8 @@ const Login = () => {
             navigate('/home');
           }
           else if(sendData.userFound === false){
-            alert("user not found");
+            alert("user didnt found");
+
             toast.error("Invalid User");
           }
           localStorage.setItem('userdata', JSON.stringify(sendData));
