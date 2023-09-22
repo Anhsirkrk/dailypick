@@ -17,31 +17,54 @@ import {
 import { useUserAuth } from "../Context/UserAuthContext";
 import PhoneInput from "react-phone-number-input";
 import axios, { formToJSON } from 'axios';
-import {ToastContainer,toast } from 'react-toastify';
 import logocover from '../Images/logocover.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash, faL } from '@fortawesome/free-solid-svg-icons';
+import 'react-toastify/dist/ReactToastify.css';
+import {ToastContainer,toast } from 'react-toastify';
+import validation from '../Components/validations';
+import { useLoginAuth } from '../Components/UserAuthContext';
+
 
 
 
 
 const Login = () => {
 
-
+  const {isLoginauthenticated, setIsLoginauthenticated}= useLoginAuth();
 
   const [error, setError] = useState("");
-  const [number, setNumber] = useState("");
+  const [mobilenumber, setMobileNumber] = useState("");
   const [name,setName]=useState("");
 
   const [email, setEmail] = useState("");
   const [password,setPassword]=useState("");
+  const [confirmpassword,setConfirmPassword]=useState("");
   const [flag, setFlag] = useState(false);
   const [otp, setOtp] = useState('');
   const [result, setResult] = useState("");
   const { setUpRecaptha } = useUserAuth();
+  const [resultMessage, setResultMessage] = useState('');
+  const [isauthenticated, setisauthenticated] = useState('');
+  
+  const {countrycode,setcountrycode}=useState('+91');
+
+  const navigate = useNavigate();
 
   const [timer, setTimer] = useState(5);
   const [timerActive, setTimerActive] = useState(true);
+
+  const [passwordVisible, setPasswordVisible] = useState(false);
+
+  const [loginwithotpshow,setloginwithotpshow]= useState(true);
+  const [loginwithemail,setloginwithemailshow]= useState(false);
+  const [regisitrationForm,setRegisatrtionFormShow]= useState(false);
+
+  const [isPhoneNumberValid, setIsPhoneNumberValid] = useState(true);
+
+  
+  const [validationerrors,setValidationErrors]=useState('');
+
 
   useEffect(() => {
     let interval;
@@ -62,43 +85,180 @@ const Login = () => {
     }
   }, [timer]);
 
+  useEffect(() => {
+    // Perform any actions you want when loginwithotpshow changes here
+    console.log("loginwithotpshow has changed:", loginwithotpshow);
+  }, [loginwithotpshow,loginwithemail,regisitrationForm,mobilenumber]);
+
   const resendOTP = () => {
     alert("hitted");
     console.log(timerActive)
     if (!timerActive) {
       setTimer(5);
       setTimerActive(true);
-      getresendOtp(number);
+      getresendOtp(mobilenumber);
     }
   };
-  const [passwordVisible, setPasswordVisible] = useState(false);
   
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
 
-  const [loginwithotpshow,setloginwithotpshow]= useState(true);
-  const [loginwithemail,setloginwithemailshow]= useState(false);
-  const [regisitrationForm,setRegisatrtionFormShow]= useState(false);
+  const Authenticateemailandpassword = async(e) =>{
+    e.preventDefault();
+    const values={email,password};
+  const validationErrors = validation(values);
 
-  const navigate = useNavigate();
+  if(!(validationErrors.email)== '' || !(validationErrors.password)=='' )
+  {
+    setValidationErrors(validationErrors);
+    alert('lg val er mail' + validationErrors.email);
+    alert('lg val er pas' + validationErrors.password);
+    return;
+  }
+  alert("validatiions pass");
+    const url = "";
+    const data={
+      email: email,
+      password:password
+    }
+    try {
+      const response = await axios.post(url, data);
+      console.log(response.data);
+      if (response.status === 200) 
+      {
+        alert("satus 200");
+          const sendData = 
+          {
+            userId: response.data.userId,
+            userTypeId: response.data.userTypeId,
+            username: response.data.username,
+            firstName: response.data.firstname,
+            lastName: response.data.lastname,
+            mobile: response.data.mobile,
+            email: response.data.email,
+            userFound: response.data.userFound,
+          };
+          console.log(sendData);
+          if(sendData.userFound === true){
+            alert("user validated by mail");
+            toast.success("user found by mail");
+            setIsLoginauthenticated(true);
+            navigate('/home');
+          }
+          else if(sendData.userFound === false){
+            alert("user didnt found");
 
-   const [currentPage, setCurrentPage] = useState('LoginWithemailid');
-   const [mdcurrentPage, setMDCurrentPage] = useState('subscription');
+            toast.error("Invalid User");
+          }
+          localStorage.setItem('userdata', JSON.stringify(sendData));
+      } 
+      else 
+      {
+        setResultMessage("An unknown error occurred");
+      }
+    } catch(error) {
+      setResultMessage('An error occurred while processing your request.');
+      console.error(error);
+    }
+  }
 
-  const handleMobileNumberChange=(e)=>{
-setNumber(e.target.value);
+  const verifymobilenumber = async (e) => {
+    e.preventDefault();
+    const values={mobilenumber};
+    console.log(values);
+  const validationErrors = validation(values);
+  console.log(validationErrors);
+  if(!(validationErrors.mobilenumber)=='')
+  {
+    setValidationErrors(validationErrors);
+    alert(validationErrors.mobilenumber);
+    console.log(validationerrors.mobilenumber);
+    return;
+  }
+    const url = 'https://localhost:7041/api/Login/GetUserByMobileNumber';
+    const data = {
+      userId: 0,
+      userTypeId: 0,
+      username: "",
+      password: "",
+      firstname: "",
+      lastname: "",
+      mobile: mobilenumber,
+      email: "",
+      isActive: true,
+      userFound: true,
+      resultMessage: ""
+    };
+    try {
+      const response = await axios.post(url, data);
+      console.log(response.data);
+      if (response.status === 200) 
+      {
+        alert("satus 200");
+          const sendData = 
+          {
+            userId: response.data.userId,
+            userTypeId: response.data.userTypeId,
+            username: response.data.username,
+            firstName: response.data.firstname,
+            lastName: response.data.lastname,
+            mobile: response.data.mobile,
+            email: response.data.email,
+            userFound: response.data.userFound,
+          };
+          console.log(sendData);
+          if(sendData.userFound === true){
+            alert("user found redirecting to otp gen");
+            getOtp(mobilenumber);
+            toast.success("user found redirecting to otp gen");
+          }
+          else if(sendData.userFound === false){
+            alert("user   not found");
+            toast.error("Invalid User");
+          }
+          localStorage.setItem('userdata', JSON.stringify(sendData));
+      } 
+      else 
+      {
+        setResultMessage("An unknown error occurred");
+      }
+    } catch(error) {
+      setResultMessage('An error occurred while processing your request.');
+      console.error(error);
+    }
+  
   };
+  
+  const UserRegistration = async (e)=>{
+      e.preventDefault();
+      const values={name,email,mobilenumber,password,confirmpassword};
+      console.log(values);
+    const validationErrors = validation(values);
+    console.log(validationErrors);
+    alert('lg vl ' + validationErrors.name);
+    alert('lg vl ' + validationErrors.email);
+    alert('lg vl ' + validationErrors.mobilenumber);
+    alert('lg vl ' + validationErrors.password);
+    alert('lg vl ' + validationErrors.confirmpassword);
 
-    const getOtp = async (e) => {
-        e.preventDefault();
-        console.log(number);
+    if(Object.keys(validationErrors).length>0){
+    {
+      setValidationErrors(validationErrors);
+      console.log(validationerrors.mobilenumber);
+      return;
+    }
+    }
+  }
+
+    const getOtp = async (mobilenumber) => {
+        console.log(mobilenumber);
         setError("");
-        if (number === "" || number === undefined)
-          return setError("Please enter a valid phone number!");
+        if (mobilenumber === "" || mobilenumber === undefined)
+          return setError("Please enter a valid phone mobilenumber!");
         try {
-          const response = await setUpRecaptha(number);
+          const response = await setUpRecaptha(mobilenumber);
           setResult(response);
           setFlag(true);
           setTimer(5);
@@ -110,15 +270,15 @@ setNumber(e.target.value);
 
       const getresendOtp = async (e) => {
         alert("getresendOtp");
-        console.log(number);
+        console.log(mobilenumber);
         setError("");
-        if (number === "" || number === undefined){
+        if (mobilenumber === "" || mobilenumber === undefined){
         alert("num is invalid or undefined");
-          return setError("Please enter a valid phone number!");
+          return setError("Please enter a valid phone mobilenumber!");
         }
         try {
           alert("hitted try");
-          const response = await setUpRecaptha(number);
+          const response = await setUpRecaptha(mobilenumber);
           alert(" hitted set up recptcha ");
           setResult(response);
           setFlag(true);
@@ -130,222 +290,26 @@ setNumber(e.target.value);
       };
 
       
-  const verifyOtp = async (e) => {
-    e.preventDefault();
-    setError("");
-    if (otp === "" || otp === null) return;
-    try {
-      await result.confirm(otp);
-      alert("opt verified");
-      navigate('/home');
-      // userchecking(number);
-    } catch (err) {
-      setError(err.message);
-    }
-  };
+      const verifyOtp = async (e) => {
+        e.preventDefault();
+        setError("");
+        if (otp === "" || otp === null) return;
+        try {
+          await result.confirm(otp);
+          alert("opt verified");
+          setisauthenticated(prevState => {
+            console.log('Before setting authenticated:', prevState);
+            return true;
+          });
+          setIsLoginauthenticated(true);
+          navigate('/home');
+        } catch (err) {
+          setError(err.message);
+        }
+      };
 
 
-  {/* const renderContent = () => {
-    switch (currentPage) {
-      case 'loginwithotp':
-        return <LoginWithOTP />;
-        case 'LoginWithemailid':
-    return <LoginWithemail />;
-              default :
-        return null;
-    }
-  }; */}
-
-  const RegistrationForm=()=>{
-    return(
-      <div className='RegistartionBox_container' style={{ display: regisitrationForm ? "block" : "none" }}>
-      <div className='Login_contant'>
-        <div className='LoginContainerHeader'>
-        <center>
-            <h3 >Create an   <span style={{ fontWeight: "bold" }}>Account</span></h3>
-            </center>
-        </div>
-        <div className='Login2-form'>
-        <div className="p-4 box">
-        {error && <Alert variant="danger">{error}</Alert>}
-          <div>
-            <Form className='MobileLoginForm' onSubmit={getOtp} style={{ display: !flag ? "block" : "none" }}>
-              <p>Enter your Name</p>
-              <div className='nameinputdiv'>
-                <input 
-                type='text'
-                className='name-input'
-                placeholder="Enter name"
-                value={name}
-                onChange={setName}
-                 />
-              </div>
-              <p>Enter Email</p>
-              <div className='emailinputdiv'>
-                <input 
-                type='email'
-                className='email-input'
-                placeholder="Enter Email"
-                value={email}
-                onChange={setEmail}
-                 />
-              </div>
-              <p>Phone No</p>
-              <div style={{display:'flex'}}>
-                  <div>
-                  <input className='countrycodeinput' type='text' value={'+91'}/>
-                  </div>
-                
-                  <div className='phoneinputdiv'>
-                    <PhoneInput 
-                    className='phonenumber-input'
-                    defaultCountry="IN"
-                    placeholder="Enter phone number"
-                    value={number}
-                    onChange={setNumber}
-                    />
-                  </div>
-              </div>
-              <p>Enter password</p>
-              <div className="password-input-container">
-                 <input
-                 type={passwordVisible ? "text" : "password"}
-                 className='password-input'
-                 placeholder="Enter password "
-                 value={password}
-                 onChange={e=>setPassword(e.target.value)}
-                  />
-                  <span onClick={togglePasswordVisibility} className="regform-password-icon">
-                  <FontAwesomeIcon icon={passwordVisible ? faEye : faEyeSlash} />
-                  </span>
-                  </div>
-              
-              
-            
-            <div >
-              <Button className='submit-Button' type="submit" variant="primary">
-                Submit
-              </Button>
-            </div>
-          </Form>
-        </div>
-      </div>
-        </div>
-        </div>
-        <div className='registrationConatiner_Bottomdiv'>
-          <div className='ORdiv'>
-          <p >------------------------ OR -----------------------</p>
-          </div>
-          <div className='alternatePageDiv'>
-          <p style={{padding:'0px', margin:'0px'}}>Already have an Account</p>
-          </div>
-          <div className='alternateButtonDiv'>
-          <Button className='Regpage-signinwitheOTPbutton' onClick={showloginwithOTp} >sign in with otp </Button>
-          <Button className='Regpage-signinwithEmailbutton' onClick={showloginwithEmail}> sign in with password</Button>
-
-          </div>
-          
-      </div>
-    
-  </div> 
-    )
-  }
-
- {/*} const LoginWithemail=()=>{
-    return(
-        <div className='LoginBox_container'>
-      <div className='Login_contant'>
-        <div className='LoginContainerHeader'>
-        <center>
-            <h3 >Login with <span style={{ fontWeight: "bold" }}>OTP</span></h3>
-            </center>
-        </div>
-
-        <br></br>
-        <div className='Login2-form'>
-        <div className="p-4 box">
-        {error && <Alert variant="danger">{error}</Alert>}
-          <div>
-            <Form className='MobileLoginForm' onSubmit={getOtp} style={{ display: !flag ? "block" : "none" }}>
-              <p>Phone No</p>
-              <div style={{display:'flex'}}>
-              <div>
-              <input className='countrycodeinput' type='text' value={'+91'}/>
-              </div>
-             
-              <div className='phoneinputdiv'>
-                <div className=''>
-                <PhoneInput 
-                className='phonenumberinput'
-                defaultCountry="IN"
-                placeholder="Enter phone number"
-                value={number}
-                onChange={setNumber}
-                 />
-          
-                </div>
-              </div>
-              </div>
-              <div id="recaptcha-container"></div>
-            
-            <div >
-              <Button className='sendOtpButton' type="submit" variant="primary">
-                Get OTP
-              </Button>
-            </div>
-          </Form>
-        </div>
-
-        <Form onSubmit={verifyOtp} style={{ display: flag ? "block" : "none" }}>
-          <Form.Group className="EnterOtp-div mb-3" controlId="formBasicOtp">
-            
-            <input 
-            className='otpinput'
-            type="otp"
-              placeholder="Enter OTP"
-              maxLength={6}
-              onChange={e=>setOtp(e.target.value)}/>
-            
-          </Form.Group>
-          <div className="button-right">
-          
-   
-            <Button className='otpverifyBtn' type="submit" variant="primary">
-              Verify
-            </Button>
-          </div>
-        </Form>
-
-      </div>
-        </div>
-        </div>
-        <div className='LoginConatiner_Bottomdiv'>
-          <div className='ORdiv'>
-          <p >------------------------ OR -----------------------</p>
-          </div>
-          <div className='alternatePageDiv'>
-          <p style={{marginTop:'10px'}}><a style={{ fontFamily:'system-ui' ,color:'#024172',paddingTop: '40px', fontSize: '15px',fontWeight: '600'}}>Sign in with E@Mail</a></p>
-          </div>
-          
-          <p style={{marginTop:'20px'}}><a>Don't have an account yet?</a>&nbsp; &nbsp;<a style={{ color:'#024172',textDecoration:'underline', fontWeight:'bold'}}>Register for Free</a></p>
-      </div>
-    
-    </div>
-   
-    )
-  } */}
-  
-  useEffect(() => {
-    // Perform any actions you want when loginwithotpshow changes here
-    console.log("loginwithotpshow has changed:", loginwithotpshow);
-  }, [loginwithotpshow,loginwithemail,regisitrationForm]);
-
- {/*} const showloginwithEmail=()=>{
-    setloginwithotpshow(false);
-    alert("false");
-    setloginwithemailshow(true);
-    alert("true");
-  } */}
+  console.log(mobilenumber);
   const showloginwithEmail = () => {
     setloginwithotpshow(prevState => {
       console.log('Before setting loginwithotpshow:', prevState);
@@ -383,8 +347,7 @@ setNumber(e.target.value);
       });
       console.log('After setting registrationform:', regisitrationForm);
   }
-
-  
+ 
   const showregistartionform =()=>{
     setloginwithotpshow(prevState => {
         console.log('Before setting loginwithotpshow:', prevState);
@@ -415,26 +378,31 @@ setNumber(e.target.value);
       <img className='logocover-img' src={logocover} ></img>
       </div>
     </div>
+    
     <div className='col-4'>
       <div>
+     
+       {/* Sign in with OTP Code */}
         <div className='LoginBox_container' style={{ display: loginwithotpshow ? "block" : "none" }}>
       <div className='Login_contant'>
         <div className='LoginContainerHeader'>
         <center>
             <h3 >Login with <span style={{ fontWeight: "bold" }}>OTP</span></h3>
+            <ToastContainer/>
             </center>
         </div>
 
         <br></br>
         <div className='Login2-form'>
         <div className="p-4 box">
+        <div>{resultMessage}</div>
         {error && <Alert variant="danger">{error}</Alert>}
           <div>
-            <Form className='MobileLoginForm' onSubmit={getOtp} style={{ display: !flag ? "block" : "none" }}>
+            <Form className='MobileLoginForm' onSubmit={verifymobilenumber} style={{ display: !flag ? "block" : "none" }}>
               <p>Phone No</p>
               <div style={{display:'flex'}}>
               <div>
-              <input className='countrycodeinput' type='text' value={'+91'}/>
+              <input className='countrycodeinput' type='text' value={'+91'}  />
               </div>
              
               <div className='phoneinputdiv'>
@@ -443,10 +411,11 @@ setNumber(e.target.value);
                 className='phonenumberinput'
                 defaultCountry="IN"
                 placeholder="Enter phone number"
-                value={number}
-                onChange={setNumber}
+                value={mobilenumber}
+                onChange={(val)=>{setMobileNumber(val);}}
+                maxLength={11}
                  />
-          
+                 {validationerrors.mobilenumber && <p  className='AdminUserRegform-group-errors-p'style={{color:"deeppink",fontSize:'medium'}}>{validationerrors.mobilenumber}</p>}
                 </div>
               </div>
               </div>
@@ -487,7 +456,7 @@ setNumber(e.target.value);
       </div>
         </div>
         </div>
-        <div className='LoginConatiner_Bottomdiv'>
+        <div className='LoginConatiner_Bottomdiv_loginotp'>
           <div className='ORdiv'>
           <p >------------------------ OR -----------------------</p>
           </div>
@@ -501,7 +470,260 @@ setNumber(e.target.value);
         </div> 
 
 
+
+       {/* Sign in with email Code */}
         <div className='LoginBox_container' style={{ display: loginwithemail ? "block" : "none" }}>
+        <div className='Login_contant'>
+          <div className='LoginContainerHeader'>
+          <center>
+              <h3 >Login with <span style={{ fontWeight: "bold" }}>Email</span></h3>
+              </center>
+          </div>
+  
+          <br></br>
+          <div className='Login2-form'>
+          <div className="p-4 box">
+          {error && <Alert variant="danger">{error}</Alert>}
+            <div>
+              <Form className='MobileLoginForm' onSubmit={Authenticateemailandpassword} style={{ display: !flag ? "block" : "none" }}>
+                <p>Enter Email</p>
+                <div style={{display:'flex'}}>
+                
+               
+                <div className='phoneinputdiv'>
+                  <div className=''>
+                  <input
+                  type='email'
+                  className='email-input'
+                  placeholder="Enter registered MailID"
+                  value={email}
+                  onChange={e=>setEmail(e.target.value)}
+                   />
+                   {validationerrors.email && <p  className='AdminUserRegform-group-errors-p'style={{color:"deeppink",fontSize:'medium'}}>{validationerrors.email}</p>}
+
+                   <p>Enter Password</p>
+                   <div className="password-input-container">
+                   <input
+                   type={passwordVisible ? "text" : "password"}
+                   className='password-input'
+                   placeholder="Enter password "
+                   value={password}
+                   onChange={e=>setPassword(e.target.value)}
+                    />
+                    {validationerrors.password && <p  className='AdminUserRegform-group-errors-p'style={{color:"deeppink",fontSize:'medium'}}>{validationerrors.password}</p>}
+                    <span onClick={togglePasswordVisibility} className="password-icon">
+                    <FontAwesomeIcon icon={passwordVisible ? faEye : faEyeSlash} />
+                    </span>
+                    </div>
+                  
+                  </div>
+                </div>
+                </div>
+                <div id="recaptcha-container"></div>
+              
+              <div >
+                <Button className='sendOtpButton' type="submit"  variant="primary">
+                  Login
+                </Button>
+              </div>
+            </Form>
+          </div>
+  
+        </div>
+          </div>
+          </div>
+          <div className='LoginConatiner_Bottomdiv'>
+            <div className='ORdiv'>
+            <p >------------------------ OR -----------------------</p>
+            </div>
+            <div className='alternatePageDiv'>
+            <Button className='signinwithemailbutton' onClick={showloginwithOTp}> Sign in with OTP</Button>
+            </div>
+            
+            <p style={{marginTop:'20px'}}><a>Don't have an account yet?</a>&nbsp; &nbsp;<a onClick={showregistartionform} style={{ color:'#024172',textDecoration:'underline', fontWeight:'bold'}}>Register for Free</a></p>
+        </div>
+      
+          </div> 
+     
+       
+
+            {/* Regisatrtion form  Code */}
+          {/*} <div className='regisatrtionformdispaly' style={{display:regisitrationForm? "block":"none"}}>
+          <Regsitartionformcode/>
+  </div> */}
+
+         <div className='RegistartionBox_container' style={{ display: regisitrationForm ? "block" : "none" }}>
+              <div className='Login_contant'>
+                <div className='LoginContainerHeader'>
+                <center>
+                    <h3 style={{marginTop:'2px'}} >Create an   <span style={{ fontWeight: "bold" }}>Account</span></h3>
+                    </center>
+                </div>
+                <div className='Login2-form'>
+                <div className="p-4 box">
+                {error && <Alert variant="danger">{error}</Alert>}
+                  <div>
+                    <Form className='MobileLoginForm' onSubmit={UserRegistration} style={{ display: !flag ? "block" : "none" }}>
+                      <p>Enter your Name</p>
+                      <div className='nameinputdiv'>
+                        <input 
+                        type='text'
+                        className='name-input'
+                        placeholder="Enter name"
+                        value={name}
+                        onChange={e=>setName(e.target.value)}
+                        />
+                        {validationerrors.name && <p  className='AdminUserRegform-group-errors-p'style={{color:"deeppink",fontSize:'medium'}}>{validationerrors.name}</p>}
+
+                      </div>
+                      <p>Enter Email</p>
+                      <div className='emailinputdiv'>
+                        <input 
+                        type='email'
+                        className='email-input'
+                        placeholder="Enter Email"
+                        value={email}
+                        onChange={e=>setEmail(e.target.value)}
+                        />
+                        {validationerrors.email && <p  className='AdminUserRegform-group-errors-p'style={{color:"deeppink",fontSize:'medium'}}>{validationerrors.email}</p>}
+
+                      </div>
+                      <p>Phone No</p>
+                      <div style={{display:'flex'}}>
+                          <div>
+                          <input className='countrycodeinput' type='text' value={'+91'}/>
+                          </div>
+                        
+                          <div className='phoneinputdiv'>
+                            <PhoneInput 
+                            className='phonenumber-input'
+                            defaultCountry="IN"
+                            placeholder="Enter phone number"
+                            value={mobilenumber}
+                            onChange={(val)=>{setMobileNumber(val);}}
+                            maxLength={11}
+                            />
+                          </div>
+                      </div>
+                      {validationerrors.mobilenumber && <p  className='AdminUserRegform-group-errors-p'style={{color:"deeppink",fontSize:'medium'}}>{validationerrors.mobilenumber}</p>}
+
+                      <p>Enter password</p>
+                      <div className="password-input-container">
+                        <input
+                        type={passwordVisible ? "text" : "password"}
+                        className='password-input'
+                        placeholder="Enter password "
+                        value={password}
+                        onChange={e=>setPassword(e.target.value)}
+                          />
+
+                          <span onClick={togglePasswordVisibility} className="regform-confirmpassword-icon">
+                          <FontAwesomeIcon icon={passwordVisible ? faEye : faEyeSlash} />
+                          </span>
+                          </div>
+                          {validationerrors.password && <p  className='AdminUserRegform-group-errors-p'style={{color:"deeppink",fontSize:'medium'}}>{validationerrors.password}</p>}
+
+                          <p>Confirm password</p>
+                          <div className="confirmpassword-input-container">
+                            <input
+                            type={passwordVisible ? "text" : "password"}
+                            className='confirmpassword-input'
+                            placeholder="Enter password "
+                            value={confirmpassword}
+                            onChange={e=>setConfirmPassword(e.target.value)}
+                              />
+                              <span onClick={togglePasswordVisibility} className="regform-confirmpassword-icon">
+                              <FontAwesomeIcon icon={passwordVisible ? faEye : faEyeSlash} />
+                              </span>
+                              </div>
+                              {validationerrors.confirmpassword && <p  className='AdminUserRegform-group-errors-p'style={{color:"deeppink",fontSize:'medium'}}>{validationerrors.confirmpassword}</p>}
+
+                      
+                      
+                    
+                    <div >
+                      <Button className='submit-Button' type="submit" variant="primary">
+                        Submit
+                      </Button>
+                    </div>
+                  </Form>
+                </div>
+              </div>
+                </div>
+                <div className='registrationConatiner_Bottomdiv'>
+                <div className='ORdiv'>
+                <p >------------------------ OR -----------------------</p>
+                </div>
+                <div className='alternatePageDiv'>
+                <p style={{padding:'0px', margin:'0px'}}>Already have an Account</p>
+                </div>
+                <div className='alternateButtonDiv'>
+                <Button className='Regpage-signinwitheOTPbutton' onClick={showloginwithOTp} >sign in with otp </Button>
+                <Button className='Regpage-signinwithEmailbutton' onClick={showloginwithEmail}> sign in with password</Button>
+
+                </div>
+                
+            </div>
+                </div>
+               
+            
+          </div> 
+      </div>
+
+    </div> 
+
+   </div> 
+    </div>
+
+
+  )
+}
+
+export default Login
+
+
+
+  //  const [currentPage, setCurrentPage] = useState('LoginWithemailid');
+  //  const [mdcurrentPage, setMDCurrentPage] = useState('subscription');
+
+  // axios.interceptors.response.use(
+  //   (response) => response,
+  //   (error) => {
+  //     const { status, data } = error.response;
+
+  //     switch (status) {
+  //       case 401:
+  //         setResultMessage('Unauthorized request error');
+  //         break;
+  //       case 403:
+  //         setResultMessage('Forbidden request error');
+  //         break;
+  //       case 404:
+  //         setResultMessage('Not found error');
+  //         break;
+  //       default:
+  //         setResultMessage('Unknown error occurred');
+  //     }
+
+  //     return Promise.reject(error);
+  //   }
+  // );
+
+
+  {/* const renderContent = () => {
+    switch (currentPage) {
+      case 'loginwithotp':
+        return <LoginWithOTP />;
+        case 'LoginWithemailid':
+    return <LoginWithemail />;
+              default :
+        return null;
+    }
+  }; */}
+
+   {/*const Signinwithemailcodedis =(e)=>{
+    return(
+      <div className='LoginBox_container' style={{ display: loginwithemail ? "block" : "none" }}>
       <div className='Login_contant'>
         <div className='LoginContainerHeader'>
         <center>
@@ -570,18 +792,165 @@ setNumber(e.target.value);
       </div>
     
         </div> 
-        <div className='Regsitrationform_Display' style={{display: regisitrationForm ? "block" :"none"}}>
-          <RegistrationForm/>
-        </div>
-      </div>
-
-    </div> 
-
-   </div> 
-    </div>
+    )
+  } */}
 
 
-  )
-}
 
-export default Login
+
+ //     switch (userData.status) {
+  //       case 200:
+  //         const userFound = userData.data.userFound;
+  //         if (userFound) {
+  //           const sendData = {
+  //             userId: userData.data.userId,
+  //             userTypeId: userData.data.userTypeId,
+  //             username: userData.data.username,
+  //             firstName: userData.data.firstName,
+  //             lastName: userData.data.lastName,
+  //             mobile: userData.data.mobile,
+  //             email: userData.data.email,
+  //             userFound: userData.data.userFound,
+  //           };
+  //           localStorage.setItem('userdata', JSON.stringify(sendData));
+  //           // Add your logic for user found scenario
+  //         } 
+  //         else 
+  //         {
+  //           setResultMessage('User not found');
+  //           // Add your logic for user not found scenario
+  //         }
+  //         break;
+  //       case 404:
+  //         setResultMessage('User not found');
+  //         break;
+  //       default:
+  //         setResultMessage('Unknown error occurred');
+  //     }
+  //   } catch (error) {
+  //     setResultMessage('An error occurred while processing your request.');
+  //     console.error(error);
+  //   }
+  // }
+
+
+//   const verifymobilenumber=async (e)=>{
+//     e.preventDefault();
+//     const url = 'https://localhost:7041/api/Login/GetUserByMobileNumber';
+//     const data = {
+//       userId: 0,  // Assuming these properties are required
+//     userTypeId: 0,
+//     username: "",
+//     password: "",
+//     firstname: "",
+//     lastname: "",
+//     mobile: mobilenumber,  // Make sure 'number' is correctly set
+//     email: "",
+//     isActive: true,
+//     userFound: true,
+//     resultMessage: ""
+//     }
+//     axios.post(url, data)
+//     .then((response) => {
+//       const { data } = response;
+//       console.log(data);
+
+//       switch (response.status) {
+//         case 200:
+//           const { userFound } = data;
+
+//           if (userFound) {
+//             const senddata = {
+//               userId: data.userId,
+//               userTypeId: data.userTypeId,
+//               username: data.username,
+//               firstname: data.firstname,
+//               lastname: data.lastname,
+//               mobile: data.mobile,
+//               email: data.email,
+//               userFound: data.userFound,
+//             };
+//             localStorage.setItem('userdata', JSON.stringify(senddata));
+//             // Add your logic for user found scenario
+//           } else {
+//             setResultMessage('User not found');
+//             // Add your logic for user not found scenario
+//           }
+//           break;
+//         case 404:
+//           setResultMessage('User not found');
+//           break;
+//         default:
+//           setResultMessage('Unknown error occurred');
+//       }
+//     })
+//     .catch((error) => {
+//       setResultMessage('An error occurred while processing your request.');
+//       console.error(error);
+//     });
+// };
+
+
+//     alert('verify mobile nu hitted ');
+//     console.log(data);
+//     axios.post(url,data)
+// .then((result)=>{
+//   console.log(result.data);
+//  switch (result.status){
+//   case 200 : 
+//   const senddata = {
+//     userId:result.data.userId,
+//     userTypeId:result.data.userTypeId,
+//     username:result.data.username,
+//     firstname:result.data.firstname,
+//     lastname:result.data.lastname,
+//     mobile:result.data.mobile,
+//     email:result.data.email,
+//     userFound:result.data.userFound,
+//   }
+//   localStorage.setItem('userdata', JSON.stringify(senddata));
+//   getOtp(mobilenumber);
+//   break;
+//   case 400 :
+//     setResultmessage(result.data.ResultMessage);
+//   case 404:
+//     setResultmessage("user not found");
+//     break;
+//     default :
+//     setResultmessage("unknown error occured");
+//  }
+// }).catch((error)=>{
+//   setError("mobile number not regsitered");
+//   console.log(error);
+// })
+//   };
+
+//   if(result.status===200)
+//   {
+//     const senddata={
+//       userId:result.data.userId,
+//       userTypeId:result.data.userTypeId,
+//       username:result.data.username,
+//       firstname:result.data.firstname,
+//       lastname:result.data.lastname,
+//       mobile:result.data.mobile,
+//       email:result.data.email,
+//       userFound:result.data.userFound,
+//     }
+//     console.log(senddata);
+//         localStorage.setItem('userdata', JSON.stringify(senddata)); 
+//         getOtp(mobilenumber);   
+//   }
+//   else
+//     {
+//        setResultmessage("Not a valid User - please do register");
+//        console.log(resultmessage);
+//     }
+//   })
+// .catch((error)=>{
+//   setError("mobile nu not resgitered");
+//   console.log(error);
+//    toast.success("Invalid User");
+// });
+
+//   }
