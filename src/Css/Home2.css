@@ -1,24 +1,96 @@
 .top-bar{
-    border-radius: 10px;
-    flex-shrink: 0;
-    background: var(--p-01, #024172);
-    display: flex;  
+    border-radius: 10px;  
+    position: fixed;
+    width:97%;
+  top: 0;
+  left: 0;
+  height: 80px;
+  background: var(--p-01, #024172);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  z-index: 1000; /* Adjust as needed */
 }
-.logo{
+.top-bar .logo{
     color: #ffffff;
     text-align: left;
-    font: 700 50px 'Poppins', sans-serif;
+    font: 700 30px 'Poppins', sans-serif;
     position: relative;
     display: flex;
     align-items: center;
     justify-content: flex-start
 }
+.top-bar .Location{
+    box-sizing: border-box;
+    border-radius: 11.9px;
+    border-style: solid;
+    border-color: var(--white-lit, #ffffff);
+    border-width: 1.19px;
+    padding: 10.71px 21.43px 10.71px 21.43px;
+    display: flex;
+    flex-direction: row;
+    gap: 10.71px;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    height: 20px;
+    width: 150px;
+    margin-left: 1000px;
+    
+}
+.top-bar .Location:hover{
+    cursor: pointer;
+}
+   .top-bar .Location .hyderabad {
+   color: var(--white-lit, #ffffff);
+    text-align: left;
+    font: var(--h-2-14-r, 400 14px 'Poppins', sans-serif);
+    position: relative;
+    display: flex;
+}
+
+.top-bar .userdisplay {
+    color: var(--white-lit, #ffffff);
+    margin-right: 30px;
+
+    
+  }
+  .top-bar .userdisplay:hover{
+    cursor: pointer;
+  }
+  
+  .top-bar .userdisplay .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+  }
+  
+  .top-bar .userdisplay .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .top-bar .userdisplay .dropdown-content a:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .top-bar .userdisplay:hover .dropdown-content {
+    display: block;
+  }
+  
+
 .banner{
-   margin-top: 10px;
-   margin-left: 20px;
+   margin-top: 100px;
+   margin-left: 50px;
 }
 .banner .bannner-img{
-    width:1080px;
+    width: 1400px;
     border-radius: 20px;
     
 }
@@ -29,10 +101,10 @@
     display: flex;
     justify-content: space-between;
     column-gap: 10px;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 100px;
+    padding-right: 100px;
 }
-.Button-Fields .fields .field{
+.Button-Fields .fields .field .btn{
     background: #ebe9e9;
     border-radius: 30.29px;
     border-style: solid;
@@ -46,37 +118,68 @@
     justify-content: center;
     flex-shrink: 0;
     position: relative;
+    
+}
+.Button-Fields .fields .field .btn:hover{
+    cursor: pointer;
 }
 .daily-needs{
-    margin-top: 10px;
+    
+    margin: 50px 50px 0px 50px;
+}
+.daily-needs .Heading{
+    color: #024172;
+    font: var(--h-1-38-sb, 600 26px 'Poppins', sans-serif);
+    margin-left: 100px;
+    margin-bottom: 10px;
 }
 .daily-needs .group {
     display: flex;
     justify-content: space-between;
-    column-gap: 5px;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 100px;
+    padding-right: 100px;  
+flex-direction: row;
+
+overflow-x: auto; /* Enable horizontal overflow */
+  white-space: nowrap; /* Prevent items from wrapping to the next line */
 }
+
+.daily-needs .group .scroll-container {
+    display: flex; /* Display items in a row */
+  }
 .daily-needs .group .rectangle{
     border-radius: 30px;
 border-style: solid;
 border-color: rgba(105, 105, 105, 0.30);
 border-width: 1px;
 flex-shrink: 0;
-width: 344px;
-height: 238px;
+width: 250px;
+height: 200px;
 position: relative;
 box-shadow: 2px 2px 4px 0px rgba(76, 76, 76, 0.25);
+margin-left: 20px;
 }
 .Best-Sellers{
-    margin-top: 10px;
+    margin: 50px 50px 0px 50px;
+}
+.Best-Sellers .Heading{
+    color: #024172;
+    font: var(--h-1-38-sb, 600 26px 'Poppins', sans-serif);
+    margin-left: 100px;
+    margin-bottom: 10px;
 }
 .Best-Sellers .group {
     display: flex;
     justify-content: space-between;
-    column-gap: 5px;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 100px;
+    padding-right: 100px;
+
+    overflow-x: auto; /* Enable horizontal overflow */
+  white-space: nowrap; /* Prevent items from wrapping to the next line */
+}
+
+.Best-Sellers .group .scroll-container{
+    display: flex;
 }
 .Best-Sellers .group .rectangle{
     border-radius: 30px;
@@ -84,17 +187,26 @@ border-style: solid;
 border-color: rgba(105, 105, 105, 0.30);
 border-width: 1px;
 flex-shrink: 0;
-width: 344px;
-height: 238px;
+width: 250px;
+height: 200px;
 position: relative;
 box-shadow: 2px 2px 4px 0px rgba(76, 76, 76, 0.25);
+margin-left: 20px;
+}
+.Brands{
+    margin: 50px 50px 0px 50px;
 }
 .Brands .group {
     display: flex;
     justify-content: space-between;
-    column-gap: 5px;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 100px;
+    padding-right: 100px;
+}
+.Brands .Heading{
+    color: #024172;
+    font: var(--h-1-38-sb, 600 26px 'Poppins', sans-serif);
+    margin-left: 100px;
+    margin-bottom: 10px;
 }
 .Brands .group .rectangle{
     border-radius: 30px;
@@ -102,8 +214,8 @@ border-style: solid;
 border-color: rgba(105, 105, 105, 0.30);
 border-width: 1px;
 flex-shrink: 0;
-width: 344px;
-height: 238px;
+width: 250px;
+height: 200px;
 position: relative;
 box-shadow: 2px 2px 4px 0px rgba(76, 76, 76, 0.25);
 }

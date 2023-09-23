@@ -1,14 +1,25 @@
+import { useState } from 'react';
 import React from 'react';
 import '../Css/Home2.css';
 import banner from '../Images/Home/Rectangle 1403.png';
+import HorizontalScroll from "react-horizontal-scrolling";
 
 
 const Home2 = () => {
+
+  
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
     <>
         <div className='top-bar'>
             <div className='logo'>Logo</div>
-            <div className="component-15">
+            <div className="Location">
                 <svg className="material-symbols-location-on-outline"
                     width="25"
                     height="25"
@@ -20,7 +31,15 @@ const Home2 = () => {
                 </svg>
                 <div className="hyderabad">Hyderabad</div>
             </div>
-            <div className='userdisplay'></div>
+            <div className="userdisplay" onClick={toggleDropdown}>
+              Username
+                  {isOpen && (
+                      <div className="dropdown-content">
+                        <a href="#">Profile</a>
+                        <a href="#">Signout</a>
+                      </div>
+                  )}
+            </div>
         </div>
         <div className='banner'>
             <img class="bannner-img" src={banner} alt='banner' />
@@ -30,25 +49,25 @@ const Home2 = () => {
             <center>
             <div className="fields">
   	            <div className="field" >
-                    <button className="milk">News-Paper</button>
+                    <button className="btn">News-Paper</button>
   	            </div>
   	            <div className="field" >
-    	    	    <button className="milk" >Milk </button>
+    	    	    <button className="btn" >Milk </button>
   	            </div>
   	            <div className="field" >
-    	    	    <button className="milk" >Curd </button>
+    	    	    <button className="btn" >Curd </button>
   	            </div>
   	            <div className="field" >
-    	    	    <button className="milk" >Eggs </button>
+    	    	    <button className="btn" >Eggs </button>
   	            </div>
   	            <div className="field" >
-    	    	    <button className="milk" >Vegetables </button>
+    	    	    <button className="btn" >Vegetables </button>
   	            </div>
   	            <div className="field" >
-    	    	    <button className="milk" >Breads </button>
+    	    	    <button className="btn" >Breads </button>
   	            </div>
   	            <div className="field" >
-    	    	    <button className="milk"  >Cookies </button>
+    	    	    <button className="btn"  >Cookies </button>
   	            </div>
             </div>
             </center>
@@ -57,36 +76,64 @@ const Home2 = () => {
             
   	            <div className="Heading" >Daily Needs </div>
   	            <div className="group" >
-    		        <div className="rectangle" >
+                <div className="scroll-container">
+                <div className="rectangle" >
       			        <div className="DN-field" >
-        				    <img className="DN_Image" src="rectangle-14102.png" />
-        				    <div className="name" >Vegetables </div>
+        				      <img className="DN_Image" src="rectangle-14102.png" />
+        				      <div className="name" >Vegetables </div>
       			        </div>
     		        </div>
     		        <div className="rectangle" >
       			        <div className="DN-field" >
-        				    <img className="DN_Image" src="rectangle-14102.png" />
-        				    <div className="name" >Milk </div>
+        				      <img className="DN_Image" src="rectangle-14102.png" />
+        				      <div className="name" >Milk </div>
       			        </div>
     		        </div>
     		        <div className="rectangle" >
       			        <div className="DN-field" >
-        				    <img className="DN_Image" src="rectangle-14102.png" />
-        				    <div className="name" >News Papers </div>
+        				      <img className="DN_Image" src="rectangle-14102.png" />
+        				      <div className="name" >News Papers </div>
       			        </div>
     		        </div>
     		        <div className="rectangle" >
       			        <div className="DN-field" >
-        				    <img className="DN_Image" src="rectangle-14102.png" />
-        				    <div className="name" >Curd </div>
+        				      <img className="DN_Image" src="rectangle-14102.png" />
+        				      <div className="name" >Curd </div>
       			        </div>
     		        </div>
+                <div className="rectangle" >
+      			        <div className="DN-field" >
+        				      <img className="DN_Image" src="rectangle-14102.png" />
+        				      <div className="name" >Vegetables </div>
+      			        </div>
+    		        </div>
+    		        <div className="rectangle" >
+      			        <div className="DN-field" >
+        				      <img className="DN_Image" src="rectangle-14102.png" />
+        				      <div className="name" >Milk </div>
+      			        </div>
+    		        </div>
+    		        <div className="rectangle" >
+      			        <div className="DN-field" >
+        				      <img className="DN_Image" src="rectangle-14102.png" />
+        				      <div className="name" >News Papers </div>
+      			        </div>
+    		        </div>
+    		        <div className="rectangle" >
+      			        <div className="DN-field" >
+        				      <img className="DN_Image" src="rectangle-14102.png" />
+        				      <div className="name" >Curd </div>
+      			        </div>
+    		        </div>
+
+                </div>
   	            </div>
             </div>
             <div className='Best-Sellers'>     
             
             <div className="Heading" >Best Sellers </div>
             <div className="group" >
+            <div className="scroll-container">
               <div className="rectangle" >
                     <div className="BS-field" >
                       <img className="DN_Image" src="rectangle-14102.png" />
@@ -110,6 +157,31 @@ const Home2 = () => {
                       <img className="DN_Image" src="rectangle-14102.png" />
                       <div className="name" >Eggs </div>
                     </div>
+              </div>
+              <div className="rectangle" >
+                    <div className="BS-field" >
+                      <img className="DN_Image" src="rectangle-14102.png" />
+                      <div className="name" >Milk </div>
+                    </div>
+              </div>
+              <div className="rectangle" >
+                    <div className="BS-field" >
+                      <img className="DN_Image" src="rectangle-14102.png" />
+                      <div className="name" >Curd </div>
+                    </div>
+              </div>
+              <div className="rectangle" >
+                    <div className="BS-field" >
+                      <img className="DN_Image" src="rectangle-14102.png" />
+                      <div className="name" >Cookies </div>
+                    </div>
+              </div>
+              <div className="rectangle" >
+                    <div className="BS-field" >
+                      <img className="DN_Image" src="rectangle-14102.png" />
+                      <div className="name" >Eggs </div>
+                    </div>
+              </div>
               </div>
             </div>
       </div>
