@@ -26,18 +26,12 @@ import validation from '../Components/validations';
 import { useLoginAuth } from '../Components/UserAuthContext';
 import UerRegistrationPage from '../Pages/Regisatrtion';
 
-
-
-
-
 const Login = () => {
-
   const {isLoginauthenticated, setIsLoginauthenticated}= useLoginAuth();
 
   const [error, setError] = useState("");
   const [mobilenumber, setMobileNumber] = useState("");
   const [name,setName]=useState("");
-
   const [email, setEmail] = useState("");
   const [password,setPassword]=useState("");
   const [confirmpassword,setConfirmPassword]=useState("");
@@ -47,25 +41,16 @@ const Login = () => {
   const { setUpRecaptha } = useUserAuth();
   const [resultMessage, setResultMessage] = useState('');
   const [isauthenticated, setisauthenticated] = useState('');
-  
   const {countrycode,setcountrycode}=useState('+91');
-
   const navigate = useNavigate();
-
   const [timer, setTimer] = useState(5);
   const [timerActive, setTimerActive] = useState(true);
-
   const [passwordVisible, setPasswordVisible] = useState(false);
-
   const [loginwithotpshow,setloginwithotpshow]= useState(true);
   const [loginwithemail,setloginwithemailshow]= useState(false);
   const [registrationform,setRegistrationForm]= useState(false);
-
   const [isPhoneNumberValid, setIsPhoneNumberValid] = useState(true);
-
-  
   const [validationerrors,setValidationErrors]=useState('');
-
 
   useEffect(() => {
     let interval;
@@ -101,7 +86,6 @@ const Login = () => {
     }
   };
   
-
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
@@ -119,12 +103,22 @@ const Login = () => {
     return;
   }
   alert("validatiions pass");
-    const url = "";
+    const url = "https://localhost:7041/api/Login/GetUserByEmail";
     const data={
+      userId: 0,
+      userTypeId: 0,
+      username: email,
+      password: password,
+      firstname: "string",
+      lastname: "string",
+      mobile: "string",
       email: email,
-      password:password
+      isActive: true,
+      userFound: true,
+      resultMessage: "string"
     }
     try {
+      alert("here");
       const response = await axios.post(url, data);
       console.log(response.data);
       if (response.status === 200) 
@@ -150,7 +144,6 @@ const Login = () => {
           }
           else if(sendData.userFound === false){
             alert("user didnt found");
-
             toast.error("Invalid User");
           }
           localStorage.setItem('userdata', JSON.stringify(sendData));
@@ -164,7 +157,6 @@ const Login = () => {
       console.error(error);
     }
   }
-
   const verifymobilenumber = async (e) => {
     e.preventDefault();
     const values={mobilenumber};
@@ -231,7 +223,7 @@ const Login = () => {
     }
   
   };
-  
+
   const UserRegistration = async (e)=>{
       e.preventDefault();
       const values={name,email,mobilenumber,password,confirmpassword};
@@ -289,8 +281,6 @@ const Login = () => {
           setError(err.message);
         }
       };
-
-      
       const verifyOtp = async (e) => {
         e.preventDefault();
         setError("");
@@ -368,7 +358,6 @@ const Login = () => {
       });
       console.log('After setting registrationform:', registrationform);
   }
-
   return (
 
     <div className='Login2-container'>
@@ -381,7 +370,6 @@ const Login = () => {
       <img className='logocover-img' src={logocover} ></img>
       </div>
     </div>
-    
     <div className='col-4'>
       <div>
      
@@ -491,8 +479,7 @@ const Login = () => {
               <Form className='MobileLoginForm' onSubmit={Authenticateemailandpassword} style={{ display: !flag ? "block" : "none" }}>
                 <p>Enter Email</p>
                 <div style={{display:'flex'}}>
-                
-               
+                 
                 <div className='phoneinputdiv'>
                   <div className=''>
                   <input
@@ -531,7 +518,6 @@ const Login = () => {
               </div>
             </Form>
           </div>
-  
         </div>
           </div>
           </div>
@@ -547,9 +533,6 @@ const Login = () => {
         </div>
       
           </div>
-     
-       
-
             {/* Regisatrtion form  Code */}
            <div className='regisatrtionformdispaly' style={{ display: registrationform ? "block" : "none" }} >
                {<UerRegistrationPage/>}
@@ -577,10 +560,8 @@ const Login = () => {
    </div> 
     </div>
 
-
   )
 }
-
 export default Login;
 
 
