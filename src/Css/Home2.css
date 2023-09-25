@@ -1,4 +1,35 @@
-.top-bar{
+._1Us3XD{
+    position: relative;
+    display: flex;
+    align-items: center;
+    border: 1px solid transparent;
+    box-sizing: border-box;
+    padding: 8px;
+}
+.userdisplay{
+    margin-right: 50px;
+}
+._1TOQfO{
+    color: white;
+font-size: 16px;
+line-height: 24px;
+display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+.-dOa_b.L_FVxe {
+    margin-right: 8px;
+}
+._1sLnDu{
+padding-left: 10px;
+}
+.H6-NpN{
+    display: flex;
+    align-items: center;
+    border: 1px solid transparent;
+    box-sizing: border-box;
+    padding: 8px;
+}.top-bar{
     border-radius: 10px;  
     position: fixed;
     width:97%;
@@ -22,11 +53,8 @@
     justify-content: flex-start
 }
 .top-bar .Location{
-    box-sizing: border-box;
-    border-radius: 11.9px;
-    border-style: solid;
-    border-color: var(--white-lit, #ffffff);
-    border-width: 1.19px;
+  
+
     padding: 10.71px 21.43px 10.71px 21.43px;
     display: flex;
     flex-direction: row;

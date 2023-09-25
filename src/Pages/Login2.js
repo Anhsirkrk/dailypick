@@ -1,6 +1,6 @@
 import React, { useState,useEffect }  from 'react';
 import '../Css/Login2.css';
-import { Link, useAsyncError, useNavigate } from "react-router-dom";
+import { Link,useAsyncError, useNavigate } from 'react-router-dom';
 import { Form, Alert } from "react-bootstrap";
 import { Button } from "react-bootstrap";
  import OtpInput from 'react-otp-input';
@@ -25,6 +25,7 @@ import {ToastContainer,toast } from 'react-toastify';
 import validation from '../Components/validations';
 import { useLoginAuth } from '../Components/UserAuthContext';
 import UerRegistrationPage from '../Pages/Regisatrtion';
+import Popup from './PopUp';
 
 const Login = () => {
   const {isLoginauthenticated, setIsLoginauthenticated}= useLoginAuth();
@@ -52,6 +53,17 @@ const Login = () => {
   const [isPhoneNumberValid, setIsPhoneNumberValid] = useState(true);
   const [validationerrors,setValidationErrors]=useState('');
 
+
+  // const history = useHistory();
+   
+  // useEffect(() => {
+  //   history.listen(() => {
+  //     if (history.length > 1) {
+  //       history.goBack();
+  //     }
+  //   });
+  // }, [history]);
+
   useEffect(() => {
     let interval;
     if (timer > 0) {
@@ -59,11 +71,11 @@ const Login = () => {
         setTimer(prevTimer => prevTimer - 1);
       }, 1000);
     }
-
     return () => {
       clearInterval(interval);
     };
   }, [timer]);
+
 
   useEffect(() => {
     if (timer === 0) {
@@ -140,13 +152,16 @@ const Login = () => {
             alert("user validated by mail");
             toast.success("user found by mail");
             setIsLoginauthenticated(true);
-            navigate('/home');
+            navigate('/home2');
           }
           else if(sendData.userFound === false){
             alert("user didnt found");
             toast.error("Invalid User");
           }
           localStorage.setItem('userdata', JSON.stringify(sendData));
+          alert("see console -162");
+          const dummydata= JSON.parse(localStorage.getItem('userdata'));
+          console.log(dummydata);
       } 
       else 
       {
@@ -293,12 +308,14 @@ const Login = () => {
             return true;
           });
           setIsLoginauthenticated(true);
-          navigate('/home');
+          navigate('/home2');
         } catch (err) {
           setError(err.message);
         }
       };
-
+      const ContinueAsaGuest=async(e)=>{
+        navigate('/ContinueAsaGuest');
+      }
 
   console.log(mobilenumber);
   const showloginwithEmail = () => {
@@ -322,7 +339,6 @@ const Login = () => {
   };
 
   const ShowloginwithOTp= ()=> {
-  
     setloginwithotpshow(prevState => {
         console.log('Before setting loginwithotpshow:', prevState);
         return true;
@@ -359,6 +375,7 @@ const Login = () => {
       console.log('After setting registrationform:', registrationform);
   }
   return (
+<>
 
     <div className='Login2-container'>
     <div className='row'>
@@ -456,7 +473,9 @@ const Login = () => {
           </div>
           
           <p style={{marginTop:'20px'}}><a>Don't have an account yet?</a>&nbsp; &nbsp;<a onClick={showregistartionform} style={{ color:'#024172',textDecoration:'underline', fontWeight:'bold'}}>Register for Free</a></p>
-      </div>
+          <Button className='ContinueAsaGuestButton' onClick={ContinueAsaGuest} style={{textDecoration:'none'}}> Continue As a Guest ---  </Button>
+
+          </div>
     
         </div> 
 
@@ -559,7 +578,7 @@ const Login = () => {
 
    </div> 
     </div>
-
+    </>
   )
 }
 export default Login;
