@@ -1,13 +1,26 @@
-import { useEffect, useState } from 'react';
+
+import { useState,useEffect } from 'react';
+
 import React from 'react';
 import '../Css/Home2.css';
 import banner from '../Images/Home/Rectangle 1403.png';
 import HorizontalScroll from "react-horizontal-scrolling";
+
 import Nav from '../Components/Nav';
-import axios from 'axios'
+
+
+import { useLoginAuth } from '../Components/UserAuthContext';
+import { Link, useAsyncError, useNavigate } from "react-router-dom";
+import {FaRegUser} from 'react-icons/fa'
+import { Navigate } from 'react-router-dom';
+import axios from 'axios';
+import {GoLocation} from 'react-icons/go';
+
+
 
 
 const Home2 = () => {
+
 
   const [dailyneeds, setDailyneeds]=useState('');
 
@@ -15,6 +28,72 @@ const Home2 = () => {
   useEffect(()=>{
     GetDailyNeed();
   },[]);
+
+  const {isLoginauthenticated, setIsLoginauthenticated}= useLoginAuth();
+  const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
+  const [username, setUsername] = useState('');
+
+  const [location, setLocation] = useState(null);
+  const [city, setCity] = useState(null);
+
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setLocation({ latitude, longitude });
+          // Use OpenCage API to get city
+          axios
+            .get(`https://api.opencagedata.com/geocode/v1/json`, {
+              params: {
+                key: '6fa32c40ce6d44e7b02b86a5111f3277', // Get your API key from OpenCage
+                q: `${latitude},${longitude}`,
+              },
+            })
+            .then((response) => {
+              const city = response.data.results[0].components.city;
+              setCity(city);
+            })
+            .catch((error) => {
+              console.error('Error fetching city:', error);
+            });
+        },
+        (error) => {
+          console.error('Error getting location:', error);
+        }
+      );
+    } else {
+      console.error('Geolocation is not supported by this browser.');
+    }
+  }, []);
+
+
+  
+  useEffect(() => {
+    // Get item from local storage on component mount
+    const storeddata = localStorage.getItem('userdata');
+    const storeduserdata = JSON.parse(storeddata);
+    console.log(storeduserdata);
+    if (storeduserdata) {
+      setUsername(storeduserdata.firstName);
+    }
+    console.log(username);
+  }, []);
+
+
+  const handlesignout = () => {
+    localStorage.removeItem('userdata');
+    setIsLoginauthenticated(false);
+    <Navigate to='/Login2'/>
+  }
+
+  if (!isLoginauthenticated) {
+    return <Navigate to='/Login2' />;
+  }
+
+
+
 
   const GetDailyNeed=()=>{
     axios.get('https://localhost:7041/api/Admin/GetAllProducts')
@@ -28,6 +107,7 @@ const Home2 = () => {
 
   return (
     <>
+
         <Nav/>
         <div className='banner'>
             <img class="bannner-img" src={banner} alt='banner' />

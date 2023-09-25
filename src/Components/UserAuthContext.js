@@ -3,10 +3,11 @@ import React, { createContext, useState, useContext } from 'react';
 const UserAuthContext = createContext();
 
 export const UserAuthProvider = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  // const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoginauthenticated, setIsLoginauthenticated] = useState(false); // Add this line
 
   return (
-    <UserAuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
+    <UserAuthContext.Provider value={{ isLoginauthenticated, setIsLoginauthenticated }}>
       {children}
     </UserAuthContext.Provider>
   );

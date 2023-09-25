@@ -1,6 +1,6 @@
 import React, { useState,useEffect }  from 'react';
 import '../Css/Login2.css';
-import { Link, useAsyncError, useNavigate } from "react-router-dom";
+import { Link,useAsyncError, useNavigate } from 'react-router-dom';
 import { Form, Alert } from "react-bootstrap";
 import { Button } from "react-bootstrap";
  import OtpInput from 'react-otp-input';
@@ -24,19 +24,15 @@ import 'react-toastify/dist/ReactToastify.css';
 import {ToastContainer,toast } from 'react-toastify';
 import validation from '../Components/validations';
 import { useLoginAuth } from '../Components/UserAuthContext';
-
-
-
-
+import UerRegistrationPage from '../Pages/Regisatrtion';
+import Popup from './PopUp';
 
 const Login = () => {
-
   const {isLoginauthenticated, setIsLoginauthenticated}= useLoginAuth();
 
   const [error, setError] = useState("");
   const [mobilenumber, setMobileNumber] = useState("");
   const [name,setName]=useState("");
-
   const [email, setEmail] = useState("");
   const [password,setPassword]=useState("");
   const [confirmpassword,setConfirmPassword]=useState("");
@@ -46,25 +42,27 @@ const Login = () => {
   const { setUpRecaptha } = useUserAuth();
   const [resultMessage, setResultMessage] = useState('');
   const [isauthenticated, setisauthenticated] = useState('');
-  
   const {countrycode,setcountrycode}=useState('+91');
-
   const navigate = useNavigate();
-
   const [timer, setTimer] = useState(5);
   const [timerActive, setTimerActive] = useState(true);
-
   const [passwordVisible, setPasswordVisible] = useState(false);
-
   const [loginwithotpshow,setloginwithotpshow]= useState(true);
   const [loginwithemail,setloginwithemailshow]= useState(false);
-  const [regisitrationForm,setRegisatrtionFormShow]= useState(false);
-
+  const [registrationform,setRegistrationForm]= useState(false);
   const [isPhoneNumberValid, setIsPhoneNumberValid] = useState(true);
-
-  
   const [validationerrors,setValidationErrors]=useState('');
 
+
+  // const history = useHistory();
+   
+  // useEffect(() => {
+  //   history.listen(() => {
+  //     if (history.length > 1) {
+  //       history.goBack();
+  //     }
+  //   });
+  // }, [history]);
 
   useEffect(() => {
     let interval;
@@ -73,11 +71,11 @@ const Login = () => {
         setTimer(prevTimer => prevTimer - 1);
       }, 1000);
     }
-
     return () => {
       clearInterval(interval);
     };
   }, [timer]);
+
 
   useEffect(() => {
     if (timer === 0) {
@@ -88,7 +86,7 @@ const Login = () => {
   useEffect(() => {
     // Perform any actions you want when loginwithotpshow changes here
     console.log("loginwithotpshow has changed:", loginwithotpshow);
-  }, [loginwithotpshow,loginwithemail,regisitrationForm,mobilenumber]);
+  }, [loginwithotpshow,loginwithemail,registrationform,mobilenumber]);
 
   const resendOTP = () => {
     alert("hitted");
@@ -100,7 +98,6 @@ const Login = () => {
     }
   };
   
-
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
@@ -118,12 +115,22 @@ const Login = () => {
     return;
   }
   alert("validatiions pass");
-    const url = "";
+    const url = "https://localhost:7041/api/Login/GetUserByEmail";
     const data={
+      userId: 0,
+      userTypeId: 0,
+      username: email,
+      password: password,
+      firstname: "string",
+      lastname: "string",
+      mobile: "string",
       email: email,
-      password:password
+      isActive: true,
+      userFound: true,
+      resultMessage: "string"
     }
     try {
+      alert("here");
       const response = await axios.post(url, data);
       console.log(response.data);
       if (response.status === 200) 
@@ -145,14 +152,16 @@ const Login = () => {
             alert("user validated by mail");
             toast.success("user found by mail");
             setIsLoginauthenticated(true);
-            navigate('/home');
+            navigate('/home2');
           }
           else if(sendData.userFound === false){
             alert("user didnt found");
-
             toast.error("Invalid User");
           }
           localStorage.setItem('userdata', JSON.stringify(sendData));
+          alert("see console -162");
+          const dummydata= JSON.parse(localStorage.getItem('userdata'));
+          console.log(dummydata);
       } 
       else 
       {
@@ -163,7 +172,6 @@ const Login = () => {
       console.error(error);
     }
   }
-
   const verifymobilenumber = async (e) => {
     e.preventDefault();
     const values={mobilenumber};
@@ -230,7 +238,7 @@ const Login = () => {
     }
   
   };
-  
+
   const UserRegistration = async (e)=>{
       e.preventDefault();
       const values={name,email,mobilenumber,password,confirmpassword};
@@ -288,8 +296,6 @@ const Login = () => {
           setError(err.message);
         }
       };
-
-      
       const verifyOtp = async (e) => {
         e.preventDefault();
         setError("");
@@ -302,12 +308,14 @@ const Login = () => {
             return true;
           });
           setIsLoginauthenticated(true);
-          navigate('/home');
+          navigate('/home2');
         } catch (err) {
           setError(err.message);
         }
       };
-
+      const ContinueAsaGuest=async(e)=>{
+        navigate('/ContinueAsaGuest');
+      }
 
   console.log(mobilenumber);
   const showloginwithEmail = () => {
@@ -323,14 +331,14 @@ const Login = () => {
     });
     console.log('After setting loginwithemailshow:', loginwithemail);
 
-    setRegisatrtionFormShow(prevState => {
+    setRegistrationForm(prevState => {
       console.log('Before setting registrationform:', prevState);
       return false;
     });
-    console.log('After setting registrationform:', regisitrationForm);
+    console.log('After setting registrationform:', registrationform);
   };
 
-  const showloginwithOTp =()=>{
+  const ShowloginwithOTp= ()=> {
     setloginwithotpshow(prevState => {
         console.log('Before setting loginwithotpshow:', prevState);
         return true;
@@ -341,11 +349,12 @@ const Login = () => {
         return false;
       });
       console.log('After setting loginwithemailshow:', loginwithemail);
-      setRegisatrtionFormShow(prevState => {
+      setRegistrationForm(prevState => {
         console.log('Before setting registrationform:', prevState);
         return false;
       });
-      console.log('After setting registrationform:', regisitrationForm);
+      console.log('After setting registrationform:', registrationform);
+  
   }
  
   const showregistartionform =()=>{
@@ -359,14 +368,14 @@ const Login = () => {
         return false;
       });
       console.log('After setting loginwithemailshow:', loginwithemail);
-      setRegisatrtionFormShow(prevState => {
+      setRegistrationForm(prevState => {
         console.log('Before setting registrationform:', prevState);
         return true;
       });
-      console.log('After setting registrationform:', regisitrationForm);
+      console.log('After setting registrationform:', registrationform);
   }
-
   return (
+<>
 
     <div className='Login2-container'>
     <div className='row'>
@@ -378,7 +387,6 @@ const Login = () => {
       <img className='logocover-img' src={logocover} ></img>
       </div>
     </div>
-    
     <div className='col-4'>
       <div>
      
@@ -465,13 +473,15 @@ const Login = () => {
           </div>
           
           <p style={{marginTop:'20px'}}><a>Don't have an account yet?</a>&nbsp; &nbsp;<a onClick={showregistartionform} style={{ color:'#024172',textDecoration:'underline', fontWeight:'bold'}}>Register for Free</a></p>
-      </div>
+          <Button className='ContinueAsaGuestButton' onClick={ContinueAsaGuest} style={{textDecoration:'none'}}> Continue As a Guest ---  </Button>
+
+          </div>
     
         </div> 
 
 
 
-       {/* Sign in with email Code */}
+       {/* Sign in with email Code  */}
         <div className='LoginBox_container' style={{ display: loginwithemail ? "block" : "none" }}>
         <div className='Login_contant'>
           <div className='LoginContainerHeader'>
@@ -488,8 +498,7 @@ const Login = () => {
               <Form className='MobileLoginForm' onSubmit={Authenticateemailandpassword} style={{ display: !flag ? "block" : "none" }}>
                 <p>Enter Email</p>
                 <div style={{display:'flex'}}>
-                
-               
+                 
                 <div className='phoneinputdiv'>
                   <div className=''>
                   <input
@@ -528,7 +537,6 @@ const Login = () => {
               </div>
             </Form>
           </div>
-  
         </div>
           </div>
           </div>
@@ -537,149 +545,43 @@ const Login = () => {
             <p >------------------------ OR -----------------------</p>
             </div>
             <div className='alternatePageDiv'>
-            <Button className='signinwithemailbutton' onClick={showloginwithOTp}> Sign in with OTP</Button>
+            <Button className='signinwithemailbutton' onClick={ShowloginwithOTp}> Sign in with OTP</Button>
             </div>
             
             <p style={{marginTop:'20px'}}><a>Don't have an account yet?</a>&nbsp; &nbsp;<a onClick={showregistartionform} style={{ color:'#024172',textDecoration:'underline', fontWeight:'bold'}}>Register for Free</a></p>
         </div>
       
-          </div> 
-     
-       
-
+          </div>
             {/* Regisatrtion form  Code */}
-          {/*} <div className='regisatrtionformdispaly' style={{display:regisitrationForm? "block":"none"}}>
-          <Regsitartionformcode/>
-  </div> */}
-
-         <div className='RegistartionBox_container' style={{ display: regisitrationForm ? "block" : "none" }}>
-              <div className='Login_contant'>
-                <div className='LoginContainerHeader'>
-                <center>
-                    <h3 style={{marginTop:'2px'}} >Create an   <span style={{ fontWeight: "bold" }}>Account</span></h3>
-                    </center>
-                </div>
-                <div className='Login2-form'>
-                <div className="p-4 box">
-                {error && <Alert variant="danger">{error}</Alert>}
-                  <div>
-                    <Form className='MobileLoginForm' onSubmit={UserRegistration} style={{ display: !flag ? "block" : "none" }}>
-                      <p>Enter your Name</p>
-                      <div className='nameinputdiv'>
-                        <input 
-                        type='text'
-                        className='name-input'
-                        placeholder="Enter name"
-                        value={name}
-                        onChange={e=>setName(e.target.value)}
-                        />
-                        {validationerrors.name && <p  className='AdminUserRegform-group-errors-p'style={{color:"deeppink",fontSize:'medium'}}>{validationerrors.name}</p>}
-
-                      </div>
-                      <p>Enter Email</p>
-                      <div className='emailinputdiv'>
-                        <input 
-                        type='email'
-                        className='email-input'
-                        placeholder="Enter Email"
-                        value={email}
-                        onChange={e=>setEmail(e.target.value)}
-                        />
-                        {validationerrors.email && <p  className='AdminUserRegform-group-errors-p'style={{color:"deeppink",fontSize:'medium'}}>{validationerrors.email}</p>}
-
-                      </div>
-                      <p>Phone No</p>
-                      <div style={{display:'flex'}}>
-                          <div>
-                          <input className='countrycodeinput' type='text' value={'+91'}/>
-                          </div>
-                        
-                          <div className='phoneinputdiv'>
-                            <PhoneInput 
-                            className='phonenumber-input'
-                            defaultCountry="IN"
-                            placeholder="Enter phone number"
-                            value={mobilenumber}
-                            onChange={(val)=>{setMobileNumber(val);}}
-                            maxLength={11}
-                            />
-                          </div>
-                      </div>
-                      {validationerrors.mobilenumber && <p  className='AdminUserRegform-group-errors-p'style={{color:"deeppink",fontSize:'medium'}}>{validationerrors.mobilenumber}</p>}
-
-                      <p>Enter password</p>
-                      <div className="password-input-container">
-                        <input
-                        type={passwordVisible ? "text" : "password"}
-                        className='password-input'
-                        placeholder="Enter password "
-                        value={password}
-                        onChange={e=>setPassword(e.target.value)}
-                          />
-
-                          <span onClick={togglePasswordVisibility} className="regform-confirmpassword-icon">
-                          <FontAwesomeIcon icon={passwordVisible ? faEye : faEyeSlash} />
-                          </span>
-                          </div>
-                          {validationerrors.password && <p  className='AdminUserRegform-group-errors-p'style={{color:"deeppink",fontSize:'medium'}}>{validationerrors.password}</p>}
-
-                          <p>Confirm password</p>
-                          <div className="confirmpassword-input-container">
-                            <input
-                            type={passwordVisible ? "text" : "password"}
-                            className='confirmpassword-input'
-                            placeholder="Enter password "
-                            value={confirmpassword}
-                            onChange={e=>setConfirmPassword(e.target.value)}
-                              />
-                              <span onClick={togglePasswordVisibility} className="regform-confirmpassword-icon">
-                              <FontAwesomeIcon icon={passwordVisible ? faEye : faEyeSlash} />
-                              </span>
-                              </div>
-                              {validationerrors.confirmpassword && <p  className='AdminUserRegform-group-errors-p'style={{color:"deeppink",fontSize:'medium'}}>{validationerrors.confirmpassword}</p>}
-
-                      
-                      
-                    
-                    <div >
-                      <Button className='submit-Button' type="submit" variant="primary">
-                        Submit
-                      </Button>
-                    </div>
-                  </Form>
-                </div>
-              </div>
-                </div>
-                <div className='registrationConatiner_Bottomdiv'>
-                <div className='ORdiv'>
-                <p >------------------------ OR -----------------------</p>
-                </div>
-                <div className='alternatePageDiv'>
-                <p style={{padding:'0px', margin:'0px'}}>Already have an Account</p>
-                </div>
-                <div className='alternateButtonDiv'>
-                <Button className='Regpage-signinwitheOTPbutton' onClick={showloginwithOTp} >sign in with otp </Button>
-                <Button className='Regpage-signinwithEmailbutton' onClick={showloginwithEmail}> sign in with password</Button>
-
-                </div>
-                
-            </div>
-                </div>
+           <div className='regisatrtionformdispaly' style={{ display: registrationform ? "block" : "none" }} >
+               {<UerRegistrationPage/>}
+               <div className='registrationConatiner_Bottomdiv'>
+               <div className='ORdiv'>
+           {/*}    <p >------------------------ OR -----------------------</p> */}
+               </div>
+               <div className='alternatePageDiv'>
+               <p style={{padding:'0px', margin:'0px', textDecoration:'UNDERLINE'}}>Already have an Account ?</p>
+               </div>
+               <div className='alternateButtonDiv'>
+               <Button className='Regpage-signinwitheOTPbutton' onClick={ShowloginwithOTp} >sign in with otp </Button>
+               <Button className='Regpage-signinwithEmailbutton' onClick={showloginwithEmail}> sign in with password</Button>
+         
+               </div>
                
-            
-          </div> 
+           </div>
+           </div>
+
+
       </div>
 
     </div> 
 
    </div> 
     </div>
-
-
+    </>
   )
 }
-
-export default Login
+export default Login;
 
 
 

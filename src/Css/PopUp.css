@@ -1,0 +1,62 @@
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 1536px;
+    height: 753px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(70, 70, 70, 0.81);
+  }
+  .popup-background{
+    text-align: center;
+    width: 1536px;
+    height: 753px;
+    background: url('../Images/LoginPageScreeShot.png');
+    background-size: cover;
+  }
+  
+  .redirecttoGuestButton {
+    background: aliceblue;
+    width: 200px;
+    height: 100px;
+    color: black;
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: inherit;
+    font-weight: 600;
+  }
+  .redirecttoLoginButton {
+    background: var(--P01, #024172);
+    width: 200px;
+    height: 100px;
+    color: aliceblue;
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: inherit;
+    font-weight: 600;
+  }
+  
+  .redirecttoLoginButton:hover {
+    /* background: aliceblue;
+    color: black; */
+    font-size: 25px;
+    cursor: pointer;
+  }
+
+  .redirecttoGuestButton:hover {
+    /* background: var(--P01, #024172); */
+    /* color: white; */
+     font-size: 20px; 
+    cursor: pointer;
+   
+  }
+  
+  
