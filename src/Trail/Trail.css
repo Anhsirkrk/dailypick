@@ -1,6 +1,20 @@
-*{
-    margin: 0;
-    padding:0;
-    box-sizing: border-box;
-    font-family: 'Poppins';
+.container .row{
+    display: flex;
+    justify-content: space-between;
+}
+.container .row .first-column{
+background: #d9d9d9;
+width: 256px;
+height: 1260px;
+position: absolute;
+left: 0px;
+top: 0px;
+
+
+
+inset: 0;
+}
+
+.container .row .second-column{
+    margin-left: 100px;
 }

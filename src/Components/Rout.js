@@ -6,6 +6,7 @@ import Login2 from '../Pages/Login2';
 import Home2 from '../Pages/Home2';
 import Trail from '../Trail/Trail';
 
+
 const Rout = () => {
   return (
     <>
