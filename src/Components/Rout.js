@@ -5,7 +5,11 @@ import Login2 from '../Pages/Login2';
 import Home2 from '../Pages/Home2';
 import Trail from '../Trail/Trail';
 import Popup from '../Pages/PopUp';
+
 const Rout = () => {
+
+  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+
   return (
     <>
         <Routes>
@@ -15,7 +19,7 @@ const Rout = () => {
       />
           <Route path='/home' element={<Home />} />
           <Route path='/login2' element={<Login2 />} />
-          <Route path='/home2' element={<Home2/>}/>
+          <Route path='/home2' element={isLoggedIn ? <Home2/> : <Navigate to="/login2" />} />
           <Route path='/trail' element={<Trail/>}/>
           <Route path="/*" element={<Navigate to="/popup" replace />} />
         </Routes>

@@ -67,6 +67,7 @@ const Nav = () => {
   const handlesignout = async (e) => {
     e.preventDefault();
     localStorage.removeItem('userdata');
+    localStorage.removeItem('isLoggedIn');
     setUsername('');
     console.log(isLoginauthenticated);
     if(isLoginauthenticated===true){
@@ -82,7 +83,8 @@ const Nav = () => {
 
   useEffect(() => {
     const token = localStorage.getItem('userdata');
-    if (token) {
+    if(localStorage.getItem('isLoggedIn') === 'true')
+    {
       setIsLoginauthenticated(true);
     }
   }, []);
