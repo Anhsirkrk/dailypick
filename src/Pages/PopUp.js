@@ -1,25 +1,30 @@
 import React, { useState,useEffect }  from 'react';
 import '../Css/PopUp.css'
 
-const Popup = ({ }) => {
+const Popup = ({}) => {
 
       
   const [showPopup, setShowPopup] = useState(true);
+
+  useEffect(() => {
+
+  }, [showPopup]);
     
   const closePopup = () => {
-    alert("close popup clicked");
     setShowPopup(prevShowPopup => {
-      alert(prevShowPopup);
-      alert("setting it to false");
-      
       return false; // Setting the state to false
-      alert(showPopup);
     });
   };
 
+  const openpopup =()=>{
+    setShowPopup(prevShowPopup =>{
+      return true;
+    })
+  }
+
   useEffect(() => {
-    alert(`showPopup is now ${showPopup}`);
-  }, [showPopup]);
+
+  }, [openpopup]);
 
   const redirectToLogin = () => {
     window.location.href = '/login2';

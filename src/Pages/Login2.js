@@ -1,6 +1,6 @@
 import React, { useState,useEffect }  from 'react';
 import '../Css/Login2.css';
-import { Link,useAsyncError, useNavigate } from 'react-router-dom';
+import { Link,json,useAsyncError, useNavigate } from 'react-router-dom';
 import { Form, Alert } from "react-bootstrap";
 import { Button } from "react-bootstrap";
  import OtpInput from 'react-otp-input';
@@ -29,7 +29,6 @@ import Popup from './PopUp';
 
 const Login = () => {
   const {isLoginauthenticated, setIsLoginauthenticated}= useLoginAuth();
-
   const [error, setError] = useState("");
   const [mobilenumber, setMobileNumber] = useState("");
   const [name,setName]=useState("");
@@ -41,7 +40,6 @@ const Login = () => {
   const [result, setResult] = useState("");
   const { setUpRecaptha } = useUserAuth();
   const [resultMessage, setResultMessage] = useState('');
-  const [isauthenticated, setisauthenticated] = useState('');
   const {countrycode,setcountrycode}=useState('+91');
   const navigate = useNavigate();
   const [timer, setTimer] = useState(5);
@@ -52,17 +50,6 @@ const Login = () => {
   const [registrationform,setRegistrationForm]= useState(false);
   const [isPhoneNumberValid, setIsPhoneNumberValid] = useState(true);
   const [validationerrors,setValidationErrors]=useState('');
-
-
-  // const history = useHistory();
-   
-  // useEffect(() => {
-  //   history.listen(() => {
-  //     if (history.length > 1) {
-  //       history.goBack();
-  //     }
-  //   });
-  // }, [history]);
 
   useEffect(() => {
     let interval;
@@ -86,7 +73,7 @@ const Login = () => {
   useEffect(() => {
     // Perform any actions you want when loginwithotpshow changes here
     console.log("loginwithotpshow has changed:", loginwithotpshow);
-  }, [loginwithotpshow,loginwithemail,registrationform,mobilenumber]);
+  }, [loginwithotpshow,loginwithemail,registrationform,mobilenumber,isLoginauthenticated,setIsLoginauthenticated]);
 
   const resendOTP = () => {
     alert("hitted");
@@ -149,7 +136,7 @@ const Login = () => {
           };
           console.log(sendData);
           if(sendData.userFound === true){
-            alert("user validated by mail");
+      
             toast.success("user found by mail");
             setIsLoginauthenticated(true);
             navigate('/home2');
@@ -158,8 +145,10 @@ const Login = () => {
             alert("user didnt found");
             toast.error("Invalid User");
           }
-          localStorage.setItem('userdata', JSON.stringify(sendData));
-          alert("see console -162");
+          if(sendData)
+          {
+            localStorage.setItem('userdata', JSON.stringify(sendData));
+          }
           const dummydata= JSON.parse(localStorage.getItem('userdata'));
           console.log(dummydata);
       } 
@@ -304,7 +293,7 @@ const Login = () => {
         try {
           await result.confirm(otp);
           alert("opt verified");
-          setisauthenticated(prevState => {
+          setIsLoginauthenticated(prevState => {
             console.log('Before setting authenticated:', prevState);
             return true;
           });
@@ -375,9 +364,13 @@ const Login = () => {
       });
       console.log('After setting registrationform:', registrationform);
   }
+  useEffect(() => {
+    // Perform any actions you want when loginwithotpshow changes here
+    console.log("loginwithotpshow has changed:", loginwithotpshow);
+  }, [setIsLoginauthenticated,isLoginauthenticated]);
+
   return (
 <>
-
     <div className='Login2-container'>
     <div className='row'>
     <div className='col-8'>
