@@ -97,6 +97,7 @@ console.log(username);
 
   return (
     <>
+
         
         <div className='row' id='navbar-row'>
             <div className='col-2' id='navbar-row-col-2'>
@@ -105,6 +106,7 @@ console.log(username);
                 <GoLocation style={{color:'whitesmoke'}}/>
                     <div className="cityname"><p>{city}</p></div>
               </div>
+
             </div>
           
             <div className='col-4' id='navbar-row-col-4'>
