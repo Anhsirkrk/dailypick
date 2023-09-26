@@ -87,7 +87,7 @@ const Nav = () => {
   useEffect(() => {
     if(localStorage.getItem('isLoggedIn') === 'true')
     {
-      console.log('nav.js', JSON.parse(localStorage.getItem('isLoggedIn')))
+      console.log('nav.js', JSON.parse(localStorage.getItem('isLoggedIn')));
       setIsLoginauthenticated(true);
       console.log('navjs' , isLoginauthenticated);
     }
