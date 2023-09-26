@@ -139,7 +139,9 @@ const Login = ({}) => {
       
             toast.success("user found by mail");
             setIsLoginauthenticated(true);
-            localStorage.setItem('isLoggedIn', true);
+            localStorage.setItem('isLoggedIn', 'true');
+            console.log("login2", JSON.parse(localStorage.getItem('isLoggedIn')));
+            alert("login2", JSON.parse(localStorage.getItem('isLoggedIn')));
             navigate('/home2');
           }
           else if(sendData.userFound === false){

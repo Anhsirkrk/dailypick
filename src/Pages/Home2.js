@@ -53,7 +53,7 @@ const Home2 = () => {
     //   setIsLoginauthenticated(true);
     // }
     const token = localStorage.getItem('userdata');
-    if(localStorage.getItem('isLoggedIn') === 'true')
+    if(localStorage.getItem('isLoggedIn') === true)
     {
       setIsLoginauthenticated(true);
     }
