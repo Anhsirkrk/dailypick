@@ -31,7 +31,7 @@ const Home2 = () => {
 
 
   const GetDailyNeed=()=>{
-    axios.get('https://localhost:7041/api/Admin/GetAllCategories')
+    axios.get('https://localhost:7041/api/Admin/GetAllCategoriesWithImageUrls')
     .then((result)=>{
       console.log('API Response:', result.data); 
       setDailyneeds(result.data);
@@ -151,29 +151,21 @@ const Home2 = () => {
   	            <div className="Heading" >Daily Needs </div>
   	            <div className="group" >
                 <div className="scroll-container">
-                    {
-                    dailyneeds.map((items)=>
-                    {
+                    {dailyneeds.map((items)=>{
                         return(
                             <>
                             <div className="rectangle" >
                                 <div className='DN-field' key={items.categoryId}>
                                     <div className='img-box'>
-                                      <img src={`https://localhost:7041${items.imageUrl}`} alt={items.categoryName} />   
+                                    <img src={items.imageUrl} alt={items.categoryName} />   
                                     </div>
-                                    
                                 </div>
                                 <div className='detail'>
-                                        
-                                        <h3>{items.categoryName}</h3>
-                                        
+                                        <h3>{items.categoryName}</h3>  
                                     </div>
-                                </div>
-                                
+                                </div>   
                             </>
-                        )
-                    })
-                }
+                        )})}
                 </div>
   	            </div>
             </div>
