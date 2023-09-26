@@ -173,6 +173,7 @@ const Login = () => {
     }
   }
   const verifymobilenumber = async (e) => {
+    alert(mobilenumber);
     e.preventDefault();
     const values={mobilenumber};
     console.log(values);

@@ -22,9 +22,26 @@ import {GoLocation} from 'react-icons/go';
 const Home2 = () => {
 
 
-  const [dailyneeds, setDailyneeds]=useState('');
+  const [dailyneeds, setDailyneeds]=useState([]);
 
-  
+  const [categoryId, setCategoryid]=useState('');
+  const [categoryName, setCategoryname]=useState('');
+  const [description, setDescription]=useState('');
+  const [imageUrl,setImageurl]=useState('');
+
+
+  const GetDailyNeed=()=>{
+    axios.get('https://localhost:7041/api/Admin/GetAllCategoriesWithImageUrls')
+    .then((result)=>{
+      console.log('API Response:', result.data); 
+      setDailyneeds(result.data);
+ 
+    })
+    .catch((error)=>{
+      console.log(error);
+    })
+  }
+
   useEffect(()=>{
     GetDailyNeed();
   },[]);
@@ -93,26 +110,15 @@ const Home2 = () => {
   }
 
 
-
-
-  const GetDailyNeed=()=>{
-    axios.get('https://localhost:7041/api/Admin/GetAllProducts')
-    .then((result)=>{
-      setDailyneeds(result.data);
-    })
-    .catch((error)=>{
-      console.log(error);
-    })
-  }
-
   return (
     <>
 
-        <Nav/>
+        <Nav/> 
+        
         <div className='banner'>
             <img class="bannner-img" src={banner} alt='banner' />
         </div>
-
+        <img src="E:/Visual Studio/Ecommerce_Api/Assests/Images/Category_images/milk.png" alt='dummyimage'/>
         <div className='Button-Fields'>
             <center>
             <div className="fields">
@@ -145,13 +151,21 @@ const Home2 = () => {
   	            <div className="Heading" >Daily Needs </div>
   	            <div className="group" >
                 <div className="scroll-container">
-                <div className="rectangle" >
-      			        <div className="DN-field" >
-        				      <img className="DN_Image" src="rectangle-14102.png" />
-        				      <div className="name" >Vegetables </div>
-      			        </div>
-    		        </div>
-    		        
+                    {dailyneeds.map((items)=>{
+                        return(
+                            <>
+                            <div className="rectangle" >
+                                <div className='DN-field' key={items.categoryId}>
+                                    <div className='img-box'>
+                                    <img src={items.imageUrl} alt={items.categoryName} />   
+                                    </div>
+                                </div>
+                                <div className='detail'>
+                                        <h3>{items.categoryName}</h3>  
+                                    </div>
+                                </div>   
+                            </>
+                        )})}
                 </div>
   	            </div>
             </div>
