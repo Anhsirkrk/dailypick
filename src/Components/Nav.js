@@ -69,25 +69,29 @@ const Nav = () => {
     localStorage.removeItem('userdata');
     localStorage.removeItem('isLoggedIn');
     setUsername('');
-    console.log(isLoginauthenticated);
+    console.log('nav.js before setting to false', isLoginauthenticated);
     if(isLoginauthenticated===true){
       setIsLoginauthenticated(false);
-      console.log(isLoginauthenticated);
+      console.log('nav.js before setting to false',isLoginauthenticated);
        //return <Redirect to="/popup" />;
       //navigate('/popup');
      window.location.href='/popup';
+     alert("logged out");
      window.history.replaceState(null,'','/popup');
+     alert("logged out");
     console.log(isLoginauthenticated);
+    alert("logged out");
     }
   }
 
   useEffect(() => {
-    const token = localStorage.getItem('userdata');
     if(localStorage.getItem('isLoggedIn') === 'true')
     {
+      console.log('nav.js', JSON.parse(localStorage.getItem('isLoggedIn')));
       setIsLoginauthenticated(true);
+      console.log('navjs' , isLoginauthenticated);
     }
-  }, []);
+  }, [isLoginauthenticated,setIsLoginauthenticated]);
      
   useEffect(() => {
     // Perform any actions you want when loginwithotpshow changes here
