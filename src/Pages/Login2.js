@@ -27,7 +27,7 @@ import { useLoginAuth } from '../Components/UserAuthContext';
 import UerRegistrationPage from '../Pages/Regisatrtion';
 import Popup from './PopUp';
 
-const Login = () => {
+const Login = ({}) => {
   const {isLoginauthenticated, setIsLoginauthenticated}= useLoginAuth();
   const [error, setError] = useState("");
   const [mobilenumber, setMobileNumber] = useState("");
@@ -139,6 +139,7 @@ const Login = () => {
       
             toast.success("user found by mail");
             setIsLoginauthenticated(true);
+            localStorage.setItem('isLoggedIn', true);
             navigate('/home2');
           }
           else if(sendData.userFound === false){

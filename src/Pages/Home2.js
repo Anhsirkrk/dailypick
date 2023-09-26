@@ -48,8 +48,13 @@ const Home2 = () => {
   console.log(isLoginauthenticated);
 
   useEffect(() => {
+    // const token = localStorage.getItem('userdata');
+    // if (token) {
+    //   setIsLoginauthenticated(true);
+    // }
     const token = localStorage.getItem('userdata');
-    if (token) {
+    if(localStorage.getItem('isLoggedIn') === 'true')
+    {
       setIsLoginauthenticated(true);
     }
   }, []);
@@ -65,18 +70,6 @@ const Home2 = () => {
     console.log(username);
   }, []);
 
-  const GetDailyNeed=()=>{
-    axios.get('https://localhost:7041/api/Admin/GetAllProducts')
-    .then((result)=>{
-      setDailyneeds(result.data);
-    })
-    .catch((error)=>{
-      console.log(error);
-    })
-  }
-
-
-
 
 
   return (
@@ -87,7 +80,7 @@ const Home2 = () => {
         <div className='banner'>
             <img class="bannner-img" src={banner} alt='banner' />
         </div>
-        <img src="E:/Visual Studio/Ecommerce_Api/Assests/Images/Category_images/milk.png" alt='dummyimage'/>
+ {/*} <img src="" alt='dummyimage'/> */}
 
         <div className='Button-Fields'>
             <center>
