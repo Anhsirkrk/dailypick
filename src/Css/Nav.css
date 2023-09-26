@@ -1,86 +1,134 @@
-.top-bar{
-    border-radius: 10px;  
-    position: fixed;
-    width:97%;
-  top: 0;
-  left: 0;
-  height: 80px;
-  background: var(--p-01, #024172);
+
+._1Us3XD{
+  position: relative;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
-  z-index: 1000; /* Adjust as needed */
+  border: 1px solid transparent;
+  box-sizing: border-box;
+  padding: 8px;
 }
-.top-bar .logo{
-    color: #ffffff;
-    text-align: left;
-    font: 700 30px 'Poppins', sans-serif;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start
+.userdisplay{
+  margin-right: 50px;
 }
-.top-bar .Location{
-    box-sizing: border-box;
-    border-radius: 11.9px;
-    border-style: solid;
-    border-color: var(--white-lit, #ffffff);
-    border-width: 1.19px;
-    padding: 10.71px 21.43px 10.71px 21.43px;
-    display: flex;
-    flex-direction: row;
-    gap: 10.71px;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    height: 20px;
-    width: 150px;
-    margin-left: 1000px;
-    
+._1TOQfO{
+  color: white;
+font-size: 16px;
+line-height: 24px;
+display: flex;
+  align-items: center;
+  text-decoration: none;
 }
-.top-bar .Location:hover{
-    cursor: pointer;
+.-dOa_b.L_FVxe {
+  margin-right: 8px;
 }
-   .top-bar .Location .hyderabad {
-   color: var(--white-lit, #ffffff);
-    text-align: left;
-    font: var(--h-2-14-r, 400 14px 'Poppins', sans-serif);
-    position: relative;
-    display: flex;
+._1sLnDu{
+padding-left: 10px;
+}
+.H6-NpN{
+  display: flex;
+  align-items: center;
+  border: 1px solid transparent;
+  box-sizing: border-box;
+  padding: 8px;
 }
 
-.top-bar .userdisplay {
-    color: var(--white-lit, #ffffff);
-    margin-right: 30px;
+#navbar-row{
+  border-radius: 8px;  
+  position: fixed;
+  width:100%;
+top: 0;
+left: 0;
+height: 80px;
+background: var(--p-01, #024172);
+display: flex;
+ justify-content: space-between; 
+align-items: center;
+/* padding: 0 20px; */
+z-index: 1000; 
+align-items: flex-start;
+justify-content: center;
+}
+#navbar-row-col-2{
+display: flex;
+width: auto;
+align-items: center;
+float: left;
+width: auto;
+align-items: center;
+}
+#navbar-row-col-4{
+  margin: auto;
+}
+#navbar-userdisplay-col-2{
+  margin-left: auto;
+  color: var(--white-lit, #ffffff);
+  margin-right: 40px;
+}
+#navbar-userdisplay-col-2:hover{
+  cursor: pointer;
+}
 
-    
-  }
-  .top-bar .userdisplay:hover{
-    cursor: pointer;
-  }
-  
-  .top-bar .userdisplay .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-  }
-  
-  .top-bar .userdisplay .dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-  }
-  
-  .top-bar .userdisplay .dropdown-content a:hover {
-    background-color: #f1f1f1;
-  }
-  
-  .top-bar .userdisplay:hover .dropdown-content {
-    display: block;
-  }
-  
+.logo{
+  color: #ffffff;
+  text-align: left;
+  font: 700 30px 'Poppins', sans-serif;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 30px;
+  margin: auto;
+}
+.Location{
+  display: flex;
+    width: auto;
+    color: white;
+    padding-left: 50px;
+    align-items: center;
+    justify-content: space-between;
+}
+.Location:hover{
+  cursor: pointer;
+}
+
+
+.cityname {
+ color: var(--white-lit, #ffffff);
+  text-align: left;
+  font: var(--h-2-14-r, 400 14px 'Poppins', sans-serif);
+  position: relative;
+  display: flex;
+  padding-left: 10px;
+}
+
+.userdisplay {
+  color: var(--white-lit, #ffffff);
+  margin-right: 30px;
+}
+
+
+.userdisplay-dropdown-content{
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.userdisplay-dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.userdisplay-dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+#navbar-userdisplay-col-2:hover .userdisplay-dropdown-content {
+  display: block;
+}
+
+
