@@ -24,7 +24,9 @@ const Home2 = () => {
   const [imageUrl,setImageurl]=useState('');
 
   const GetDailyNeed=()=>{
-    axios.get('https://localhost:7041/api/Admin/GetAllCategoriesWithImageUrls')
+    const  url="https://localhost:7041/api/Admin/GetDetailsAndImagesOfCategories";
+    const data =[6,7,8,9];
+    axios.post(url,data)
     .then((result)=>{
       console.log('API Response:', result.data); 
       setDailyneeds(result.data);
@@ -36,8 +38,10 @@ const Home2 = () => {
   }
 
   useEffect(()=>{
-    GetDailyNeed();
-  },[]);
+   GetDailyNeed();
+  },[dailyneeds]);
+  
+  console.log(dailyneeds);
 
 
   const {isLoginauthenticated, setIsLoginauthenticated}= useLoginAuth();
@@ -86,7 +90,7 @@ const Home2 = () => {
             <center>
             <div className="fields">
   	            <div className="field" >
-                    <button className="btn">News-Paper</button>
+                    <button className="btn" onClick={GetDailyNeed} >News-Paper</button>
   	            </div>
   	            <div className="field" >
     	    	    <button className="btn"  >Milk </button>
@@ -114,17 +118,17 @@ const Home2 = () => {
   	            <div className="group" >
                 <div className="scroll-container">
      
-                    {dailyneeds.map((items)=>{
+                    {dailyneeds.map((dailyneed)=>{
                         return(
                             <>
                             <div className="rectangle" >
-                                <div className='DN-field' key={items.categoryId}>
+                                <div className='DN-field' key={dailyneed.userId}>
                                     <div className='img-box'>
-                                    <img src={items.imageUrl} alt={items.categoryName} />   
+                                    <img src={`data:image/jpeg;base64,${dailyneed.base64Image}`} alt={`User ${dailyneed.userId}`}  className='Dailyneed-Images'/>   
                                     </div>
                                 </div>
                                 <div className='detail'>
-                                        <h3>{items.categoryName}</h3>  
+                                        <h3>{dailyneed.userName}</h3>  
                                     </div>
                                 </div>   
                             </>

@@ -84,6 +84,7 @@ padding-left: 10px;
 .Button-Fields .fields .field .btn:hover{
     cursor: pointer;
 }
+
 .daily-needs{
     
     margin: 50px 50px 0px 50px;
@@ -100,8 +101,11 @@ padding-left: 10px;
     padding-left: 100px;
     padding-right: 100px;  
 flex-direction: row;
+overflow: hidden;
+height: 250px;
+margin-top: 20px;
 
-overflow-x: auto; /* Enable horizontal overflow */
+/*overflow-x: auto;  Enable horizontal overflow */
   white-space: nowrap; /* Prevent items from wrapping to the next line */
 }
 
@@ -110,17 +114,36 @@ overflow-x: auto; /* Enable horizontal overflow */
   }
 .daily-needs .group .rectangle{
     
-    border-radius: 30px;
+    border-radius: 5px;
 border-style: solid;
 border-color: rgba(105, 105, 105, 0.30);
 border-width: 1px;
 flex-shrink: 0;
 width: 250px;
-height: 200px;
+height: 180px;
 position: relative;
 box-shadow: 2px 2px 4px 0px rgba(76, 76, 76, 0.25);
 margin-left: 20px;
+
 }
+.daily-needs .group .rectangle .DN-field{
+    display: flex;
+    overflow: hidden;
+}
+.daily-needs .group .rectangle .DN-field .img-box{
+    height: 200px;
+}
+.daily-needs .group .rectangle .DN-field .img-box .Dailyneed-Images{
+    height: 180px;
+}
+.daily-needs .group .rectangle .detail{
+    margin: 0px;
+} 
+.daily-needs .group .rectangle .detail h3{
+    margin: 0px;
+} 
+
+
 .Best-Sellers{
     margin: 50px 50px 0px 50px;
 }
