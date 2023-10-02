@@ -88,26 +88,27 @@ const Home2 = () => {
     console.log(username);
   }, []);
 
-
+ const HandleMilkProducts=()=>{
+  alert("milk btn hitted");
+  navigate('/products');
+ }
 
   return (
     <>
-
         <Nav/> 
-        
         <div className='banner'>
             <img class="bannner-img" src={banner} alt='banner' />
         </div>
  {/*} <img src="" alt='dummyimage'/> */}
-
+ <button className="btn" onClick={HandleMilkProducts}  >Milk </button>
         <div className='Button-Fields'>
             <center>
             <div className="fields">
   	            <div className="field" >
-                    <button className="btn" onClick={GetDailyNeed} >News-Paper</button>
+                    <button className="btn" >News-Paper</button>
   	            </div>
   	            <div className="field" >
-    	    	    <button className="btn"  >Milk </button>
+    	    	    <button className="btn" onclick={HandleMilkProducts}  >Milk </button>
   	            </div>
   	            <div className="field" >
     	    	    <button className="btn" >Curd </button>
