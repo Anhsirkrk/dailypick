@@ -41,14 +41,17 @@ const Products = ({detail, view, close, setClose, addtocart}) => {
         navigate('/cart'); // Assuming your cart route is '/cart'
       };
 
+      const [selectedValue, setSelectedValue] = useState(1);
+
+      const handleDropdownChange = (e) => {
+        setSelectedValue(e.target.value);
+      }
 
 
   return (
     <>
     <Nav/>
     <div className='products'>
-    <h2># Products</h2>
-    <p>Home . products</p>
     <div className='container'>
         <div className='filter'>
             <div className='categories'>
@@ -66,6 +69,7 @@ const Products = ({detail, view, close, setClose, addtocart}) => {
             </div>
         </div>
         <div className='productbox'>
+        <h3> Products</h3>
             <div className='contant'>
                 {
                     product.map((curElm) => 
@@ -81,13 +85,17 @@ const Products = ({detail, view, close, setClose, addtocart}) => {
                                       </div>
                                     </div>
                                     <div className='detail'>
-                                      <p>{curElm.Cat}</p>
+                                     {/*} <p>{curElm.Cat}</p> */}
                                       <h3>{curElm.Title}</h3>
                                       <h4>${curElm.Price}</h4>
-                                      <button onClick={() => buyOnce(curElm)}>buy once</button>
+                                      <select value={selectedValue} onChange={handleDropdownChange} className='QuantitySelectDropdown'>
+                                      {[1, 2, 3, 4, 5].map((num) => (
+                                        <option key={num} value={num}>{num}</option>
+                                      ))}
+                                    </select>
 
                                             
-                                      <button>subscribe</button>
+                                      <button className='SubscribeButton'>subscribe</button>
                                     </div>
                 
                                   </div>
