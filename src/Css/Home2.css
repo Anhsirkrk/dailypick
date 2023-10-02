@@ -53,6 +53,7 @@ padding-left: 10px;
 .banner .bannner-img{
     width: 1400px;
     border-radius: 20px;
+    height: 150px;
     
 }
 .Button-Fields{
@@ -181,26 +182,56 @@ margin-left: 20px;
 .Brands{
     margin: 50px 50px 0px 50px;
 }
-.Brands .group {
-    display: flex;
-    justify-content: space-between;
-    padding-left: 100px;
-    padding-right: 100px;
-}
+
 .Brands .Heading{
     color: #024172;
     font: var(--h-1-38-sb, 600 26px 'Poppins', sans-serif);
     margin-left: 100px;
     margin-bottom: 10px;
 }
+.Brands .group {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 100px;
+    padding-right: 100px;
+    flex-direction: row;
+overflow: hidden;
+height: 250px;
+margin-top: 20px;
+white-space: nowrap;
+}
+
+.Brands .group .scroll-container {
+    display: flex; /* Display items in a row */
+  }
 .Brands .group .rectangle{
     border-radius: 30px;
 border-style: solid;
 border-color: rgba(105, 105, 105, 0.30);
 border-width: 1px;
 flex-shrink: 0;
-width: 250px;
-height: 200px;
+width: 180px;
+height: 150px;
 position: relative;
 box-shadow: 2px 2px 4px 0px rgba(76, 76, 76, 0.25);
+box-shadow: 2px 2px 4px 0px rgba(76, 76, 76, 0.25);
+margin-left: 20px;
 }
+.Brands .group .rectangle .DN-field{
+    display: flex;
+    overflow: hidden;
+}
+.Brands .group .rectangle .DN-field .img-box{
+    width: 180px;
+    height: 150px;
+}
+.Brands .group .rectangle .DN-field .img-box .Dailyneed-Images{
+    width: 180px;
+    height: 150px;
+}
+.Brands .group .rectangle .detail{
+    margin: 0px;
+} 
+.Brands .group .rectangle .detail h3{
+    margin: 0px;
+} 

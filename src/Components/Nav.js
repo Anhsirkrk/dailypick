@@ -26,6 +26,7 @@ const Nav = () => {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
+          alert("navigaion hitted");
           setLocation({ latitude, longitude });
           // Use OpenCage API to get city
           axios

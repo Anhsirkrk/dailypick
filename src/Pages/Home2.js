@@ -17,6 +17,7 @@ import { signOut } from 'firebase/auth';
 const Home2 = () => {
 
   const [dailyneeds, setDailyneeds]=useState([]);
+  const [brands, setBrands]=useState([]);
 
   const [categoryId, setCategoryid]=useState('');
   const [categoryName, setCategoryname]=useState('');
@@ -25,8 +26,7 @@ const Home2 = () => {
 
   const GetDailyNeed=()=>{
     const  url="https://localhost:7041/api/Admin/GetDetailsAndImagesOfCategories";
-    const data =[6,7,8,9];
-    axios.post(url,data)
+    axios.post(url)
     .then((result)=>{
       console.log('API Response:', result.data); 
       setDailyneeds(result.data);
@@ -37,11 +37,25 @@ const Home2 = () => {
     })
   }
 
+  const GetBrands=()=>{
+    const  url="https://localhost:7041/api/Admin/GetDetailsAndImagesOfBrands";
+    axios.post(url)
+    .then((result)=>{
+      console.log('API Response:', result.data); 
+      setBrands(result.data);
+ 
+    })
+    .catch((error)=>{
+      console.log(error);
+    })
+  }
   useEffect(()=>{
    GetDailyNeed();
-  },[dailyneeds]);
+   GetBrands();
+  },[dailyneeds,brands]);
   
   console.log(dailyneeds);
+  console.log(brands);
 
 
   const {isLoginauthenticated, setIsLoginauthenticated}= useLoginAuth();
@@ -122,13 +136,13 @@ const Home2 = () => {
                         return(
                             <>
                             <div className="rectangle" >
-                                <div className='DN-field' key={dailyneed.userId}>
+                                <div className='DN-field' key={dailyneed.categoryId}>
                                     <div className='img-box'>
                                     <img src={`data:image/jpeg;base64,${dailyneed.base64Image}`} alt={`User ${dailyneed.userId}`}  className='Dailyneed-Images'/>   
                                     </div>
                                 </div>
                                 <div className='detail'>
-                                        <h3>{dailyneed.userName}</h3>  
+                                        <h3>{dailyneed.categoryName}</h3>  
                                     </div>
                                 </div>   
                             </>
@@ -192,31 +206,29 @@ const Home2 = () => {
               </div>
             </div>
       </div>
-      <div className='Brands'>           
-            <div className="Heading" >Brands </div>
-            <div className="group" >
-              <div className="rectangle" >
-                    <div className="B-field" >
-                      <img className="DN_Image" src="rectangle-14102.png" />  
-                    </div>
-              </div>
-              <div className="rectangle" >
-                    <div className="B-field" >
-                      <img className="DN_Image" src="rectangle-14102.png" /> 
-                    </div>
-              </div>
-              <div className="rectangle" >
-                    <div className="B-field" >
-                      <img className="DN_Image" src="rectangle-14102.png" />  
-                    </div>
-              </div>
-              <div className="rectangle" >
-                    <div className="B-field" >
-                      <img className="DN_Image" src="rectangle-14102.png" />
-                    </div>
-              </div>
-            </div>
+      <div className='Brands'>     
+      <div className="Heading" >Brands </div>
+      <div className="group" >
+      <div className="scroll-container">
+
+          {brands.map((brand)=>{
+              return(
+                  <>
+                  <div className="rectangle" >
+                      <div className='DN-field' key={brand.brandId}>
+                          <div className='img-box'>
+                          <img src={`data:image/jpeg;base64,${brand.base64Image}`} alt={`User ${brand.brandId}`}  className='Dailyneed-Images'/>   
+                          </div>
+                      </div>
+                     
+                      </div>   
+                  </>
+              )})}
+
       </div>
+      </div>
+  </div>
+    
        
     </>
   )
