@@ -13,6 +13,11 @@ import { Navigate } from 'react-router-dom';
 import axios from 'axios';
 import {GoLocation} from 'react-icons/go';
 import { signOut } from 'firebase/auth';
+import Banana from '../Images/Dummy/Banana.jpg';
+import Pomegranate from '../Images/Dummy/Promogranate.png';
+import HatsunGhee from '../Images/Dummy/Hatsun_Ghee.jpg';
+import HeritageCowGhee  from  '../Images/Dummy/heritage_cow_ghee.jpg';
+import HeritageCurd1 from '../Images/Dummy/Heritage_Curd_1 copy.jpg';
 
 const Home2 = () => {
 
@@ -52,7 +57,7 @@ const Home2 = () => {
   useEffect(()=>{
    GetDailyNeed();
    GetBrands();
-  },[dailyneeds,brands]);
+  },[]);
   
   console.log(dailyneeds);
   console.log(brands);
@@ -88,13 +93,14 @@ const Home2 = () => {
     console.log(username);
   }, []);
 
-
+ const HandleMilkProducts=()=>{
+  alert("milk btn hitted");
+  navigate('/products');
+ }
 
   return (
     <>
-
         <Nav/> 
-        
         <div className='banner'>
             <img class="bannner-img" src={banner} alt='banner' />
         </div>
@@ -104,10 +110,10 @@ const Home2 = () => {
             <center>
             <div className="fields">
   	            <div className="field" >
-                    <button className="btn" onClick={GetDailyNeed} >News-Paper</button>
+                    <button className="btn" >News-Paper</button>
   	            </div>
   	            <div className="field" >
-    	    	    <button className="btn"  >Milk </button>
+    	    	    <button className="btn" onClick={HandleMilkProducts}  >Milk </button>
   	            </div>
   	            <div className="field" >
     	    	    <button className="btn" >Curd </button>
@@ -155,54 +161,94 @@ const Home2 = () => {
             <div className="Heading" >Best Sellers </div>
             <div className="group" >
             <div className="scroll-container">
-              <div className="rectangle" >
-                    <div className="BS-field" >
-                      <img className="DN_Image" src="rectangle-14102.png" />
-                      <div className="name" >Milk </div>
-                    </div>
-              </div>
-              <div className="rectangle" >
-                    <div className="BS-field" >
-                      <img className="DN_Image" src="rectangle-14102.png" />
-                      <div className="name" >Curd </div>
-                    </div>
-              </div>
-              <div className="rectangle" >
-                    <div className="BS-field" >
-                      <img className="DN_Image" src="rectangle-14102.png" />
-                      <div className="name" >Cookies </div>
-                    </div>
-              </div>
-              <div className="rectangle" >
-                    <div className="BS-field" >
-                      <img className="DN_Image" src="rectangle-14102.png" />
-                      <div className="name" >Eggs </div>
-                    </div>
-              </div>
-              <div className="rectangle" >
-                    <div className="BS-field" >
-                      <img className="DN_Image" src="rectangle-14102.png" />
-                      <div className="name" >Milk </div>
-                    </div>
-              </div>
-              <div className="rectangle" >
-                    <div className="BS-field" >
-                      <img className="DN_Image" src="rectangle-14102.png" />
-                      <div className="name" >Curd </div>
-                    </div>
-              </div>
-              <div className="rectangle" >
-                    <div className="BS-field" >
-                      <img className="DN_Image" src="rectangle-14102.png" />
-                      <div className="name" >Cookies </div>
-                    </div>
-              </div>
-              <div className="rectangle" >
-                    <div className="BS-field" >
-                      <img className="DN_Image" src="rectangle-14102.png" />
-                      <div className="name" >Eggs </div>
-                    </div>
-              </div>
+                        <div className="rectangle" >
+                            <div className='DN-field' >
+                                <div className='img-box'>
+                                <img src={HeritageCowGhee} alt='Cow Ghee'  className='Dailyneed-Images'/>   
+                                </div>
+                            </div>
+                            <div className='detail'>
+                                    <h3>Cow Ghee</h3>  
+                                </div>
+                        </div> 
+
+                        <div className="rectangle" >
+                            <div className='DN-field' >
+                                <div className='img-box'>
+                                <img src={Pomegranate} alt='Cow Ghee'  className='Dailyneed-Images'/>   
+                                </div>
+                            </div>
+                            <div className='detail'>
+                                    <h3>Cow Ghee</h3>  
+                                </div>
+                        </div> 
+
+                     <div className="rectangle" >
+                            <div className='DN-field' >
+                                <div className='img-box'>
+                                <img src={HatsunGhee} alt='Cow Ghee'  className='Dailyneed-Images'/>   
+                                </div>
+                            </div>
+                            <div className='detail'>
+                                    <h3>Cow Ghee</h3>  
+                                </div>
+                        </div> 
+
+                    <div className="rectangle" >
+                            <div className='DN-field' >
+                                <div className='img-box'>
+                                <img src={Banana} alt='Cow Ghee'  className='Dailyneed-Images'/>   
+                                </div>
+                            </div>
+                            <div className='detail'>
+                                    <h3>Cow Ghee</h3>  
+                                </div>
+                        </div> 
+
+                    <div className="rectangle" >
+                            <div className='DN-field' >
+                                <div className='img-box'>
+                                <img src={HeritageCurd1} alt='Cow Ghee'  className='Dailyneed-Images'/>   
+                                </div>
+                            </div>
+                            <div className='detail'>
+                                    <h3>Cow Ghee</h3>  
+                                </div>
+                        </div> 
+
+                    <div className="rectangle" >
+                            <div className='DN-field' >
+                                <div className='img-box'>
+                                <img src={HeritageCowGhee} alt='Cow Ghee'  className='Dailyneed-Images'/>   
+                                </div>
+                            </div>
+                            <div className='detail'>
+                                    <h3>Cow Ghee</h3>  
+                                </div>
+                        </div> 
+
+                  <div className="rectangle" >
+                            <div className='DN-field' >
+                                <div className='img-box'>
+                                <img src={HeritageCowGhee} alt='Cow Ghee'  className='Dailyneed-Images'/>   
+                                </div>
+                            </div>
+                            <div className='detail'>
+                                    <h3>Cow Ghee</h3>  
+                                </div>
+                        </div> 
+
+                    <div className="rectangle" >
+                            <div className='DN-field' >
+                                <div className='img-box'>
+                                <img src={HeritageCowGhee} alt='Cow Ghee'  className='Dailyneed-Images'/>   
+                                </div>
+                            </div>
+                            <div className='detail'>
+                                    <h3>Cow Ghee</h3>  
+                                </div>
+                        </div> 
+
               </div>
             </div>
       </div>

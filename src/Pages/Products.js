@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react';
 import Nav from '../Components/Nav';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineHeart, AiOutlineCloseCircle } from 'react-icons/ai';
@@ -6,15 +6,59 @@ import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { BsEye } from 'react-icons/bs';
 import Productdetail from '../Pages/ProductDetail';
 import '../Css/Products.css';
+import axios from 'axios';
+import { Button } from 'react-bootstrap';
+import SubscriptionModal  from '../Pages/SubscriptionModal';
 
 const Products = ({detail, view, close, setClose, addtocart}) => {
 
-    const [quantity, setQuantity] = useState(1);
-    const navigate = useNavigate();
-    const [isSubscribed, setIsSubscribed] = useState(false);
-    const [isPurchased, setIsPurchased] = useState(false);
+  const [product,setProduct]=useState([]);
+  const [selectedSizes, setSelectedSizes] = useState({}); 
+   const [selectedproductPrice, setSelectedproductPrice] = useState('');
+   const [showModal, setShowModal] = useState(false);
+   const [selectedProduct, setSelectedProduct] = useState(null);
 
-    const [product,setProduct]=useState(Productdetail);
+
+
+  const GetAllProducts =()=>{
+    alert("axios beore");
+    const url = "https://localhost:7041/api/Admin/GetAllProducts";
+    axios.get(url)
+    .then((response)=>{
+      console.log(response.data);
+      setProduct(response.data);
+   // Initialize selected sizes with the first size for each product
+   const initialSelectedSizes = {};
+   response.data.forEach(item => {
+     initialSelectedSizes[item.productId] = item.sizeOfEachUnits[0];
+   });
+   setSelectedSizes(initialSelectedSizes);
+ })
+
+   }
+    
+    useEffect(()=>{
+      GetAllProducts();
+     },[]);
+
+    //  useEffect(() => {
+    //   if (product.length > 0) {
+    //     setSelectedSize(product[0].sizeOfEachUnits[0]);
+    //   }
+    // }, [product]);
+
+ 
+    const handleSubscribeClick = (curElm) => {
+      setSelectedProduct(curElm);
+      alert(selectedproductPrice);
+      setShowModal(true);
+    };
+
+    const handleCloseModal = () => {
+      setShowModal(false);
+      setSelectedProduct(null);
+    };
+  
 
 
    
@@ -38,14 +82,26 @@ const Products = ({detail, view, close, setClose, addtocart}) => {
         addtocart(product);
     
         // Redirect to the cart page
-        navigate('/cart'); // Assuming your cart route is '/cart'
+        //navigate('/cart'); // Assuming your cart route is '/cart'
       };
 
       const [selectedValue, setSelectedValue] = useState(1);
 
-      const handleDropdownChange = (e) => {
-        setSelectedValue(e.target.value);
+      const handleDropdownChange = (productId, newSize) => {
+        //    const newSize = e.target.value;
+        // setSelectedSize(newSize);
+        const selectedProduct = product.find(p => p.sizeOfEachUnits.includes(Number(newSize)));
+        const selectedPrice = selectedProduct ? selectedProduct.priceOfEachUnits[selectedProduct.sizeOfEachUnits.indexOf(Number(newSize))] : '';
+        setSelectedproductPrice(selectedPrice);
+
+        setSelectedSizes(prevSelectedSizes => ({
+          ...prevSelectedSizes,
+          [productId]: newSize
+        }));
+
+     
       }
+
 
 
   return (
@@ -69,16 +125,22 @@ const Products = ({detail, view, close, setClose, addtocart}) => {
             </div>
         </div>
         <div className='productbox'>
-        <h3> Products</h3>
+        <h3><Button >Products</Button> </h3>
             <div className='contant'>
                 {
                     product.map((curElm) => 
                     {
+                      const selectedSize = selectedSizes[curElm.productId];
+                      const selectedPrice = curElm.sizeOfEachUnits.includes(Number(selectedSize))
+                        ? curElm.priceOfEachUnits[curElm.sizeOfEachUnits.indexOf(Number(selectedSize))]
+                        : '';
+                    
+                      console.log(selectedPrice);
                         return(
                             <>
-                                <div className='box' key={curElm.id}>
+                                <div className='box' key={curElm.productId}>
                                     <div className='img_box'>
-                                      <img src={curElm.Img} alt={curElm.Title}></img>
+                                      <img src={`data:image/jpeg;base64,${curElm.base64Image}`} alt={curElm.Title}></img>
                                       <div className='icon'>
                                         
                                         <li><AiOutlineHeart className='li-icon' /></li>                                     
@@ -86,16 +148,19 @@ const Products = ({detail, view, close, setClose, addtocart}) => {
                                     </div>
                                     <div className='detail'>
                                      {/*} <p>{curElm.Cat}</p> */}
-                                      <h3>{curElm.Title}</h3>
-                                      <h4>${curElm.Price}</h4>
-                                      <select value={selectedValue} onChange={handleDropdownChange} className='QuantitySelectDropdown'>
-                                      {[1, 2, 3, 4, 5].map((num) => (
-                                        <option key={num} value={num}>{num}</option>
+                                      <h3>{curElm.productName}</h3>
+                                {/*}      <h4>${product.priceOfEachUnits[curElm.sizeOfEachUnits.indexOf(selectedSize)]}</h4> */}
+                                     <h4>{selectedPrice}</h4>
+
+                                      {product.length > 0 && (
+                                      <select value={selectedSize} onChange={(e) => handleDropdownChange(curElm.productId, e.target.value)} className='QuantitySelectDropdown'>
+                                      {curElm.sizeOfEachUnits.map((size) => (
+                                        <option key={size} value={size}>{size} ML</option>
                                       ))}
-                                    </select>
+                                    </select> )}
 
                                             
-                                      <button className='SubscribeButton'>subscribe</button>
+                                      <button className='SubscribeButton' onClick={() => handleSubscribeClick(curElm)}>subscribe</button>
                                     </div>
                 
                                   </div>
@@ -104,9 +169,20 @@ const Products = ({detail, view, close, setClose, addtocart}) => {
                     })
                 }
             </div>
+            
         </div>
+        
     </div>
+    
 </div>
+{selectedProduct && (
+  <SubscriptionModal
+    product={selectedProduct}
+    selectedPrice={selectedproductPrice}
+    handleClose={handleCloseModal}
+  />
+)}
+
     </>
     
   )
