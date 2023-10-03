@@ -45,11 +45,25 @@ padding-left: 10px;
   z-index: 1000; /* Adjust as needed 
 } */
 
+.pagecontent{
+    background:#FBFAFA;
+    margin: 0 auto;
+    max-width: none;
+    min-width: 1000px;
+    overflow: hidden;
+    /* display: table; */
+}
 
 .banner{
    margin-top: 88px;
-   margin-left: 50px;
-   width: 100%;
+   /* width: 100%; */
+   padding: 0px 100px 0px 100px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   max-width: none;
+   min-width: 1000px;
+   overflow: hidden;
 }
 .banner .bannner-img{
     /* width: 1400px; */
@@ -57,7 +71,8 @@ padding-left: 10px;
     /* display: flex; */
     border-radius: 20px;
     height: 250px;
-
+    min-width: 1000px;
+    max-width: none;
     
 }
 .Button-Fields{
@@ -92,7 +107,7 @@ padding-left: 10px;
 
 .daily-needs{
     
-    margin: 50px 50px 0px 50px;
+    margin: 50px 50px 0px 0px;
 }
 .daily-needs .Heading{
     color: #024172;
@@ -154,7 +169,7 @@ height: 125px;
 
 
 .Best-Sellers{
-    margin: 50px 50px 0px 50px;
+    margin: 50px 50px 0px 0px;
 }
 .Best-Sellers .Heading{
     color: #024172;
@@ -214,7 +229,7 @@ margin-top: 20px;
 
 
 .Brands{
-    margin: 50px 50px 0px 50px;
+    margin: 50px 50px 0px 0px;
 }
 
 .Brands .Heading{
