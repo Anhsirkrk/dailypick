@@ -202,9 +202,13 @@ color:#024172;
       background-color: #FFF;
     cursor: pointer;
     } */
+    .button-right{
+      display: flex;
+      align-items: center;
+    }
 .otpverifyBtn{
     margin-top: 10px;
-    width:280px;
+    width:130px;
     height: 40px;
     padding: 10px 0px;
     border-radius:5px;
@@ -214,7 +218,23 @@ color:#024172;
     color: #fff;
     cursor: pointer;
     font-size: medium;
+    margin-left: 30px;
 }
+.CancelVerifyOtp{
+  margin-top: 10px;
+  width:130px;
+  height: 40px;
+  padding: 10px 0px;
+  border-radius:5px;
+  outline: none;
+  background:none;
+  background: #FFF;
+  color: black;
+  cursor: pointer;
+  font-size: medium;
+  margin-left: 30px;
+}
+
 
 
 .EnterOtp-div{

@@ -94,7 +94,6 @@ const Home2 = () => {
   }, []);
 
  const HandleMilkProducts=()=>{
-  alert("milk btn hitted");
   navigate('/products');
  }
 

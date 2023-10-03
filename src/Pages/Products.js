@@ -14,6 +14,7 @@ const Products = ({detail, view, close, setClose, addtocart}) => {
 
   const [product,setProduct]=useState([]);
   const [selectedSizes, setSelectedSizes] = useState({}); 
+  const [selectedPrices, setSelectedPrices] = useState({}); 
    const [selectedproductPrice, setSelectedproductPrice] = useState('');
    const [showModal, setShowModal] = useState(false);
    const [selectedProduct, setSelectedProduct] = useState(null);
@@ -21,7 +22,6 @@ const Products = ({detail, view, close, setClose, addtocart}) => {
 
 
   const GetAllProducts =()=>{
-    alert("axios beore");
     const url = "https://localhost:7041/api/Admin/GetAllProducts";
     axios.get(url)
     .then((response)=>{
@@ -29,27 +29,34 @@ const Products = ({detail, view, close, setClose, addtocart}) => {
       setProduct(response.data);
    // Initialize selected sizes with the first size for each product
    const initialSelectedSizes = {};
-   response.data.forEach(item => {
-     initialSelectedSizes[item.productId] = item.sizeOfEachUnits[0];
-   });
-   setSelectedSizes(initialSelectedSizes);
- })
+   const initialSelectedPrices ={};
 
-   }
+   response.data.forEach(item => {
+    initialSelectedSizes[item.productId] = item.sizeOfEachUnits[0];
+    initialSelectedPrices[item.productId] = item.priceOfEachUnits[0]; // Assuming the first price is the default
+  });
+
+  setSelectedSizes(initialSelectedSizes);
+  setSelectedPrices(initialSelectedPrices);
+
+     // Set the initial price when products are loaded
+     if (response.data.length > 0) {
+      setSelectedproductPrice(response.data[0].priceOfEachUnits[0]);
+    }
+  });
+ }
+
+   
     
     useEffect(()=>{
       GetAllProducts();
      },[]);
 
-    //  useEffect(() => {
-    //   if (product.length > 0) {
-    //     setSelectedSize(product[0].sizeOfEachUnits[0]);
-    //   }
-    // }, [product]);
 
  
     const handleSubscribeClick = (curElm) => {
       setSelectedProduct(curElm);
+      console.log(selectedProduct);
       alert(selectedproductPrice);
       setShowModal(true);
     };
@@ -125,7 +132,7 @@ const Products = ({detail, view, close, setClose, addtocart}) => {
             </div>
         </div>
         <div className='productbox'>
-        <h3><Button >Products</Button> </h3>
+        <h3 style={{fontSize:'30px', fontWeight:'bolder'}}>All Products  <span style={{ fontSize: '15px', fontWeight:'normal' }} >({product.length} results)</span> </h3>
             <div className='contant'>
                 {
                     product.map((curElm) => 
@@ -134,33 +141,38 @@ const Products = ({detail, view, close, setClose, addtocart}) => {
                       const selectedPrice = curElm.sizeOfEachUnits.includes(Number(selectedSize))
                         ? curElm.priceOfEachUnits[curElm.sizeOfEachUnits.indexOf(Number(selectedSize))]
                         : '';
-                    
+             
                       console.log(selectedPrice);
                         return(
                             <>
                                 <div className='box' key={curElm.productId}>
                                     <div className='img_box'>
-                                      <img src={`data:image/jpeg;base64,${curElm.base64Image}`} alt={curElm.Title}></img>
                                       <div className='icon'>
-                                        
                                         <li><AiOutlineHeart className='li-icon' /></li>                                     
                                       </div>
+                                      <img src={`data:image/jpeg;base64,${curElm.base64Image}`} alt={curElm.Title}></img>
                                     </div>
+
                                     <div className='detail'>
                                      {/*} <p>{curElm.Cat}</p> */}
-                                      <h3>{curElm.productName}</h3>
-                                {/*}      <h4>${product.priceOfEachUnits[curElm.sizeOfEachUnits.indexOf(selectedSize)]}</h4> */}
-                                     <h4>{selectedPrice}</h4>
+                                     <h3>{curElm.productName}</h3>
+                                     <div className='Price-QtyDiv'>
+                                              {/*}      <h4>${product.priceOfEachUnits[curElm.sizeOfEachUnits.indexOf(selectedSize)]}</h4> */}
+                                              <h4>$ {selectedPrice}</h4>
+                                              {product.length > 0 && (
+                                                <select value={selectedSize} onChange={(e) => handleDropdownChange(curElm.productId, e.target.value)} className='QuantitySelectDropdown'>
+                                                {curElm.sizeOfEachUnits.map((size) => (
+                                                  <option key={size} value={size}>{size} ML</option>
+                                                ))}
+                                              </select> )}
+                                     </div>
 
-                                      {product.length > 0 && (
-                                      <select value={selectedSize} onChange={(e) => handleDropdownChange(curElm.productId, e.target.value)} className='QuantitySelectDropdown'>
-                                      {curElm.sizeOfEachUnits.map((size) => (
-                                        <option key={size} value={size}>{size} ML</option>
-                                      ))}
-                                    </select> )}
+                                        <div className='product-buttons-div'>
+                                        <button className='products-AddToCartBtn' onClick={() => handleSubscribeClick(curElm)}>Add to Cart</button>
 
-                                            
-                                      <button className='SubscribeButton' onClick={() => handleSubscribeClick(curElm)}>subscribe</button>
+                                          <button className='products-SubscribeBtn' onClick={() => handleSubscribeClick(curElm)}>subscribe</button>
+                                          </div>
+
                                     </div>
                 
                                   </div>

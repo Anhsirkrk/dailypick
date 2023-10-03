@@ -27,7 +27,6 @@ const Nav = () => {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
-          alert("navigaion hitted");
           setLocation({ latitude, longitude });
           // Use OpenCage API to get city
           axios
@@ -78,11 +77,9 @@ const Nav = () => {
        //return <Redirect to="/popup" />;
       //navigate('/popup');
      window.location.href='/popup';
-     alert("logged out");
+  
      window.history.replaceState(null,'','/popup');
-     alert("logged out");
     console.log(isLoginauthenticated);
-    alert("logged out");
     }
   }
 
@@ -119,20 +116,18 @@ console.log(username);
 
             </div>
           
-
-            <div class='col-6' id='navbar-row-col-4'>
-                  <div class='navsearchinput-container'>
-                      <input type='text' class='navsearchinput' placeholder='search for products'></input>
-                      <div class='navsearchicon'><GoLocation style={{color:'whitesmoke'}}/></div>
-                  </div>
-            </div>
-
-            <div className='col-2' id='navbar-carticon-col-2' onClick={toggleDropdown}>
-            <BsCart2 className='Cart-icon'></BsCart2> 
-            </div>
+            <div className='col-4' id='navbar-row-col-4'>
+                <div class='navsearchinput-container'>
+                    <input type='text' class='navsearchinput' placeholder='search for products'></input>
+                    <div class='navsearchicon'><GoLocation style={{color:'whitesmoke'}}/></div>
+               </div>
+           </div>
 
             <div className='col-2' id='navbar-userdisplay-col-2' onClick={toggleDropdown}>
-            <div className='col-2-items'></div>
+                <BsCart2 className='Cart-icon'></BsCart2>
+              </div>
+
+            <div className='col-2' id='navbar-userdisplay-col-2' onClick={toggleDropdown}>
                       <div className="_1Us3XD">
                           <div className="H6-NpN">
                             <a className="_1TOQfO" title={username} aria-haspopup="true" >
