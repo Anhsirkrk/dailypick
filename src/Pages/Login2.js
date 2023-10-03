@@ -101,7 +101,6 @@ const Login = ({}) => {
     alert('lg val er pas' + validationErrors.password);
     return;
   }
-  alert("validatiions pass");
     const url = "https://localhost:7041/api/Login/GetUserByEmail";
     const data={
       userId: 0,
@@ -117,12 +116,12 @@ const Login = ({}) => {
       resultMessage: "string"
     }
     try {
-      alert("here");
+
       const response = await axios.post(url, data);
       console.log(response.data);
       if (response.status === 200) 
       {
-        alert("satus 200");
+  
           const sendData = 
           {
             userId: response.data.userId,
@@ -347,7 +346,6 @@ const Login = ({}) => {
         return false;
       });
       console.log('After setting registrationform:', registrationform);
-  
   }
  
   const showregistartionform =()=>{
@@ -366,6 +364,10 @@ const Login = ({}) => {
         return true;
       });
       console.log('After setting registrationform:', registrationform);
+  }
+  const handleOtpCancel =()=>{
+      navigate('/');
+      console.log('After clicking cancel:');
   }
   useEffect(() => {
     // Perform any actions you want when loginwithotpshow changes here
@@ -451,10 +453,12 @@ const Login = ({}) => {
           </div>
           <div className="button-right">
           
-   
             <Button className='otpverifyBtn' type="submit" variant="primary">
               Verify
             </Button>
+            <Button className='CancelVerifyOtp' type="submit" onClick={handleOtpCancel} variant="primary">
+            Cancel
+          </Button>
           </div>
         </Form>
 

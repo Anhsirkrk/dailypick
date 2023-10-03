@@ -56,6 +56,14 @@ float: left;
 width: auto;
 align-items: center;
 }
+#navbar-row-col-4{
+  display: flex;
+width: auto;
+align-items: center;
+float: left;
+width: auto;
+align-items: center;
+}
 #navbar-row-col-6{
   /* margin: auto; */
 }
