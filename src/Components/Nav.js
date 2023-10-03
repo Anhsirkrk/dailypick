@@ -6,6 +6,7 @@ import { useLoginAuth } from '../Components/UserAuthContext';
 import {useNavigate } from "react-router-dom";
 import axios from 'axios';
 import {GoLocation} from 'react-icons/go';
+import {BsCart2} from 'react-icons/bs';
 import { Button } from 'react-bootstrap';
 // import { Redirect } from 'react-router-dom';
 const Nav = () => {
@@ -110,16 +111,28 @@ console.log(username);
             <div className='col-2' id='navbar-row-col-2'>
               <div className='logo'>Logo</div>
               <div className="Location">
-                <GoLocation style={{color:'whitesmoke'}}/>
-                    <div className="cityname"><p>{city}</p></div>
+                    <div className='LocationBox'>
+                      <GoLocation style={{color:'whitesmoke'}}/>
+                          <div className="cityname"><p>{city}</p></div>
+                    </div>
               </div>
 
             </div>
           
-            <div className='col-4' id='navbar-row-col-4'>
-                    <input type='text' className='searchinput'></input>
+
+            <div class='col-6' id='navbar-row-col-4'>
+                  <div class='navsearchinput-container'>
+                      <input type='text' class='navsearchinput' placeholder='search for products'></input>
+                      <div class='navsearchicon'><GoLocation style={{color:'whitesmoke'}}/></div>
+                  </div>
             </div>
+
+            <div className='col-2' id='navbar-carticon-col-2' onClick={toggleDropdown}>
+            <BsCart2 className='Cart-icon'></BsCart2> 
+            </div>
+
             <div className='col-2' id='navbar-userdisplay-col-2' onClick={toggleDropdown}>
+            <div className='col-2-items'></div>
                       <div className="_1Us3XD">
                           <div className="H6-NpN">
                             <a className="_1TOQfO" title={username} aria-haspopup="true" >

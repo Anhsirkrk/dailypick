@@ -101,13 +101,14 @@ const Home2 = () => {
   return (
     <>
         <Nav/> 
+        <div className='pagecontent'>
         <div className='banner'>
             <img class="bannner-img" src={banner} alt='banner' />
         </div>
  {/*} <img src="" alt='dummyimage'/> */}
 
         <div className='Button-Fields'>
-            <center>
+            
             <div className="fields">
   	            <div className="field" >
                     <button className="btn" >News-Paper</button>
@@ -131,7 +132,7 @@ const Home2 = () => {
     	    	    <button className="btn"  >Cookies </button>
   	            </div>
             </div>
-            </center>
+           
         </div>
         <div className='daily-needs'>     
   	            <div className="Heading" >Daily Needs </div>
@@ -274,7 +275,7 @@ const Home2 = () => {
       </div>
       </div>
   </div>
-    
+  </div>
        
     </>
   )

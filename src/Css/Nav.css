@@ -56,16 +56,21 @@ float: left;
 width: auto;
 align-items: center;
 }
-#navbar-row-col-4{
-  margin: auto;
+#navbar-row-col-6{
+  /* margin: auto; */
 }
 #navbar-userdisplay-col-2{
-  margin-left: auto;
+  /* margin-left: auto; */
   color: var(--white-lit, #ffffff);
-  margin-right: 40px;
+  /* margin-right: 40px; */
+  display: flex;
+  align-items: center;
 }
 #navbar-userdisplay-col-2:hover{
   cursor: pointer;
+}
+.col-2-items{
+  /* padding-left: 500px; */
 }
 
 .logo{
@@ -87,6 +92,20 @@ align-items: center;
     align-items: center;
     justify-content: space-between;
 }
+.LocationBox{
+  display: flex;
+  /* width: auto; */
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 8px;
+    /* border-style: ridge; */
+    /* border-color: #fff; */
+    /* border-width: 1px; */
+    padding: 0px 10px 0px 10px;
+    /* width: 100px; */
+    min-width: 100px;
+    border: 1.108px solid var(--White_Lit, #FFF);
+}
 .Location:hover{
   cursor: pointer;
 }
@@ -100,7 +119,44 @@ align-items: center;
   display: flex;
   padding-left: 10px;
 }
+.cityname p {
+padding: 0px ;
+ }
+ .navsearchinput-container {
+  position: relative;
+}
+.navsearchinput {
+  padding-left: 30px; /* Adjust as necessary based on the size of your icon */
+}
+.navsearchicon {
+  padding-top: 5px;
+  position: absolute;
+  top: 50%;
+  left: 10px; /* Adjust as necessary based on the size of your icon */
+  transform: translateY(-50%);
+}
+.navsearchinput{
+  background: rgba(255, 255, 255, 0.30);
+  border-radius: 8px;
+  padding: 2px 2px 2px 20px;
+  border: 1.108px solid var(--White_Lit, #FFF);
+  width: auto;
+  height: 40px;
+  width: 400px;
+  height: 40px;
 
+}
+.navsearchinput::placeholder {
+  padding-left: 15px;
+  color: #FFF; /* Set the color you want for the placeholder text */
+}
+
+.Cart-icon{
+  height: 40px;
+  width: auto;
+  color: #FFF;
+
+}
 .userdisplay {
   color: var(--white-lit, #ffffff);
   margin-right: 30px;
