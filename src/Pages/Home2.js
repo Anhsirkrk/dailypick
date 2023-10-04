@@ -97,6 +97,13 @@ const Home2 = () => {
     navigate('/products', { state: { category } });
   }
 
+  const HandleProductsByBrand = (brand) => {
+    console.log(brand);
+    navigate('/products', { state: { brand } });
+  }
+
+  
+
   return (
     <>
         <Nav/> 
@@ -110,7 +117,7 @@ const Home2 = () => {
             
             <div className="fields">
   	            <div className="field" >
-                    <button className="btn" >News-Paper</button>
+                    <button className="btn" onClick={()=>HandleProductsByCategory("")} >All Products</button>
   	            </div>
   	            <div className="field" >
     	    	    <button className="btn" onClick={() => HandleProductsByCategory('Milk')}  >Milk </button>
@@ -137,9 +144,10 @@ const Home2 = () => {
                 <div className="scroll-container">
      
                     {dailyneeds.map((dailyneed)=>{
+                      console.log(dailyneed);
                         return(
                             <>
-                            <div className="rectangle" >
+                            <div className="rectangle" onClick={() => HandleProductsByCategory(`${dailyneed.categoryName}`)} >
                                 <div className='DN-field' key={dailyneed.categoryId}>
                                     <div className='img-box'>
                                     <img src={`data:image/jpeg;base64,${dailyneed.base64Image}`} alt={`User ${dailyneed.userId}`}  className='Dailyneed-Images'/>   
@@ -256,9 +264,10 @@ const Home2 = () => {
       <div className="scroll-container">
 
           {brands.map((brand)=>{
+            console.log(brand);
               return(
                   <>
-                  <div className="rectangle" >
+                  <div className="rectangle" onClick={() => HandleProductsByBrand(`${brand.brandName}`)}>
                       <div className='DN-field' key={brand.brandId}>
                           <div className='img-box'>
                           <img src={`data:image/jpeg;base64,${brand.base64Image}`} alt={`User ${brand.brandId}`}  className='Dailyneed-Images'/>   
