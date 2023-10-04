@@ -26,6 +26,7 @@ const Products = ({detail, view, close, setClose, addtocart}) => {
 
 
   const GetAllProducts =()=>{
+    alert("getall products hitted");
     const url = "https://localhost:7041/api/Admin/GetAllProducts";
     axios.get(url)
     .then((response)=>{
@@ -46,18 +47,31 @@ const Products = ({detail, view, close, setClose, addtocart}) => {
      if (response.data.length > 0) {
       setSelectedproductPrice(response.data[0].priceOfEachUnits[0]);
     }
-
+    console.log(window.location.state && window.location.state.brand);
      console.log(window.location.state && window.location.state.category);
     const category = location.state && location.state.category;
-    if (category) {
+    const brand = location.state && location.state.brand;
+    
+    if (category) 
+    {
+      alert("categ if hitted");
       setFilteredProduct(response.data.filter(item => item.categoryName === category));
       setProduct(response.data);
-    } else {
+    } 
+    else 
+    {
+      if(brand){
+        alert("brand if hitted");
+        setFilteredProduct(response.data.filter(item => item.brandName === brand));
+        console.log(filteredProduct);
+        setProduct(response.data);
+      }
+      else
+    {
+      alert("laste else hitted");
       setFilteredProduct(response.data);
-   
-    }
-
-  });
+      setProduct(response.data);
+    }}});
  }
 
    console.log(filteredProduct);
@@ -67,8 +81,6 @@ const Products = ({detail, view, close, setClose, addtocart}) => {
       GetAllProducts();
      },[]);
 
-
- 
     const handleSubscribeClick = (curElm) => {
       setSelectedProduct(curElm);
       console.log(selectedProduct);
@@ -128,6 +140,18 @@ const Products = ({detail, view, close, setClose, addtocart}) => {
                    
                 </ul>
             </div>
+            <div className='Brand'>
+            <h3>Brand</h3>
+            <ul>
+            <li onClick={() =>  AllProducts ()}>All Products</li>
+                <li onClick={() => filtterproduct ("Milk")}>Milk</li>
+                <li onClick={() => filtterproduct ("Curd")}>Curd</li>
+                <li onClick={() => filtterproduct ("Vegetables")}>Vegetables</li>
+                <li onClick={() => filtterproduct ("Fruits")}>Fruits</li>
+                <li onClick={() => filtterproduct ("NewsPapers")}>News Papers</li>
+               
+            </ul>
+        </div>
         </div>
         <div className='productbox'>
         <h3 style={{fontSize:'30px', fontWeight:'bolder'}}>All Products  <span style={{ fontSize: '15px', fontWeight:'normal' }} >({filteredProduct.length} results)</span> </h3>
