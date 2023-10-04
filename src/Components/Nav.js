@@ -123,15 +123,16 @@ console.log(username);
                </div>
            </div>
 
-            <div className='col-2' id='navbar-userdisplay-col-2' onClick={toggleDropdown}>
-                <BsCart2 className='Cart-icon'></BsCart2>
+            <div className='col-4' id='navbar-userdisplay-col-2' onClick={toggleDropdown}>
+            <Button className='MySubscriptionsBtn'>My Subscriptions</Button>
               </div>
 
             <div className='col-2' id='navbar-userdisplay-col-2' onClick={toggleDropdown}>
+            <BsCart2 className='Cart-icon'></BsCart2>
                       <div className="_1Us3XD">
                           <div className="H6-NpN">
                             <a className="_1TOQfO" title={username} aria-haspopup="true" >
-                            <FaRegUser/>
+                            <FaRegUser className='nav-usericon'/>
                       {/*     <img src="https://static-assets-web.flixcart.com/batman-returns/batman-returns/p/images/profile-815786.svg" alt="bhaskar" class="-dOa_b L_FVxe" width="24" height="24" /> */}
                             <span class="_1sLnDu">{username}</span>
                             </a>

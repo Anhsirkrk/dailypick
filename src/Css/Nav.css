@@ -5,24 +5,39 @@
   align-items: center;
   border: 1px solid transparent;
   box-sizing: border-box;
-  padding: 8px;
+margin-right: 20px;
+    width: 120px;
+    height: 40px;
+    padding-left: 25px;
+}
+.nav-usericon{
+  height:40px;
+  width: 30px;
 }
 .userdisplay{
   margin-right: 50px;
+  font-size: 20px;
 }
+
 ._1TOQfO{
   color: white;
 font-size: 16px;
-line-height: 24px;
+/* line-height: 24px; */
 display: flex;
   align-items: center;
   text-decoration: none;
+  width: 120px;
+    height: 40px;
 }
 .-dOa_b.L_FVxe {
   margin-right: 8px;
 }
 ._1sLnDu{
-padding-left: 10px;
+  padding-left: 15px;
+  font-size: 28px;
+  width: 50px;
+  height: 40px;
+
 }
 .H6-NpN{
   display: flex;
@@ -30,6 +45,8 @@ padding-left: 10px;
   border: 1px solid transparent;
   box-sizing: border-box;
   padding: 8px;
+  width:120px;
+  height: 40px;
 }
 
 #navbar-row{
@@ -41,12 +58,10 @@ left: 0;
 height: 80px;
 background: var(--p-01, #024172);
 display: flex;
- justify-content: space-between; 
-align-items: center;
 /* padding: 0 20px; */
 z-index: 1000; 
-align-items: flex-start;
-justify-content: center;
+align-items: center;
+justify-content: space-between;
 }
 #navbar-row-col-2{
 display: flex;
@@ -112,6 +127,7 @@ align-items: center;
     padding: 0px 10px 0px 10px;
     /* width: 100px; */
     min-width: 100px;
+    height: 35px;
     border: 1.108px solid var(--White_Lit, #FFF);
 }
 .Location:hover{
@@ -149,21 +165,24 @@ padding: 0px ;
   padding: 2px 2px 2px 20px;
   border: 1.108px solid var(--White_Lit, #FFF);
   width: auto;
-  height: 40px;
+  height: 35px;
   width: 400px;
-  height: 40px;
 
 }
 .navsearchinput::placeholder {
   padding-left: 15px;
   color: #FFF; /* Set the color you want for the placeholder text */
 }
-
+.MySubscriptionsBtn{
+  border: none;
+  color: white;
+  background: none;
+  font-size: medium;
+}
 .Cart-icon{
-  height: 40px;
+  height: 35px;
   width: auto;
   color: #FFF;
-
 }
 .userdisplay {
   color: var(--white-lit, #ffffff);

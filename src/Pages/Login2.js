@@ -377,8 +377,8 @@ const Login = ({}) => {
   return (
 <>
     <div className='Login2-container'>
-    <div className='row'>
-    <div className='col-8'>
+    <div className='login2-row'>
+    <div className='login2-row-col-8'>
       <div className='login-h2-div'>
         <h1>Get your daily needs here</h1>
       </div>
@@ -386,7 +386,7 @@ const Login = ({}) => {
       <img className='logocover-img' src={logocover} ></img>
       </div>
     </div>
-    <div className='col-4'>
+    <div className='login2-row-col-4'>
       <div>
      
        {/* Sign in with OTP Code */}

@@ -93,9 +93,9 @@ const Home2 = () => {
     console.log(username);
   }, []);
 
- const HandleMilkProducts=()=>{
-  navigate('/products');
- }
+  const HandleProductsByCategory = (category) => {
+    navigate('/products', { state: { category } });
+  }
 
   return (
     <>
@@ -113,23 +113,21 @@ const Home2 = () => {
                     <button className="btn" >News-Paper</button>
   	            </div>
   	            <div className="field" >
-    	    	    <button className="btn" onClick={HandleMilkProducts}  >Milk </button>
+    	    	    <button className="btn" onClick={() => HandleProductsByCategory('Milk')}  >Milk </button>
   	            </div>
   	            <div className="field" >
-    	    	    <button className="btn" >Curd </button>
+    	    	    <button className="btn" onClick={() => HandleProductsByCategory('NewsPapers')}>News Papers </button>
   	            </div>
   	            <div className="field" >
-    	    	    <button className="btn" >Eggs </button>
+    	    	    <button className="btn" onClick={() => HandleProductsByCategory('Vegetables')} >Vegetables </button>
   	            </div>
   	            <div className="field" >
-    	    	    <button className="btn" >Vegetables </button>
+    	    	    <button className="btn"  onClick={() => HandleProductsByCategory('Curd')}>Curd </button>
   	            </div>
   	            <div className="field" >
-    	    	    <button className="btn" >Breads </button>
+    	    	    <button className="btn" onClick={() => HandleProductsByCategory('Fruits')} >Fruits </button>
   	            </div>
-  	            <div className="field" >
-    	    	    <button className="btn"  >Cookies </button>
-  	            </div>
+  	          
             </div>
            
         </div>
