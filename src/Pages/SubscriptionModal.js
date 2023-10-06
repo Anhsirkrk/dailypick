@@ -14,6 +14,7 @@ const SubscriptionModal = ({ product,Priceofselectedproduct,subscriptiontypes,ha
   const [subscriptionType, setSubscriptionType] = useState(null);
   const [selectedproductPrice,setSelectedproductPrice] = useState('');
   const [selectedSizeofproduct, setSelectedSizeofproduct]= useState([]);
+  const [quantityofproduct,setQuantityOfProduct]= useState(1);
   const [show,setShow]=useState(true);
 
 
@@ -45,6 +46,14 @@ const SubscriptionModal = ({ product,Priceofselectedproduct,subscriptiontypes,ha
     setSelectedproductPrice(selectedPrice);
     setSelectedSizeofproduct(newSize);
   }
+  const handlequantityincrement = () => {
+    setQuantityOfProduct(prevQuantity => prevQuantity + 1);
+  }
+  const handlequantitydecrement = () => {
+    if (quantityofproduct > 1) {
+      setQuantityOfProduct(prevQuantity => prevQuantity - 1);
+    }
+  }
 
 
 
@@ -75,11 +84,11 @@ const SubscriptionModal = ({ product,Priceofselectedproduct,subscriptiontypes,ha
                           </select> )}
                           </div>
                           <div className='quantity-incredecre'>
-                          <Button className='btn-decre'>-</Button>
-                          <div className='qtyvaluediv'><p className='qtyvalue'>1</p>
+                          <Button className='btn-decre' onClick={handlequantitydecrement}>-</Button>
+                          <div className='qtyvaluediv'><p className='qtyvalue'>{quantityofproduct}</p>
                           </div>
                            
-                          <Button className='btn-incre'>+</Button>
+                          <Button className='btn-incre' onClick={handlequantityincrement}>+</Button>
                           </div>
                           </div>
                           

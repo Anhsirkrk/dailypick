@@ -16,10 +16,11 @@
    justify-content: center;
   }
   .susbcriptionmodal-Title{
-    PADDING: 10PX 0PX 0PX 0PX;
+    PADDING: 5PX 0PX 0PX 0PX;
   }
   .susbcriptionmodal-Title h2{
     PADDING: 10PX 0PX 0PX 0PX;
+    margin: 0px 0px 0px 0px;
   }
   .btn-close{
     height: min-content;
@@ -30,7 +31,7 @@
   .susbcriptionmodal-body .productbox-container
     {
     padding: 0px 0px 0px 129px;
-    width: 600px;
+    width: 300px;
     display: flex;
     flex-wrap: wrap;
   }
@@ -66,9 +67,9 @@ border: 0.5px solid #848484;
 background: #F1F1F1;
 position: relative;
 /* max-height: 400px; */
-height: 160px;
+height: 129px;
     margin: 0px 0px 0px 0px;
-    width: 340px;
+    width: 300px;
   }
   .subscriptionmodal-product-card .product-card-body{
     display: flex;
@@ -76,13 +77,13 @@ height: 160px;
   }
   .subscriptionmodal-product-card .product-card-body .productcard-imagediv{
     width: 50%;
-    height: 160px;
+    height: 130px;
     overflow: hidden; 
   }
 
   .subscriptionmodal-product-card Img{
     width: 100%;
-    height: 165px;
+    height: 130px;
     object-fit: cover;
   }
   .product-card-text {
@@ -108,13 +109,14 @@ height: 160px;
    }
    .subscriptionmodal-product-card .product-card-body .priceAndSizeDiv h4{
     MARGIN: 0PX 0PX 0PX 0PX;
+    font-size: 20px;
    }
    .Price-QtyDiv .quantity-incredecre{
-    margin: 45px 0px 0px 20px;
+    margin: 30px 10px 0px 31px;
     display: flex;
     background: var(--P01, #024172);
     height: 30px;
-    width: 150px;
+    width: 100px;
    }
    .Price-QtyDiv .quantity-incredecre .btn-incre{
     width: 50px;
