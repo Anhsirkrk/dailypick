@@ -18,7 +18,10 @@
     "react": "^18.2.0",
     "react-bootstrap": "^2.8.0",
     "react-dom": "^18.2.0",
+    "react-geocode": "^1.0.0-alpha.1",
+    "react-google-autocomplete": "^2.7.3",
     "react-google-button": "^0.7.2",
+    "react-google-maps": "^9.4.5",
     "react-horizontal-scrolling": "^0.1.13",
     "react-icons": "^4.11.0",
     "react-otp-field": "^3.0.1",
@@ -53,8 +56,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^1.0.0"
   }
 }

@@ -8,7 +8,7 @@
     max-width: 700px; /* Adjust the width as needed */
     width: 600px;
     display: block;
-    height: 350px;
+    height: 450px;
     padding: 0PX 20PX 20PX 20PX;
   }
   .susbcriptionmodal-header{
@@ -83,7 +83,7 @@ height: 129px;
 
   .subscriptionmodal-product-card Img{
     width: 100%;
-    height: 130px;
+    height: 135px;
     object-fit: cover;
   }
   .product-card-text {
@@ -112,7 +112,7 @@ height: 129px;
     font-size: 20px;
    }
    .Price-QtyDiv .quantity-incredecre{
-    margin: 30px 10px 0px 31px;
+    margin: 25px 10px 0px 31px;
     display: flex;
     background: var(--P01, #024172);
     height: 30px;
@@ -168,3 +168,73 @@ height: 129px;
     WIDTH: 20%;
     color: #FFF;
    }
+   .SubscriptionTypes-div{
+    display: flex;
+    margin: 10px 0px 0px 0px;
+    padding: 10px 0px 0px 0px;
+   }
+  .subscription-type-card{
+      /* width: 16rem; */
+      overflow: hidden;
+      border: 1px solid #e2e0e0;
+      /* margin-bottom: 20px; */
+      transition: 0.5s;
+      cursor: pointer;
+      /* margin-right: 10px; */
+      border-radius: 10px;
+  border: 0.5px solid #848484;  
+  background: #F1F1F1;
+  position: relative;
+  /* max-height: 400px; */
+      margin: 0px 10px 0px 5px;
+      width: 300px;
+      padding: 10px 10px 10px 10px;
+      Width: 18rem;
+    padding: 15px 10px 10px 10px;
+    height: 120px;
+
+  }
+  .selected{
+    background-color:aqua;
+  }
+  .subscription-type-card-title{
+    margin: 0px 0px 0px 0px;
+  }
+  .subscription-type-card-text{
+    margin: 0px 0px 0px 0px;
+  }
+  .subscriptiontype-button{
+    FONT-SIZE: larger;
+    HEIGHT: 40PX;
+    BACKGROUND: var(--P01, #024172);
+    BORDER-RADIUS: 8px; 
+    WIDTH: 150PX;
+    color: #FFF;
+  }
+  .susbcriptionpricedeiv{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    padding: 0px 0px 0px 45px;
+  }
+  .susbcriptionpricedeiv h3{
+    padding-left: 50px;
+  }
+  .susbcriptiondiscount-div{
+    margin-left: 18px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .susbcriptiondiscount-div h5{
+    text-decoration: line-through;
+    font-weight: 300;
+    font-weight: 300;
+    margin: 0px 0px 0px 0px;
+    font-size: 18px;
+  }
+  .susbcriptiondiscount-div h4{
+    margin: 0px 0px 0px 0px;
+    font-weight: 200;
+  }
