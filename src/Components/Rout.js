@@ -6,6 +6,7 @@ import Home2 from '../Pages/Home2';
 import Trail from '../Trail/Trail';
 import Popup from '../Pages/PopUp';
 import Products from '../Pages/Products';
+import Location from '../Pages/Location';
 const Rout = () => {
   return (
     <>
@@ -20,6 +21,7 @@ const Rout = () => {
           <Route path='/trail' element={<Trail/>}/>
           <Route path='/products' element={<Products/>}/>
           <Route path="/*" element={<Navigate to="/popup" replace />} />
+          <Route path="/location" element={<Location/>}/>
         </Routes>
     </>
   )
