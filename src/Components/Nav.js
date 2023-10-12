@@ -71,15 +71,15 @@ const Nav = () => {
     localStorage.removeItem('isLoggedIn');
     setUsername('');
     console.log('nav.js before setting to false', isLoginauthenticated);
-    if(isLoginauthenticated===true){
+    if(isLoginauthenticated===true)
+    {
       setIsLoginauthenticated(false);
       console.log('nav.js before setting to false',isLoginauthenticated);
        //return <Redirect to="/popup" />;
       //navigate('/popup');
      window.location.href='/popup';
-  
      window.history.replaceState(null,'','/popup');
-    console.log(isLoginauthenticated);
+     console.log(isLoginauthenticated);
     }
   }
 

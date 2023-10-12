@@ -93,17 +93,27 @@ const Regisatrtion = () => {
 
   const validateemail= async(email)=>{
     const values ={email}
-    const validationErrors = validation(values);
+    const validationErrors = validation(values,['email']);
     console.log(validationErrors.email);
     setValidationErrors((prevState) => ({
       ...prevState,
       email: validationErrors.email,
     }));
   }
+  const validatemobile= async(mobilenumber)=>{
+    const values ={mobilenumber}
+    const validationErrors = validation(values,['mobilenumber']);
+    console.log(validationErrors.mobilenumber);
+    setValidationErrors((prevState) => ({
+      ...prevState,
+      mobilenumber: validationErrors.mobilenumber,
+    }));
+  }
+  
 
   const checkemailexists = async (email) => {
-    //alert("checkinmg  email ")
-    const url = 'https://localhost:7041/api/Login/GetUserByEmail';
+    alert("checkinmg  email ")
+    const url = 'https://localhost:7041/api/Login/GetUserByEmails';
     const data = {
       userId: 0,
       userTypeId: 0,
@@ -166,7 +176,7 @@ const Regisatrtion = () => {
   };
 
   const checkmobilenumberexists = async (mobilenumber) => {
-    //alert("checking mobile number");
+    alert("checking mobile number");
     const url = 'https://localhost:7041/api/Login/GetUserByMobileNumber';
     const data = {
       userId: 0,
@@ -235,7 +245,8 @@ const Regisatrtion = () => {
       const values={name,email,mobilenumber,password,confirmpassword};
       //alert("check console 243 for values");
       console.log(values);
-    const validationErrors = validation(values);
+      const validationErrors = validation(values,['name','email','mobilenumber','password','confirmpassword']);
+
     console.log(validationErrors);
    
     if(Object.keys(validationErrors).length>0)
@@ -250,7 +261,7 @@ const Regisatrtion = () => {
    if(numberexists === true)
    {
         //toast.error("mobile number exists");
-        //alert("mobile number already exists");
+        alert("mobile number already exists");
         validationerrors.mobilenumber ="Mobile number already exists";
        // alert(`valerr mob:${validationerrors.mobilenumber}`);
         setIsMobileNumberExist(true);
@@ -259,14 +270,14 @@ const Regisatrtion = () => {
    else if(numberexists === false)
    {
     //toast.success("mobile number is new");
-     // alert("mobile number is new");
+     alert("mobile number is new");
       setIsMobileNumberExist(false);
    }
    var emailexists = await checkemailexists(email);
    if(emailexists === true)
    {
     toast.error("email exists");
-        //alert(isemailexist);
+        alert('isemailexist');
         validationerrors.email ="email already exists";
         //alert(`valerr mob:${validationerrors.email}`);
         setIsmailExist(true);
@@ -275,13 +286,13 @@ const Regisatrtion = () => {
     else if( emailexists === false)
     {
       //toast.success("email is new");
-      //alert("email is new "); 
+      alert("email is new "); 
       setIsmailExist(false);
     }
     else if(emailexists === null)
     {
       //toast.error("got error while checking email")
-      //alert("got error while checking email"); 
+      alert("got error while checking email"); 
       setResultMessage('An error occurred while processing your request.');
       return;
     }
@@ -399,7 +410,8 @@ const Regisatrtion = () => {
                   defaultCountry="IN"
                   placeholder="Enter phone number"
                   value={mobilenumber}
-                  onChange={e=>{setMobileNumber(e);}}
+                  onChange={e=>{setMobileNumber(e); validatemobile(e);}}
+                  
                   maxLength={11}
                   />
                 </div>

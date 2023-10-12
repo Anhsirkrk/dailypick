@@ -1,0 +1,269 @@
+.Locationpage-container{
+    background:#FBFAFA;
+    margin: 0 auto;
+    max-width: none;
+    min-width: 1000px;
+    overflow: hidden;
+    margin: 80px 0px 0px 0px;
+}
+.location-heading{
+    padding: 0px 0px 0px 20px;
+    color: #024172;
+}
+.locationAndAdressArea{
+    display: flex;
+    padding: 20px 20px 20px 20px;
+    justify-content: flex-start;
+}
+.location-MapDiv{
+    padding: 10px 10px 10px 20px;
+    height: 860px;
+    min-width: 810px;
+    width: auto;
+    overflow: hidden;
+}
+.MapComponent{
+    height: 500px;
+    width: 90%;
+    position: relative;
+    overflow: hidden;
+    margin: 20px 0px 0px 0px;
+    border-radius: 10px;
+}
+.locationsearchbarinput{
+    box-shadow: 0px 6.97871px 19.19144px 0px rgba(0, 0, 0, 0.25);
+    width: 666px;
+    height: 32px;
+    border-radius: 10px;
+
+}
+.Addresses-div{
+    width: 600px;
+    height: 1000px;
+}
+.Addresses-div h3{
+    margin: 0px 0px 0px 0px;
+    color: #024172;
+
+}
+.Saved-Adressdisplay1{
+    width: 60%;
+    background-color: #024172;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.Saved-Adressdisplay2{
+    width: 60%;
+    background-color:#EBE9E9;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.Saved-AddressDisplay {
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px;
+    /* margin-bottom: 10px; */
+    cursor: pointer;
+    width: 60%;
+    height: 55px;
+  }
+  .savedaddress-scroll-div{
+
+    height: 250px; /* Set a fixed height */
+    overflow-y: auto; /* Enable vertical scrolling */
+    /* Add any other necessary styles */
+    display: flex;
+    justify-content: space-between;
+    /* padding-left: 100px; */
+    /* padding-right: 100px; */
+    flex-direction: column;
+    overflow: hidden;
+    /* height: 250px; */
+    /* margin-top: 20px; */
+    overflow-y: auto;
+  }
+  
+  .Saved-AddressDisplay.selected {
+    background-color: #024172;
+    color: white;
+    width: 80%;
+    height: 55px;
+  }
+  
+  .Saved-AddressDisplay.selected .Address-Paragraph {
+    color: white;
+  }
+  
+  .Address-Paragraph {
+    margin: 0;
+    color: black;
+  }
+  
+  .Saved-AddressDisplay.selected .BiCircle {
+    display: none;
+  }
+  .AddAdressButton{
+    margin: 20px;
+    width: 200px;
+    height: 46px;
+  }
+  .ContinuePymntBtn{
+    width: 150px;
+    height: 45px;
+    color: white;
+    background: #024172;
+  }
+  .AdressForm-div{
+    /* display: flex; */
+    width: 600px;
+    /* height: 700px; */
+  }
+  .AddressForm{
+    padding: 5px 5px 5px 5px;
+    width: 600px;
+    height: 376px;
+  }
+  .AddressInputandLbl-div{
+    /* display: flex;
+    justify-content: space-between; */
+  }
+  .AdrressValidationError-div{
+   display: flex;
+   justify-content: space-between;
+   /* align-items: center; */
+   padding: 5px 5px 5px 5px;
+
+  }
+     
+  .AddressFormValError-Mobile
+  { 
+    margin: 0px 0px 0px 105px;
+    }
+  .AddressFormValError-p{
+    display: inline;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-right: 85px;
+    width: 200px;
+  }
+  .AddressInput-lbldiv{
+    /* display: flex;
+    justify-content: space-between; */
+    padding: 0px 38px 0px 0px;
+  }
+  .AddressInput-inputdiv{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 5px 5px 5px 5px;
+  }
+  .Name-input,.PinCode-input, .City-input{
+    width: 230px;
+    height: 25px;
+    background-color: #EFF8FF;
+    border-color: black;
+    outline: none;
+    border-width: 0.1px;
+}
+.Mobile-input,.Locality-input,.State-input{
+    margin: 0px 0px 0px 62px;
+    height: 25px;
+    width: 230px;
+    background-color: #EFF8FF;
+    border-color: black;
+    outline: none;
+    border-width: 0.1px;
+    
+}
+.PinCode-input, .City-input{
+    width: 230px;
+    height: 25px;
+    background-color: #EFF8FF;
+    border-color: black;
+    outline: none;
+    border-width: 0.1px;
+}
+
+.Address-input{
+    width: 91%;
+    height: 100px;
+    background-color: #EFF8FF;
+    border-color: black;
+    outline: none;
+    border-width: 0.1px;
+}
+.statedropdown{
+  width: 230px;
+  height: 25px;
+  background-color: #EFF8FF;
+  border-color: black;
+  outline: none;
+  border-width: 0.1px;
+}
+.citydropdown{
+  margin: 0px 0px 0px 62px;
+  height: 25px;
+  width: 230px;
+  background-color: #EFF8FF;
+  border-color: black;
+  outline: none;
+  border-width: 0.1px;
+}
+.Addresslbl-div{
+  
+    padding: 10px 130px 0px 0px;
+}
+.addresslblbtn-div{
+    display: flex;
+    justify-content: space-around;
+    padding: 0px 87px 0px 0px;
+
+}
+.addresslblbtn {
+    background-color: #FBFAFA;
+    border-radius: 15px;
+    width: 20%;
+    height: 29px;
+    color: black;
+  }
+  
+  .addresslblbtn.selected {
+    background-color: #66BCFF;
+    color: white;
+  }
+  
+.location-search-container {
+    position: relative;
+  }
+  
+  .location-search-bar-input {
+    padding: 5px 30px; /* Adjust the padding as needed to fit the icon and button */
+    box-shadow: 0px 6.97871px 19.19144px 0px rgba(0, 0, 0, 0.25);
+    width: 660px;
+    height: 32px;
+    border-radius: 10px;
+  }
+  
+  .search-icon {
+    position: absolute;
+    top: 50%;
+    left: 10px; /* Adjust the left position as needed */
+    transform: translateY(-50%);
+  }
+  
+  .get-location-button {
+    position: absolute;
+    top: 50%;
+    right: 100px; /* Adjust the right position as needed */
+    transform: translateY(-50%);
+    border-radius: 3.489px;
+background: var(--Light_Gry, #EBE9E9);
+border-color: var(--Light_Gry, #EBE9E9); 
+box-shadow: none;
+  }
+  

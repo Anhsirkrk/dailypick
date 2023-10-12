@@ -76,7 +76,7 @@ const Login = ({}) => {
   }, [loginwithotpshow,loginwithemail,registrationform,mobilenumber,isLoginauthenticated,setIsLoginauthenticated]);
 
   const resendOTP = () => {
-    alert("hitted");
+    alert("resend otp hitted");
     console.log(timerActive)
     if (!timerActive) {
       setTimer(5);
@@ -92,8 +92,7 @@ const Login = ({}) => {
   const Authenticateemailandpassword = async(e) =>{
     e.preventDefault();
     const values={email,password};
-  const validationErrors = validation(values);
-
+  const validationErrors = validation(values,['email','password']);
   if(!(validationErrors.email)== '' || !(validationErrors.password)=='' )
   {
     setValidationErrors(validationErrors);
@@ -101,7 +100,8 @@ const Login = ({}) => {
     alert('lg val er pas' + validationErrors.password);
     return;
   }
-    const url = "https://localhost:7041/api/Login/GetUserByEmail";
+  // const url = "https://localhost:7041/api/Login/GetUserByEmails";
+    const url = "https://localhost:7041/api/Login/GetUserByEmails";
     const data={
       userId: 0,
       userTypeId: 0,
@@ -140,12 +140,13 @@ const Login = ({}) => {
             setIsLoginauthenticated(true);
             localStorage.setItem('isLoggedIn', 'true');
             console.log("login2", JSON.parse(localStorage.getItem('isLoggedIn')));
-            alert("login2", JSON.parse(localStorage.getItem('isLoggedIn')));
+            // alert("login2", JSON.parse(localStorage.getItem('isLoggedIn')));
             navigate('/home2');
           }
           else if(sendData.userFound === false){
             alert("user didnt found");
             toast.error("Invalid User");
+            return;
           }
           if(sendData)
           {
@@ -164,19 +165,22 @@ const Login = ({}) => {
     }
   }
   const verifymobilenumber = async (e) => {
-    alert(mobilenumber);
+    
     e.preventDefault();
     const values={mobilenumber};
+
     console.log(values);
-  const validationErrors = validation(values);
+  const validationErrors = validation(values,['mobilenumber']);
   console.log(validationErrors);
-  if(!(validationErrors.mobilenumber)=='')
+  if(!(validationErrors.mobilenumber) == '')
   {
+    alert("val err");
     setValidationErrors(validationErrors);
-    alert(validationErrors.mobilenumber);
+    // alert(validationErrors.mobilenumber);
     console.log(validationerrors.mobilenumber);
     return;
   }
+  alert("checking database");
     const url = 'https://localhost:7041/api/Login/GetUserByMobileNumber';
     const data = {
       userId: 0,
@@ -217,6 +221,7 @@ const Login = ({}) => {
           else if(sendData.userFound === false){
             alert("user   not found");
             toast.error("Invalid User");
+            return;
           }
           localStorage.setItem('userdata', JSON.stringify(sendData));
       } 
@@ -230,6 +235,7 @@ const Login = ({}) => {
     }
   
   };
+  console.log('login  page user data',localStorage.getItem('userdata'));
 
   const UserRegistration = async (e)=>{
       e.preventDefault();
@@ -253,6 +259,7 @@ const Login = ({}) => {
   }
 
     const getOtp = async (mobilenumber) => {
+      alert("get opt hitted");
         console.log(mobilenumber);
         setError("");
         if (mobilenumber === "" || mobilenumber === undefined)
@@ -269,15 +276,15 @@ const Login = ({}) => {
       };
 
       const getresendOtp = async (e) => {
-        alert("getresendOtp");
+        alert("hitted getresendOtp");
         console.log(mobilenumber);
         setError("");
         if (mobilenumber === "" || mobilenumber === undefined){
         alert("num is invalid or undefined");
           return setError("Please enter a valid phone mobilenumber!");
         }
-        try {
-          alert("hitted try");
+        try { 
+          alert("hitted try in get resend otp");
           const response = await setUpRecaptha(mobilenumber);
           alert(" hitted set up recptcha ");
           setResult(response);
@@ -386,6 +393,7 @@ const Login = ({}) => {
       <img className='logocover-img' src={logocover} ></img>
       </div>
     </div>
+    <ToastContainer/>
     <div className='login2-row-col-4'>
       <div>
      
@@ -395,7 +403,7 @@ const Login = ({}) => {
         <div className='LoginContainerHeader'>
         <center>
             <h3 >Login with <span style={{ fontWeight: "bold" }}>OTP</span></h3>
-            <ToastContainer/>
+            
             </center>
         </div>
 
