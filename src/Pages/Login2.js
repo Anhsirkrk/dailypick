@@ -234,6 +234,7 @@ const Login = ({}) => {
     }
   
   };
+  console.log('login  page user data',localStorage.getItem('userdata'));
 
   const UserRegistration = async (e)=>{
       e.preventDefault();

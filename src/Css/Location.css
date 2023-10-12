@@ -72,6 +72,21 @@
     width: 60%;
     height: 55px;
   }
+  .savedaddress-scroll-div{
+
+    height: 250px; /* Set a fixed height */
+    overflow-y: auto; /* Enable vertical scrolling */
+    /* Add any other necessary styles */
+    display: flex;
+    justify-content: space-between;
+    /* padding-left: 100px; */
+    /* padding-right: 100px; */
+    flex-direction: column;
+    overflow: hidden;
+    /* height: 250px; */
+    /* margin-top: 20px; */
+    overflow-y: auto;
+  }
   
   .Saved-AddressDisplay.selected {
     background-color: #024172;
@@ -106,7 +121,7 @@
   .AdressForm-div{
     /* display: flex; */
     width: 600px;
-    height: 700px;
+    /* height: 700px; */
   }
   .AddressForm{
     padding: 5px 5px 5px 5px;

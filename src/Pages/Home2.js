@@ -28,6 +28,7 @@ const Home2 = () => {
   const [categoryName, setCategoryname]=useState('');
   const [description, setDescription]=useState('');
   const [imageUrl,setImageurl]=useState('');
+  const [addressdata,setAddressData]= useState({});
 
   const GetDailyNeed=()=>{
     const  url="https://localhost:7041/api/Admin/GetDetailsAndImagesOfCategories";
@@ -66,6 +67,7 @@ const Home2 = () => {
   const {isLoginauthenticated, setIsLoginauthenticated}= useLoginAuth();
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
+  const [userid,setUserId]=useState('');
   const [username, setUsername] = useState('');
   // alert('home2 isLoginauthenticated', isLoginauthenticated);
   console.log(isLoginauthenticated);
@@ -89,9 +91,14 @@ const Home2 = () => {
     const storeduserdata = JSON.parse(storeddata);
     console.log(storeduserdata);
       setUsername(storeduserdata.firstName);
+      setUserId(storeduserdata.userId);
     }
     console.log(username);
   }, []);
+  console.log('home2 page userid ',userid);
+
+
+console.log(addressdata);
 
   const HandleProductsByCategory = (category) => {
     navigate('/products', { state: { category } });

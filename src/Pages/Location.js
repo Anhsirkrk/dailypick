@@ -98,15 +98,17 @@ const Location = () => {
       const storeddata = localStorage.getItem('userdata');
       if (storeddata) {
       const storeduserdata = JSON.parse(storeddata);
-      console.log(storeduserdata);
+      console.log('storeduseerdata',storeduserdata);
         setUserId(storeduserdata.userId);
       }
     }, []);
     console.log('userid',userid);
 
     useEffect(()=>{
-      gettingSavedAddresses();
-    },[]);
+      if (userid) {
+        gettingSavedAddresses(); // Trigger fetching saved addresses when userid is updated
+      }
+    },[userid]);
     
     const gettingSavedAddresses= async()=>{
       // alert("getting saved addre hitted");
@@ -114,6 +116,7 @@ const Location = () => {
       const data={
         userId:userid
       }
+      console.log(data);
       try{
        // alert("enetered to axios");
         const response = await axios.get(url, { params: data });
@@ -135,6 +138,7 @@ const Location = () => {
      console.error(error);
    }
   }
+  console.log(userid);
   console.log(savedAddresses);
 
     const addresses = [
@@ -238,6 +242,7 @@ const Location = () => {
     const handleAddressLbl = (label) => {
       setAddresslbl(label);
     };
+
    
     const validatemobile= async(mobilenumofAddress)=>{
       const values ={mobilenumofAddress}
@@ -261,14 +266,15 @@ const Location = () => {
 
     const handlecontinuetopaymentbysavedadress = ()=>{
       if(selectedAddressId!= null){
+        const Orderdata ={
+
+        }
         navigate('/home2');
       }
       else{
         return;
       }
-      
-
-    
+       
     }
   const handlenewaddresssubmitform= async (e)=>{
     e.preventDefault();
@@ -293,20 +299,21 @@ const Location = () => {
      alert("entered to axios");
      const url = 'https://localhost:7041/api/User/AddingAdressDetails';
      const data = {
-       addressId: 0,
-       userId:userid,
-       country:"India",
-       state:selectedStateName,
-       city:selectedCity,
-       area:locality,
-       pincode:pincode,
-       houseNo:houseNo,
-       longitude:longitude,
-       latitude:latitude,
-       username:personnameofAddress,
-       mobileNumber:mobilenumofAddress  
+      addressId: 0,
+      userId:userid,
+      country:"India",
+      state:selectedStateName,
+      city:selectedCity,
+      area:locality,
+      pincode:pincode,
+      houseNo:houseNo,
+      longitude:longitude,
+      latitude:latitude,
+      username:personnameofAddress,
+      mobileNumber:mobilenumofAddress 
      };
      console.log(data);
+     alert('axios data ready');
      const response = await axios.post(url, data);
      console.log(response.data);
      alert("axios completed");
@@ -328,7 +335,10 @@ const Location = () => {
         username:personnameofAddress,
         mobileNumber:mobilenumofAddress 
        }
-       localStorage.setItem('SelectedAddressOfSubscription',settingadressdata);
+       console.log(settingadressdata);
+       localStorage.setItem('SelectedAddressOfSubscription', JSON.stringify(settingadressdata));     
+       const setteddata = JSON.parse(localStorage.getItem('SelectedAddressOfSubscription'));
+    console.log(setteddata);
 navigate('/home2');
      } 
      else 
@@ -409,7 +419,7 @@ console.log('curr lon',longitude);
      
                 <div>
                 <h3>Saved Addresses{selectedAddressId}</h3>
-                <div>
+                <div className='savedaddress-scroll-div'>
                 {savedAddresses.map((addr) => (
                   <div
                     key={addr.addressId}
