@@ -19,6 +19,7 @@ import HatsunGhee from '../Images/Dummy/Hatsun_Ghee.jpg';
 import HeritageCowGhee  from  '../Images/Dummy/heritage_cow_ghee.jpg';
 import HeritageCurd1 from '../Images/Dummy/Heritage_Curd_1 copy.jpg';
 
+
 const Home2 = () => {
 
   const [dailyneeds, setDailyneeds]=useState([]);

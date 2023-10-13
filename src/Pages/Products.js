@@ -12,6 +12,7 @@ import { useLocation } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import HeritageCurd1 from '../Images/Dummy/Heritage_Curd_1 copy.jpg';
+import {ToastContainer,toast } from 'react-toastify';
 
 const Products = ({detail, view, close, setClose, addtocart}) => {
 
@@ -27,6 +28,19 @@ const Products = ({detail, view, close, setClose, addtocart}) => {
    const [selectedRatings,setSelectedRatings] = useState([]);
    const [isModalOpen, setIsModalOpen] = useState(false);
    const location = useLocation();
+
+   const [userid,setUserId]=useState('');
+
+   useEffect(() => {
+    // Get item from local storage on component mount
+    const storeddata = localStorage.getItem('userdata');
+    if (storeddata) {
+    const storeduserdata = JSON.parse(storeddata);
+    console.log('storeduseerdata',storeduserdata);
+      setUserId(storeduserdata.userId);
+    }
+  }, []);
+  console.log('userid',userid);
 
 
   const GetAllProducts =()=>{
@@ -164,6 +178,30 @@ const Products = ({detail, view, close, setClose, addtocart}) => {
   };
 }, [isModalOpen]);
 
+const handleaddtowishlist=  (Id)=>{
+  // Id.preventDefault();
+  alert("handle hitted");
+  if(Id){
+    const data={
+      productId:Id,
+      userId:userid
+    }
+     const url="";
+     const response =  axios.post(url, { params: data });
+     console.log(response);
+     if(response.status === 200)
+     {
+       toast.success("item added to wishlist");
+       return;
+     }
+     else
+     {
+      toast.error(" got error adding to wishlist");
+     }
+  }
+
+}
+
 
   return (
     <>
@@ -275,7 +313,7 @@ const Products = ({detail, view, close, setClose, addtocart}) => {
                         return(
                             <>
                             <Card className='product-card'>
-                            <div className={`overlay-icon ${isModalOpen ? 'hidden' : ''}`}>
+                            <div onClick={()=>handleaddtowishlist(curElm.productId)} className={`overlay-icon ${isModalOpen ? 'hidden' : ''}`}>
                            <li><AiOutlineHeart className='li-icon' /></li>
                           </div>
                             <Card.Img variant="top" src={`data:image/jpeg;base64,${curElm.base64Image}`} alt={curElm.Title} />
