@@ -24,6 +24,11 @@ const Nav = () => {
     setIsOpen(!isOpen);
   };
   
+  useEffect(() => {
+    // Perform any actions you want when loginwithotpshow changes here
+    console.log("nav.js is login authenticated:", isLoginauthenticated);
+  }, [isLoginauthenticated]);
+
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -103,13 +108,45 @@ const Nav = () => {
 console.log(isLoginauthenticated);
 console.log(username);
 
+const handleprofilepicselect=()=>{
+if(isLoginauthenticated){
+  navigate('/profile');
+}
+}
+ 
+const handlebacktohome =()=>{
+  navigate('/home2');
+}
+
+const handleMysubscriptionsroute =()=>{
+  if(isLoginauthenticated)
+  {
+    navigate('/mysusbcription');
+  }
+}
+
+const handleMyCartroute =()=>{
+  if(isLoginauthenticated)
+  {
+    navigate('/mycart');
+  }
+}
+
+const handleMyWishListroute =()=>{
+  if(isLoginauthenticated)
+  {
+    navigate('/mywishlist');
+  }
+}
+
+
   return (
     <>
 
         
         <div className='row' id='navbar-row'>
             <div className='col-2' id='navbar-row-col-2'>
-              <div className='logo'>Logo</div>
+              <div className='logo' onClick={handlebacktohome}>Logo</div>
               <div className="Location">
                     <div className='LocationBox'>
                       <GoLocation style={{color:'whitesmoke'}}/>
@@ -127,11 +164,11 @@ console.log(username);
            </div>
 
             <div className='col-2' id='navbar-userdisplay-col-2'>
-            <Button className='MySubscriptionsBtn' >My Subscriptions</Button>
-            <BsCart2 className='Cart-icon'></BsCart2>
-            <AiOutlineHeart className='wishlist-icon'></AiOutlineHeart>
+            <Button className='MySubscriptionsBtn' onClick={handleMysubscriptionsroute} >My Subscriptions</Button>
+            <BsCart2 className='Cart-icon' onClick={handleMyCartroute}></BsCart2>
+            <AiOutlineHeart className='wishlist-icon' onClick={handleMyWishListroute}></AiOutlineHeart>
             <div className="_1Us3XD" onClick={toggleDropdown}>
-                        <img className='profile-image' src={profilepic}  alt='profile-image'/>
+                        <img className='profile-image' src={profilepic}  alt='profile-image' />
                            {/*<div className="H6-NpN">
                             <a className="_1TOQfO" title={username} aria-haspopup="true" >
                              <FaRegUser className='nav-usericon'/> 
@@ -144,7 +181,9 @@ console.log(username);
                                   <div className="userdisplay-dropdown-content">
                                     <h5 className='Profile-Name-heading' >Profile Name</h5>
                                     <a className="_1TOQfO" title={username} aria-haspopup="true" >{username}</a>
-                                    <a href='#'>Profile</a>
+
+                                    <a href='#' onClick={handleprofilepicselect}  >Profile</a>
+
                                     <a href="#" onClick={(e) => handlesignout(e)}>Signout</a>
                                   </div>
                               )}
