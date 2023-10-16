@@ -7,6 +7,8 @@ import Wishlist from '../Pages/WishList';
 import Popup from '../Pages/PopUp';
 import Products from '../Pages/Products';
 import Location from '../Pages/Location';
+import Profile from '../Pages/Profile';
+
 const Rout = () => {
   return (
     <>
@@ -22,6 +24,7 @@ const Rout = () => {
           <Route path='/products' element={<Products/>}/>
           <Route path="/*" element={<Navigate to="/popup" replace />} />
           <Route path="/location" element={<Location/>}/>
+          <Route path='/profile' element={<Profile/>}/>
         </Routes>
     </>
   )
