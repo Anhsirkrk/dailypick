@@ -1,38 +1,35 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import {BiCircle} from 'react-icons/bi';
 import {TbCurrentLocation} from 'react-icons/tb';
+import {TbEdit} from 'react-icons/tb';
+import {RiDeleteBinLine} from 'react-icons/ri'
 
 const Address = () => {
 
-  const [savedAddresses, setSavedAddresses] = useState([]);
-  const [selectedAddressId, setSelectedAddressId] = useState(null);
+  const [userid, setUserId] = useState('');
+  const [selectedAddressId, setSelectedAddressId] = useState(null); // Define selectedAddressId state
+  const [savedAddresses, setSavedAddresses] = useState([]); // Define savedAddresses state
 
+  const receivedData = localStorage.getItem('usersavedaddress');
+  const savedAddressesData = JSON.parse(receivedData) || [];
+
+  useEffect(() => {
+    // Fetch user data and set it to state
+    const storedUserData = JSON.parse(localStorage.getItem('userdata'));
+    if (storedUserData) {
+      setUserId(storedUserData.userId);
+    }
+
+    // Set saved addresses to state
+    setSavedAddresses(savedAddressesData);
+  }, []);
 
   const handleSavedAddressClick = (addr) => {
-    // setSelectedAddressId((prevId) => (prevId === id ? null : id));
-    setSelectedAddressId((prevId) => (prevId === addr.addressId ? null : addr.addressId));
-const settingAddressData = {
-  addressId: addr.addressId,
-  userId: addr.userId,
-  country: addr.country,
-  state: addr.state,
-  city: addr.city,
-  area: addr.area,
-  pincode: addr.pincode,
-  houseNo: addr.houseNo,
-  longitude: addr.longitude,
-  latitude: addr.latitude,
-  username: addr.username,
-  mobileNumber: addr.mobileNumber 
-};
-localStorage.setItem('SelectedAddressOfSubscription',settingAddressData);
-
+    setSelectedAddressId(addr.addressId);
+    // Handle click logic here
   };
 
 
-
-
-  
 
   return (
     <div>
@@ -43,21 +40,24 @@ localStorage.setItem('SelectedAddressOfSubscription',settingAddressData);
       <hr></hr>
       <div className='All-saved-address'>All Saved Address</div>
 
-      <div className='savedaddress-scroll-div'>
+      <div className='address-div'>
                 {savedAddresses.map((addr) => (
-                  <div
-                    key={addr.addressId}
-                    className={`Saved-AddressDisplay ${addr.addressId === selectedAddressId ? 'selected' : ''}`}
-                    onClick={() => handleSavedAddressClick(addr)}
-                  >
-                    {addr.addressId === selectedAddressId ? (
-                      <TbCurrentLocation style={{ width: '70px', height: '20px' }} />
-                    ) : (
-                      <BiCircle style={{ width: '70px', height: '20px' }} />
-                    )}
-                    <p className='Address-Paragraph'>{addr.username}, {addr.houseNo} ,{addr.area}, {addr.city} ,{addr.mobileNumber} ,{addr.pincode}
-                    </p>        
-                              </div>
+                  <div key={addr.addressId}
+                      className={`Address-Display ${addr.addressId === selectedAddressId ? 'selected' : ''}`}
+                      onClick={() => handleSavedAddressClick(addr)}>
+                      {addr.addressId === selectedAddressId ? (
+                        <TbCurrentLocation style={{ width: '70px', height: '20px' }} />
+                      ) : (
+                        <BiCircle style={{ width: '70px', height: '20px' }} />
+                      )}
+                      <p className='address-paragraph'>{addr.username}, {addr.houseNo} ,{addr.area}, {addr.city} ,{addr.mobileNumber} ,{addr.pincode}</p>  
+                      <div className='address-icons'>
+                        <div className='edit-icon'><TbEdit/></div>
+                        <div className='delete-icon'><RiDeleteBinLine/></div> 
+                        </div>      
+                  </div>
+                 
+                    
                 ))}
               </div>
     </div>

@@ -44,6 +44,9 @@ const Location = () => {
     const [addresslbl, setAddresslbl] = useState('');
 
 
+    
+
+
 
     // const countries = Country.getAllCountries();
     const states = State.getStatesOfCountry('IN') ;
@@ -121,6 +124,7 @@ const Location = () => {
        // alert("enetered to axios");
         const response = await axios.get(url, { params: data });
         console.log(response.data);
+        localStorage.setItem('usersavedaddress',JSON.stringify(response.data));
        // alert("get address axios completed");
         if (response.status === 200) 
         {

@@ -144,7 +144,7 @@ console.log(username);
                                   <div className="userdisplay-dropdown-content">
                                     <h5 className='Profile-Name-heading' >Profile Name</h5>
                                     <a className="_1TOQfO" title={username} aria-haspopup="true" >{username}</a>
-                                    <a href='#'  >Profile</a>
+                                    <a href='#'>Profile</a>
                                     <a href="#" onClick={(e) => handlesignout(e)}>Signout</a>
                                   </div>
                               )}
