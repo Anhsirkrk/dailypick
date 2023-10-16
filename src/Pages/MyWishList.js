@@ -1,22 +1,24 @@
 import React, { useState,useEffect} from "react";
 import Nav from "../Components/Nav";
-import '../Css/wishlist.css';
+import '../Css/mywishlist.css';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineHeart, AiOutlineCloseCircle } from 'react-icons/ai';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { BsEye } from 'react-icons/bs';
-import Productdetail from '../Pages/ProductDetail';
+import Productdetail from './ProductDetail';
 import '../Css/Products.css';
 import axios, { all } from 'axios';
-import SubscriptionModal  from '../Pages/SubscriptionModal';
+import SubscriptionModal  from './SubscriptionModal';
 import { useLocation } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import {ToastContainer,toast } from 'react-toastify';
 
 
 
 
-const Wishlist =()=>{
+
+const MyWishlist =()=>{
 
     const [product,setProduct]= useState([]);
     const [filteredProduct, setFilteredProduct] = useState([]);
@@ -29,65 +31,34 @@ const Wishlist =()=>{
      const [ selectedBrands,setSelectedBrands] = useState([]);
      const [selectedRatings,setSelectedRatings] = useState([]);
      const [isModalOpen, setIsModalOpen] = useState(false);
+
+     const [wishlistData,setWishListData]= useState([]);
+     const [userid,setUserId]=useState('');
+
+
      const location = useLocation();
      const navigate = useNavigate();
     
+  
     
-    const GetAllProducts =()=>{
-        // alert("getall products hitted");
-        const url = "https://localhost:7041/api/Admin/GetAllProducts";
-        axios.get(url)
-        .then((response)=>{
-          console.log(response.data);
-       // Initialize selected sizes with the first size for each product
-       const initialSelectedSizes = {};
-       const initialSelectedPrices ={};
-    
-       response.data.forEach(item => {
-        initialSelectedSizes[item.productId] = item.sizeOfEachUnits[0];
-        initialSelectedPrices[item.productId] = item.priceOfEachUnits[0]; // Assuming the first price is the default
-      });
-    
-      setSelectedSizes(initialSelectedSizes);
-      setSelectedPrices(initialSelectedPrices);
-    
-         // Set the initial price when products are loaded
-         if (response.data.length > 0) {
-          setSelectedproductPrice(response.data[0].priceOfEachUnits[0]);
-        }
-        console.log(window.location.state && window.location.state.brand);
-         console.log(window.location.state && window.location.state.category);
-        const category = location.state && location.state.category;
-        const brand = location.state && location.state.brand;
-        
-        if (category) 
-        {
-          setFilteredProduct(response.data.filter(item => item.categoryName === category));
-          setProduct(response.data);
-        } 
-        else 
-        {
-          if(brand){
-            setFilteredProduct(response.data.filter(item => item.brandName === brand));
-            console.log(filteredProduct);
-            setProduct(response.data);
-          }
-          else
-        {
-          setFilteredProduct(response.data);
-          setProduct(response.data);
-        }}});
-     }
-    
-    
-    const AllProducts = () => 
-    {
-        setFilteredProduct(product);
-    }
+  
 
     useEffect(()=>{
-        GetAllProducts();
-       },[]);
+          // Get item from local storage on component mount
+    const storeddata = localStorage.getItem('userdata');
+    if (storeddata) {
+    const storeduserdata = JSON.parse(storeddata);
+    console.log('storeduseerdata',storeduserdata);
+      setUserId(storeduserdata.userId);
+    }
+      // Call GetWishList only if userid is available
+  if (userid) {
+    GetWishList();
+  }
+        // const retrievewishlistdata = JSON.parse(localStorage.getItem('wishlistdata'));
+        // setFilteredProduct(retrievewishlistdata);
+        // setWishListData(retrievewishlistdata);
+       },[userid]);
     
     const handleSubscribeClick = () => {
    
@@ -106,13 +77,111 @@ const Wishlist =()=>{
         navigate('/products');
       }
 
+      const GetWishList = async () => {
+        // alert(userid);
+        if (userid) {
+          const url = `https://localhost:7041/api/Wishlist/GetUserWishlistProducts?userid=${userid}`;
+          try {
+            // alert("hitte getwishkist tyry");
+            const response = await axios.get(url);
+            console.log('API Response:', response.data); 
+            // const parsedData = JSON.parse(response.data);
+               // Update the wishlist data state
+               setWishListData(response.data);
+               setFilteredProduct(response.data);
+            localStorage.removeItem('wishlistdata');
+            localStorage.setItem('wishlistdata', JSON.stringify(response.data));
+          } catch (error) {
+            alert("hitte getwishkist catch");
+            console.error('GetWishList axios error', error);
+          }
+        }
+      };
+      console.log('setwishlistdata',wishlistData);
+      const handleaddorremovewishlist= async (Pid)=>{
+        // Id.preventDefault();
+        alert(Pid);
+        alert("handleaddtowishlist hitted");
+        const isInWishlist = isProductInWishlist2(Pid);
+        alert(isInWishlist);
+        console.log(isInWishlist);
+        if (isInWishlist.isInWishlist===true)
+         {
+            const data={
+              wishlistId:0,
+              userId:userid,
+              productId:Pid,
+              isInWishlist:false
+            }
+            const url="https://localhost:7041/api/Wishlist/CreateWishlist";
+            try{
+              const response = await axios.post(url,data );
+              alert("axios done");
+              console.log(response);
+              if(response.status === 200)
+              {
+              alert("axios rem wishlist done");
+              await GetWishList();
+                toast.error("item removed from wishlist");
+              
+              }
+            }
+            catch(error)
+            {
+              alert("catch hitted");
+              console.error('handleaddtowishlist axios error',error);
+            }
+        }
+        if (isInWishlist.isInWishlist===false)
+         {
+            const data={
+              wishlistId:0,
+              userId:userid,
+              productId:Pid,
+              isInWishlist:true
+            }
+             const url="https://localhost:7041/api/Wishlist/CreateWishlist";
+             try{
+              const response = await axios.post(url,data );
+              alert("axios done");
+              console.log(response);
+              if(response.status === 200)
+              {
+               alert("axios adding wishlist done");
+               await GetWishList();
+                toast.success("item added to wishlist");
+                return;
+              }
+             }
+             catch(error)
+             {
+              alert("catch hitted");
+              console.error('handleaddtowishlist axios error',error);
+             }
+            }
+            
+      }
+      
+      const isProductInWishlist = (productId) => {
+        return wishlistData.some(item => item.productId === productId);
+      };
+
+      const isProductInWishlist2 = (productId) => {
+        for (let i = 0; i < wishlistData.length; i++) {
+          if (wishlistData[i].productId === productId) {
+            return { isInWishlist: true, index: i };
+          }
+        }
+        return { isInWishlist: false, index: -1 };
+      };
+
     return (
                 <>
                 <Nav/>
                 <div className="wishlistpage-container">
                     <h3 className="wishlist-page-heading" style={{fontSize:'30px', fontWeight:'bolder'}}>Wish List <span style={{ fontSize: '15px', fontWeight:'normal' }} >({filteredProduct.length} results)</span></h3>
                     <div className='productbox'>
-            
+                    <ToastContainer/>
                         <div className='wishlistproductbox-container'>
                         {
                             filteredProduct.map((curElm) => 
@@ -121,12 +190,14 @@ const Wishlist =()=>{
                                 const selectedPrice = curElm.sizeOfEachUnits.includes(Number(selectedSize))
                                   ? curElm.priceOfEachUnits[curElm.sizeOfEachUnits.indexOf(Number(selectedSize))]
                                   : '';
+                                  const isInWishlist = isProductInWishlist(curElm.productId);
 
+                                
                                   return(
                                       <>
                                       <Card className='product-card'>
-                                      <div className={`overlay-icon ${isModalOpen ? 'hidden' : ''}`}>
-                                     <li><AiOutlineHeart className='li-icon' /></li>
+                                      <div onClick={()=>handleaddorremovewishlist(curElm.productId)} className={`overlay-icon ${isModalOpen ? 'hidden' : ''}`}>
+                            <li style={{ backgroundColor: isInWishlist ? 'green' : '' }}><AiOutlineHeart className='li-icon' /></li>
                                     </div>
                                       <Card.Img variant="top" src={`data:image/jpeg;base64,${curElm.base64Image}`} alt={curElm.Title} />
                                       <Card.Body className='product-card-body'>
@@ -180,4 +251,4 @@ const Wishlist =()=>{
     )
 }
 
-export default Wishlist;
+export default MyWishlist;

@@ -9,7 +9,6 @@ import { FaUnderline } from 'react-icons/fa';
 import { Link, useAsyncError, useNavigate } from "react-router-dom";
 
 
-
 const SubscriptionModal = ({ product,Priceofselectedproduct,subscriptiontypes,handleClose }) => {
   console.log(product);
   console.log(Priceofselectedproduct);
@@ -135,7 +134,6 @@ const SubscriptionModal = ({ product,Priceofselectedproduct,subscriptiontypes,ha
   }
 
   const updatingprices=()=>{
-  
     setActualSingleDayPrice(quantityofproduct*selectedproductPrice);
     setDiscountedSingleDayPrice(Math.round((quantityofproduct*selectedproductPrice)*1));
 
@@ -199,7 +197,7 @@ const SubscriptionModal = ({ product,Priceofselectedproduct,subscriptiontypes,ha
                   <div className='susbcriptionpricedeiv'>
                   <h2 className='susbcriptiontotalprice'>{discountedsingleDayPrice}</h2>
                   <div className='susbcriptiondiscount-div'>
-                  <h5 >{}</h5>
+                  
                   <h4 ></h4>
                   </div>
                   </div>
@@ -244,8 +242,15 @@ const SubscriptionModal = ({ product,Priceofselectedproduct,subscriptiontypes,ha
         </>
         )}
               </div>
+              <div className='CalendarandTimeSLot-div'>
+                <>
+                  
+                </>
+              </div>
 
-      
+
+
+  
     </Modal.Body>
     <Modal.Footer className='susbcriptionmodal-footer'>
           <div className='subscriptionModal-btndiv'>
