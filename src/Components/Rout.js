@@ -3,8 +3,6 @@ import { Route, Routes, Navigate, Redirect } from 'react-router-dom';import Logi
 import Home from '../Pages/Home';
 import Login2 from '../Pages/Login2';
 import Home2 from '../Pages/Home2';
-
-import Wishlist from '../Pages/MyWishList';
 import Popup from '../Pages/PopUp';
 import Products from '../Pages/Products';
 import Location from '../Pages/Location';
