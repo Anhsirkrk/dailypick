@@ -1,6 +1,8 @@
 import React,{useState,useEffect } from 'react';
 import '../Css/Nav.css';
+import profilepic from '../Images/vecteezy_business-man-icon-for-your-web-profile_7522850.jpg'
 import {FaRegUser} from 'react-icons/fa'
+import {AiOutlineHeart} from 'react-icons/ai'
 import { Navigate, json } from 'react-router-dom';
 import { useLoginAuth } from '../Components/UserAuthContext';
 import {useNavigate } from "react-router-dom";
@@ -21,6 +23,7 @@ const Nav = () => {
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
+  
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -117,36 +120,42 @@ console.log(username);
             </div>
           
             <div className='col-4' id='navbar-row-col-4'>
-                <div class='navsearchinput-container'>
+                <div className='navsearchinput-container'>
                     <input type='text' class='navsearchinput' placeholder='search for products'></input>
-                    <div class='navsearchicon'><GoLocation style={{color:'whitesmoke'}}/></div>
+                    <div className='navsearchicon'><GoLocation style={{color:'whitesmoke'}}/></div>
                </div>
            </div>
 
-            <div className='col-4' id='navbar-userdisplay-col-2' onClick={toggleDropdown}>
-            <Button className='MySubscriptionsBtn'>My Subscriptions</Button>
-              </div>
-
-            <div className='col-2' id='navbar-userdisplay-col-2' onClick={toggleDropdown}>
+            <div className='col-2' id='navbar-userdisplay-col-2'>
+            <Button className='MySubscriptionsBtn' >My Subscriptions</Button>
             <BsCart2 className='Cart-icon'></BsCart2>
-                      <div className="_1Us3XD">
-                          <div className="H6-NpN">
+            <AiOutlineHeart className='wishlist-icon'></AiOutlineHeart>
+            <div className="_1Us3XD" onClick={toggleDropdown}>
+                        <img className='profile-image' src={profilepic}  alt='profile-image'/>
+                           {/*<div className="H6-NpN">
                             <a className="_1TOQfO" title={username} aria-haspopup="true" >
-                            <FaRegUser className='nav-usericon'/>
-                      {/*     <img src="https://static-assets-web.flixcart.com/batman-returns/batman-returns/p/images/profile-815786.svg" alt="bhaskar" class="-dOa_b L_FVxe" width="24" height="24" /> */}
+                             <FaRegUser className='nav-usericon'/> 
+                          <img src="https://static-assets-web.flixcart.com/batman-returns/batman-returns/p/images/profile-815786.svg" alt="bhaskar" class="-dOa_b L_FVxe" width="24" height="24" />
                             <span class="_1sLnDu">{username}</span>
-                            </a>
-                          </div>
+                            </a> 
+                          </div>*/}
                       </div>
-                        {/*}  {userdata.firstName} */}
-                              {isOpen && (
+                      {isOpen && (
                                   <div className="userdisplay-dropdown-content">
+                                    <h5 className='Profile-Name-heading' >Profile Name</h5>
+                                    <a className="_1TOQfO" title={username} aria-haspopup="true" >{username}</a>
                                     <a href='#'  >Profile</a>
                                     <a href="#" onClick={(e) => handlesignout(e)}>Signout</a>
                                   </div>
                               )}
+              </div>
+
+            {/* <div className='col-4' id='navbar-userdisplay-col-2' onClick={toggleDropdown}>
+                     
+                        {/*}  {userdata.firstName} 
+                              
                 
-            </div>
+            </div> */}
         </div>
         
     </>

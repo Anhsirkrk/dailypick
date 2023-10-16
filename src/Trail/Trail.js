@@ -1,122 +1,79 @@
-import React,{useState} from 'react';
-import './Trail.css'
+// import React, { useState, useEffect } from 'react';
+// import Nav from '../Components/Nav';
+// import './Trail.css';
+// import pic from '../Images/Dummy/Heritage_Milk_1.png';
+// import pic1 from '../Images/Dummy/Heritage_Milk_2.jpg';
+// import 'bootstrap/dist/css/bootstrap.min.css';
+// import { Swiper, SwiperSlide } from 'swiper/react';
+// import 'swiper/swiper-bundle.min.css';
 
-const Trail = () => {
+// const Trail = () => {
 
-    const options = [
-        { id: 1, label: 'Option 1' },
-        { id: 2, label: 'Option 2' },
-        { id: 3, label: 'Option 3' },
-        // Add more options as needed
-      ];
-    
+//   const [startIndex, setStartIndex] = useState(0);
+//   const images = [pic, pic1, pic, pic, pic1, pic, pic1, pic, pic1, pic];
 
+//   useEffect(() => {
+//     // This effect will run whenever the value of startIndex changes
+//     // You can perform any side effects or data fetching here
+//   }, [startIndex]); // Empty dependency array means this effect will run once after the initial render
 
-    const [selectedOptions, setSelectedOptions] = useState([]);
+//   const [productname, setProductname] = useState('');
+//   const [quantity, setQuantity] = useState('');
 
-  const handleCheckboxChange = (option) => {
-    if (selectedOptions.includes(option)) {
-      setSelectedOptions(selectedOptions.filter((item) => item !== option));
-    } else {
-      setSelectedOptions([...selectedOptions, option]);
-    }
-  };
+//   const handleIndexChange = (index) => {
+//     setStartIndex(index);
+//   };
 
-  return (
-    <>
-    <div className='container'>
-        <div className='row'>
-            <div className='first-column'>
-            <div>
-                <h2>Multiple Checkboxes</h2>
-                <ul>
-                    {options.map((option) => (
-                    <li key={option.id}>
-                        <label>
-                            <input type="checkbox" checked={selectedOptions.includes(option)} onChange={() => handleCheckboxChange(option)} />
-                            {option.label}
-                        </label>
-                    </li>
-                    ))}
-                </ul>
-                    <p>Selected options: {selectedOptions.join(', ')}</p>
-            </div>
-            </div>
-            <div className='second-column'>
-                        <div className='top'>
-                            <h4>milk milk milk</h4>
-                            <h4>milk milk milk</h4>
-                            <h4>milk milk milk</h4>
-                        </div>
-                        <div className='items-display'>
+//   return (
+//     <>
+//       <Nav />
 
-                        </div>
-            </div>
-        </div>
-    </div>
-    </>
-  )
-}
+//       <div className='product-display'>
+//         <div className='product-image'>
+//           <img className='main-product-image' src={pic} alt='product image' />
+//         </div>
+//         <div className='product-details'>
+//           <h2 className='product-name'>{productname}Heritage Daily Health Toned Milk</h2>
 
-export default Trail;
+//           <div className='buttons'>
+//             <button className='Product-subscribe-btn'>Subscribe</button>
+//             <button className='product-add to cart-btn'>Add to Cart</button>
+//           </div>
 
+//           <div className='product-other-quantity-images'>
+//             {images.map((imageUrl, index) => (
+//               <div key={index}>
+//                 <img className='Similar-product-images' src={imageUrl} alt={`product image ${index + 1}`} />
+//                 <p>250ml{quantity}</p>
+//               </div>
+//             ))}
+//           </div>
+//         </div>
+//       </div>
 
+//       <div className='About-product'>
+//         <h2>About Product</h2>
+//       </div>
 
+//       <div className='Similar-products'>
+//         <h2>Similar Products</h2>
+//         <div className='similar-products-carousel'>
+//           <Swiper
+//             slidesPerView={1}
+//             spaceBetween={10}
+//             pagination={{ clickable: true }}
+//             onSlideChange={(swiper) => handleIndexChange(swiper.activeIndex)}
+//           >
+//             {images.map((image, index) => (
+//               <SwiperSlide key={index} className='image-slide'>
+//                 <img className='block' src={image} alt={`product image ${index + 1}`} />
+//               </SwiperSlide>
+//             ))}
+//           </Swiper>
+//         </div>
+//       </div>
+//     </>
+//   );
+// };
 
-{/* <div className='daily-needs'>     
-            
-<div className="Heading" >Daily Needs </div>
-<div className="group" >
-<div className="scroll-container">
-<div className="rectangle" >
-    <div className="DN-field" >
-      <img className="DN_Image" src="rectangle-14102.png" />
-      <div className="name" >Vegetables </div>
-    </div>
-</div>
-<div className="rectangle" >
-    <div className="DN-field" >
-      <img className="DN_Image" src="rectangle-14102.png" />
-      <div className="name" >Milk </div>
-    </div>
-</div>
-<div className="rectangle" >
-    <div className="DN-field" >
-      <img className="DN_Image" src="rectangle-14102.png" />
-      <div className="name" >News Papers </div>
-    </div>
-</div>
-<div className="rectangle" >
-    <div className="DN-field" >
-      <img className="DN_Image" src="rectangle-14102.png" />
-      <div className="name" >Curd </div>
-    </div>
-</div>
-<div className="rectangle" >
-    <div className="DN-field" >
-      <img className="DN_Image" src="rectangle-14102.png" />
-      <div className="name" >Vegetables </div>
-    </div>
-</div>
-<div className="rectangle" >
-    <div className="DN-field" >
-      <img className="DN_Image" src="rectangle-14102.png" />
-      <div className="name" >Milk </div>
-    </div>
-</div>
-<div className="rectangle" >
-    <div className="DN-field" >
-      <img className="DN_Image" src="rectangle-14102.png" />
-      <div className="name" >News Papers </div>
-    </div>
-</div>
-<div className="rectangle" >
-    <div className="DN-field" >
-      <img className="DN_Image" src="rectangle-14102.png" />
-      <div className="name" >Curd </div>
-    </div>
-</div>
-
-</div>
-</div>
-</div> */}
+// export default Trail;
