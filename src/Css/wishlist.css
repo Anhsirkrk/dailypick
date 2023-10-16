@@ -41,3 +41,14 @@ min-height: 600px;}.wishlistpage-container{
     font-weight: 600;
     line-height: normal;
 }
+.wishlistgotohomebtn2{
+    width: 150px;
+    height: 35px;
+    background: #024172;
+    color: white;
+    border-radius: 10px;
+    font-family: system-ui;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
