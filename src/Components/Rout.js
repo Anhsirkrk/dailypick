@@ -23,8 +23,6 @@ const Rout = () => {
           <Route path='/login2' element={<Login2 />} />
           <Route path='/home2' element={<Home2/>}/>
 
-          <Route path='/wishlist' element={<Wishlist/>}/>
-
           <Route path='/products' element={<Products/>}/>
           <Route path="/*" element={<Navigate to="/popup" replace />} />
           <Route path="/location" element={<Location/>}/>
