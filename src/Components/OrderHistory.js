@@ -2,7 +2,13 @@ import React from 'react'
 
 const OrderHistory = () => {
   return (
-    <div>OrderHistory</div>
+    <div>
+       <div className='OH-top'>
+        <h2 className='OH-heading'>Order History</h2>
+      </div>
+      <hr></hr>
+      
+    </div>
   )
 }
 

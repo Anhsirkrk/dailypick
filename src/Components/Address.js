@@ -2,7 +2,9 @@ import React,{useState,useEffect} from 'react';
 import {BiCircle} from 'react-icons/bi';
 import {TbCurrentLocation} from 'react-icons/tb';
 import {TbEdit} from 'react-icons/tb';
-import {RiDeleteBinLine} from 'react-icons/ri'
+import {RiDeleteBinLine} from 'react-icons/ri';
+import locicon from '../Images/location.svg';
+import {SlLocationPin} from 'react-icons/sl'
 
 const Address = () => {
 
@@ -50,11 +52,17 @@ const Address = () => {
                       ) : (
                         <BiCircle style={{ width: '70px', height: '20px' }} />
                       )}
-                      <p className='address-paragraph'>{addr.username}, {addr.houseNo} ,{addr.area}, {addr.city} ,{addr.mobileNumber} ,{addr.pincode}</p>  
-                      <div className='address-icons'>
-                        <div className='edit-icon'><TbEdit/></div>
-                        <div className='delete-icon'><RiDeleteBinLine/></div> 
-                        </div>      
+                      <div className='address-box'>
+                        <div className='location-icon'><SlLocationPin/></div>
+                        <div className='address-paragraph'>
+                          <p>{addr.username},{addr.houseNo},{addr.area},<br></br> {addr.city},{addr.mobileNumber},{addr.pincode}</p>  
+                        </div>
+                        <div className='address-icons'>
+                          <div className='edit-icon'><TbEdit/></div>
+                          <div className='delete-icon'><RiDeleteBinLine/></div> 
+                        </div>  
+                      </div>
+                         
                   </div>
                  
                     

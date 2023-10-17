@@ -5,10 +5,18 @@ import ProfileDetails from '../Components/ProfileDetails';
 import OrderHistory from '../Components/OrderHistory';
 import Address from '../Components/Address';
 import Security from '../Components/Security';
-import ContactUs from '../Components/ContactUs'
+import ContactUs from '../Components/ContactUs';
+
+import { useLoginAuth } from '../Components/UserAuthContext';
+import {useNavigate } from "react-router-dom";
 
 
 const Profile = () => {
+
+
+  const {isLoginauthenticated, setIsLoginauthenticated}= useLoginAuth();
+  const [username, setUsername] = useState('');
+ 
 
     const [contentType, setContentType] = useState('profiledetails');
 
@@ -27,6 +35,23 @@ const Profile = () => {
         }
       };
 
+
+
+      const handlesignout = async (e) => {
+        e.preventDefault();
+        localStorage.removeItem('userdata');
+        localStorage.removeItem('isLoggedIn');
+        setUsername('');
+        console.log('nav.js before setting to false', isLoginauthenticated);
+        if(isLoginauthenticated===true)
+        {
+          setIsLoginauthenticated(false);
+          console.log('nav.js before setting to false',isLoginauthenticated);
+         window.location.href='/popup';
+         window.history.replaceState(null,'','/popup');
+         console.log(isLoginauthenticated);
+        }
+      }
 
 
   return (
@@ -48,7 +73,7 @@ const Profile = () => {
                 <div className='account-list-items' onClick={() => setContentType('address')}>Address</div>
                 <div className='account-list-items' onClick={() => setContentType('security')}>Password & Security</div>
                 <div className='account-list-items' onClick={() => setContentType('contactus')}>Contact Us</div>
-                <div className='account-list-items'>LOG OUT</div>
+                <div className='account-list-items' onClick={(e) => handlesignout(e)}>LOG OUT</div>
                 </div>
             </div>
             <div className='column-2'>
