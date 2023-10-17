@@ -30,6 +30,26 @@ const Home2 = () => {
   const [description, setDescription]=useState('');
   const [imageUrl,setImageurl]=useState('');
   const [addressdata,setAddressData]= useState({});
+  const [wishlistadata,setWishListData]= useState([]);
+
+  const {isLoginauthenticated, setIsLoginauthenticated}= useLoginAuth();
+  const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
+  const [userid,setUserId]=useState('');
+  const [username, setUsername] = useState('');
+
+  useEffect(() => {
+    // Check if user data is stored in local storage
+    const storeddata = localStorage.getItem('userdata');
+    if (storeddata) {
+      // If user data is available, update state with username and userid
+      const storeduserdata = JSON.parse(storeddata);
+      setUsername(storeduserdata.firstName);
+      setUserId(storeduserdata.userId);
+      
+    }
+  }, []);
+
 
   const GetDailyNeed=()=>{
     const  url="https://localhost:7041/api/Admin/GetDetailsAndImagesOfCategories";
@@ -56,49 +76,22 @@ const Home2 = () => {
       console.log(error);
     })
   }
-  useEffect(()=>{
-   GetDailyNeed();
-   GetBrands();
-  },[]);
-  
+
+
+  useEffect(() => {
+    // Call GetDailyNeed, GetBrands, and GetWishList when userid changes
+    GetDailyNeed();
+    GetBrands();
+  }, [userid]);
+
+
+  console.log('home2 page userid ',userid);
   console.log(dailyneeds);
   console.log(brands);
+  console.log('wishlistdata  hompeage',wishlistadata);
 
-
-  const {isLoginauthenticated, setIsLoginauthenticated}= useLoginAuth();
-  const navigate = useNavigate();
-  const [isOpen, setIsOpen] = useState(false);
-  const [userid,setUserId]=useState('');
-  const [username, setUsername] = useState('');
   // alert('home2 isLoginauthenticated', isLoginauthenticated);
   console.log(isLoginauthenticated);
-
-  useEffect(() => {
-    // const token = localStorage.getItem('userdata');
-    // if (token) {
-    //   setIsLoginauthenticated(true);
-    // }
-    const token = localStorage.getItem('userdata');
-    if(localStorage.getItem('isLoggedIn') === true)
-    {
-      setIsLoginauthenticated(true);
-    }
-  }, []);
-  
-  useEffect(() => {
-    // Get item from local storage on component mount
-    const storeddata = localStorage.getItem('userdata');
-    if (storeddata) {
-    const storeduserdata = JSON.parse(storeddata);
-    console.log(storeduserdata);
-      setUsername(storeduserdata.firstName);
-      setUserId(storeduserdata.userId);
-    }
-    console.log(username);
-  }, []);
-  console.log('home2 page userid ',userid);
-
-
 console.log(addressdata);
 
   const HandleProductsByCategory = (category) => {

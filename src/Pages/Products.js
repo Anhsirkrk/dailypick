@@ -13,6 +13,7 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import HeritageCurd1 from '../Images/Dummy/Heritage_Curd_1 copy.jpg';
 import {ToastContainer,toast } from 'react-toastify';
+import { faL } from '@fortawesome/free-solid-svg-icons';
 
 const Products = ({detail, view, close, setClose, addtocart}) => {
 
@@ -28,19 +29,52 @@ const Products = ({detail, view, close, setClose, addtocart}) => {
    const [selectedRatings,setSelectedRatings] = useState([]);
    const [isModalOpen, setIsModalOpen] = useState(false);
    const location = useLocation();
-
+   const [wishlistData,setWishListData]= useState([]);
+   const [wishlistIds, setWishlistIds] = useState([]);
    const [userid,setUserId]=useState('');
 
-   useEffect(() => {
-    // Get item from local storage on component mount
-    const storeddata = localStorage.getItem('userdata');
-    if (storeddata) {
-    const storeduserdata = JSON.parse(storeddata);
-    console.log('storeduseerdata',storeduserdata);
-      setUserId(storeduserdata.userId);
+
+   const GetWishList = async () => {
+    // alert(userid);
+    // alert('get wish list hitted');
+    if (userid) {
+      const url = `https://localhost:7041/api/Wishlist/GetUserWishlistProducts?userid=${userid}`;
+      try {
+        //  alert("hitte getwishkist tyry");
+        const response = await axios.get(url);
+        console.log('API Response:', response.data); 
+        // const parsedData = JSON.parse(response.data);
+           // Update the wishlist data state
+           setWishListData(response.data);
+        localStorage.removeItem('wishlistdata');
+        localStorage.setItem('wishlistdata', JSON.stringify(response.data));
+      } catch (error) {
+        alert("hitte getwishkist catch");
+        console.error('GetWishList axios error', error);
+      }
     }
-  }, []);
+  };
+  console.log('setwishlistdata',wishlistData);
+
+ 
+useEffect(() => {
+  // Get item from local storage on component mount
+  const storeddata = localStorage.getItem('userdata');
+  if (storeddata) {
+    const storeduserdata = JSON.parse(storeddata);
+    setUserId(storeduserdata.userId);
+  }
+  // Call GetWishList only if userid is available
+  if (userid)
+  {
+    GetWishList();
+  }
+  GetAllProducts();
+}, [userid]);
   console.log('userid',userid);
+  console.log('prod oage wihlistdata',wishlistData);
+  console.log('prod oage wishlists id;s',wishlistIds);
+
 
 
   const GetAllProducts =()=>{
@@ -91,10 +125,7 @@ const Products = ({detail, view, close, setClose, addtocart}) => {
 
    console.log(filteredProduct);
    console.log(product);
-   
-    useEffect(()=>{
-      GetAllProducts();
-     },[]);
+
 
     const handleSubscribeClick = (curElm,selectedPrice) => {
       setSelectedProduct({ ...curElm, selectedPrice }); // Include selectedPrice in the selectedProduct object
@@ -178,36 +209,91 @@ const Products = ({detail, view, close, setClose, addtocart}) => {
   };
 }, [isModalOpen]);
 
-const handleaddtowishlist=  (Id)=>{
-  // Id.preventDefault();
-  alert("handle hitted");
-  if(Id){
-    const data={
-      productId:Id,
-      userId:userid
-    }
-     const url="";
-     const response =  axios.post(url, { params: data });
-     console.log(response);
-     if(response.status === 200)
-     {
-       toast.success("item added to wishlist");
-       return;
-     }
-     else
-     {
-      toast.error(" got error adding to wishlist");
-     }
-  }
 
+const handleaddorremovewishlist= async (Pid)=>{
+  // Id.preventDefault();
+  alert(Pid);
+  alert("handleaddtowishlist hitted");
+  const isInWishlist = isProductInWishlist2(Pid);
+  alert(isInWishlist);
+  console.log(isInWishlist);
+  if (isInWishlist.isInWishlist===true)
+   {
+      const data={
+        wishlistId:0,
+        userId:userid,
+        productId:Pid,
+        isInWishlist:false
+      }
+      const url="https://localhost:7041/api/Wishlist/CreateWishlist";
+      try{
+        const response = await axios.post(url,data );
+        alert("axios done");
+        console.log(response);
+        if(response.status === 200)
+        {
+        alert("axios rem wishlist done");
+        await GetWishList();
+          toast.error("item removed from wishlist");
+        
+        }
+      }
+      catch(error)
+      {
+        alert("catch hitted");
+        console.error('handleaddtowishlist axios error',error);
+      }
+  }
+  if (isInWishlist.isInWishlist===false)
+   {
+      const data={
+        wishlistId:0,
+        userId:userid,
+        productId:Pid,
+        isInWishlist:true
+      }
+       const url="https://localhost:7041/api/Wishlist/CreateWishlist";
+       try{
+        const response = await axios.post(url,data );
+        alert("axios done");
+        console.log(response);
+        if(response.status === 200)
+        {
+         alert("axios adding wishlist done");
+         await GetWishList();
+          toast.success("item added to wishlist");
+          return;
+        }
+       }
+       catch(error)
+       {
+        alert("catch hitted");
+        console.error('handleaddtowishlist axios error',error);
+       }
+      }
+      
 }
 
+const isProductInWishlist = (productId) => {
+  return wishlistData.some(item => item.productId === productId);
+};
+
+
+const isProductInWishlist2 = (productId) => {
+  for (let i = 0; i < wishlistData.length; i++) {
+    if (wishlistData[i].productId === productId) {
+      return { isInWishlist: true, index: i };
+    }
+  }
+  return { isInWishlist: false, index: -1 };
+};
 
   return (
     <>
     <Nav/>
     <div className='products'>
     <div className='products-container'>
+    <ToastContainer/>
         <div className='filter'>
             <div className='categories'>
                 <h3>categories</h3>
@@ -308,13 +394,13 @@ const handleaddtowishlist=  (Id)=>{
                       const selectedPrice = curElm.sizeOfEachUnits.includes(Number(selectedSize))
                         ? curElm.priceOfEachUnits[curElm.sizeOfEachUnits.indexOf(Number(selectedSize))]
                         : '';
-             
+                        const isInWishlist = isProductInWishlist(curElm.productId);
                       
                         return(
                             <>
                             <Card className='product-card'>
-                            <div onClick={()=>handleaddtowishlist(curElm.productId)} className={`overlay-icon ${isModalOpen ? 'hidden' : ''}`}>
-                           <li><AiOutlineHeart className='li-icon' /></li>
+                            <div onClick={()=>handleaddorremovewishlist(curElm.productId)} className={`overlay-icon ${isModalOpen ? 'hidden' : ''}`}>
+                            <li style={{ backgroundColor: isInWishlist ? 'green' : '' }}><AiOutlineHeart className='li-icon' /></li>
                           </div>
                             <Card.Img variant="top" src={`data:image/jpeg;base64,${curElm.base64Image}`} alt={curElm.Title} />
                             <Card.Body className='product-card-body'>
@@ -364,3 +450,24 @@ const handleaddtowishlist=  (Id)=>{
 }
 
 export default Products
+
+
+
+// const isProductInWishlist = (productId) => {
+//   for (let i = 0; i < wishlistData.length; i++) {
+//     // alert(i);
+//     // alert(wishlistData.length);
+//     if (wishlistData[i].productId === productId) {
+//       return true;
+//     }
+//   }
+//   return false;
+// };
+// const isProductInWishlist = (productId) => {
+//   for (let i = 0; i < wishlistData.length; i++) {
+//     if (wishlistData[i].productId === productId) {
+//       return { isInWishlist: true, index: i };
+//     }
+//   }
+//   return { isInWishlist: false, index: -1 };
+// };
