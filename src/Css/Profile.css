@@ -156,7 +156,7 @@ background: #f6f6f6;
 display: flex;
   align-items: center;
 width: 300px;
-height: 70px;
+height: 60px;
 gap:20px;
 border: 1px #BABABA solid;
 padding: 15px 24px 15px 24px;
@@ -200,7 +200,7 @@ padding: 15px 24px 15px 24px;
     display: flex;
     align-items: center;
     width: 300px;
-    height: 70px;
+    height: 60px;
     gap:20px;
     border: 1px #BABABA solid;
     padding: 30px 24px 15px 24px;
@@ -247,7 +247,6 @@ color: #f6f6f6;
 position: relative;
 font-size: 20px;
 font-family: Poppins;
-color: #f6f6f6;
 text-align: left;
 margin-top: 10px;
 }
@@ -264,17 +263,77 @@ display: inline-block;
     display: flex;
     gap:30px;
     margin-left: 100px;
+    align-items: center;
+    padding-right: 20px;
+}
+.edit-icon {
+    border-radius: 49px;
+border-style: solid;
+border-color: #024172;
+color: #024172;
+border-width: 0.5px;
+box-sizing: border-box;
+background: var(--white, #f6f6f6);
+flex-shrink: 0;
+width: 30px;
+height: 30px;
+position: relative;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.delete-icon{
+    border-radius: 50%;
+border-style: solid;
+border-color: #f24c62;
+border-width: 0.83px;
+width: 30px;
+height: 30px;
+position: relative;
+display: flex;
+align-items: center;
+justify-content: center;
+color: #f24c62;
+}
+.location-icon{
+    display: flex;
+align-items: center;
+justify-content: center;
 }
 .address-div{
-    width: 900px;
-    height: auto;
-    
+    margin-top: 20px;
+    width: 870px;
+    height: 400px;
+    align-items: center;
+    overflow-y: auto;
 }
 .Address-Display{
+    margin-top: 10px;
     display: flex;
-    width:900px;
+    width:850px;
     align-items: center;
+    justify-content: space-between;
 }
 .address-paragraph{
-    
+    width: 500px;
+    padding: 10px 20px;
+    margin-left: 30px;
+}
+.address-box{
+    padding-left:  20px;
+    display: flex;
+    justify-content: space-between;
+    background: var(--white, #f6f6f6);
+    border-radius: 5px;
+    box-shadow: inset 0px 0px 2px 0px rgba(0, 0, 0, 0.50);
+}
+
+
+
+/* order-history */
+.OH-heading{
+color: var(--p-1, #024172);
+text-align: left;
+font: var(--b-2-sb, 600 25px 'Poppins', sans-serif);
+position: relative;
 }

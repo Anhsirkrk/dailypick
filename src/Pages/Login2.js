@@ -131,6 +131,7 @@ const Login = ({}) => {
             lastName: response.data.lastname,
             mobile: response.data.mobile,
             email: response.data.email,
+            password:response.data.password,
             userFound: response.data.userFound,
           };
           console.log(sendData);
