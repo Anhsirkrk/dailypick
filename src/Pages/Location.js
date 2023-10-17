@@ -48,6 +48,7 @@ const Location = () => {
     const [selectedAddressPinCode,setSelectedAddressPincode]= useState('');
 
     
+    const [filteredSuppliers,setFilteredSuppliers] = useState([]);
 
 
     const [orderProductId,setorderProductId] = useState('');
@@ -414,9 +415,24 @@ navigate('/mysusbcription');
       mobilenumber: '+919812345678'
     }
   ];
-  const filteredSuppliers = suppliersdata.filter(supr => {
+
+  useEffect(() => {
+    if (selectedAddressPinCode !== null) {
+
+    setFilteredSuppliers(suppliersdata.filter(supr => {
+      return supr.pincodesofsupply.includes(selectedAddressPinCode.toString());
+    }));
+  }
+  }, [selectedAddressPinCode]);
+ 
+   
+  const filetringsupplierdatabypincode = (e) =>{
+   setSelectedAddressPincode(e);
+   setFilteredSuppliers(suppliersdata.filter(supr => {
     return supr.pincodesofsupply.includes(selectedAddressPinCode.toString());
-  });
+  }));
+      
+  }
   
 
   // Function to get address from latitude and longitude
@@ -483,30 +499,33 @@ console.log('sel addr pincode',selectedAddressPinCode);
             </div>
             <div>
             
-              <div>
+             {/*} <div>
                 <div>Latitude: {latitude}</div>
                 <div>Longitude: {longitude}</div>
-              </div>
+  </div> */}
+              <div className='supplierdata-div'>
+              <h3>Selected supplierID{selectedSupplierId}</h3>
+              <div className='supplierdata-scroll-div'>
+              {filteredSuppliers.map((supr) => (
+                <div
+                  key={supr.supplierId}
+                  className={`Supplier-dataDisplay ${supr.supplierId === selectedSupplierId ? 'selected' : ''}`}
+                  onClick={() => handleSupplierClick(supr)}
+                >
+                  {supr.supplierId === selectedSupplierId ? (
+                    <TbCurrentLocation style={{ width: '70px', height: '20px' }} />
+                  ) : (
+                    <BiCircle style={{ width: '70px', height: '20px' }} />
+                  )}
+                  <p className='supplierdetail-Paragraph'>{supr.name}, {supr.locality} ,{supr.state}, {supr.mobilenumber}
+                  </p>        
+                            </div>
+              ))}
+            </div>
+            </div>
             
             </div>
-            <h3>Selected supplierID{selectedSupplierId}</h3>
-            <div className='savedaddress-scroll-div'>
-            {filteredSuppliers.map((supr) => (
-              <div
-                key={supr.supplierId}
-                className={`Saved-AddressDisplay ${supr.supplierId === selectedSupplierId ? 'selected' : ''}`}
-                onClick={() => handleSupplierClick(supr)}
-              >
-                {supr.supplierId === selectedSupplierId ? (
-                  <TbCurrentLocation style={{ width: '70px', height: '20px' }} />
-                ) : (
-                  <BiCircle style={{ width: '70px', height: '20px' }} />
-                )}
-                <p className='Address-Paragraph'>{supr.name}, {supr.locality} ,{supr.state}, {supr.mobilenumber}
-                </p>        
-                          </div>
-            ))}
-          </div>
+         
 
          
       </div>
@@ -577,7 +596,7 @@ console.log('sel addr pincode',selectedAddressPinCode);
                           type='text'
                           className='PinCode-input'
                           placeholder="Enter Pin-Code"
-                          onChange={e=>{setPinCode(e.target.value); validatePinCode(e.target.value);}}
+                          onChange={e=>{setPinCode(e.target.value); validatePinCode(e.target.value); filetringsupplierdatabypincode(e.target.value); }}
                           />
                           <input 
                           type='text'
@@ -686,6 +705,8 @@ console.log('sel addr pincode',selectedAddressPinCode);
                   </Form>
                   )}
                   </div>
+
+                
 
                 </div>
           </div>
