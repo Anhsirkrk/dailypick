@@ -44,10 +44,23 @@ const Location = () => {
     const [addresslbl, setAddresslbl] = useState('');
 
 
+    const [selectedSupplierId, setSelectedSupplierId] = useState(null);
+    const [selectedAddressPinCode,setSelectedAddressPincode]= useState('');
+
     
 
 
+    const [orderProductId,setorderProductId] = useState('');
+    const [orderProductIndiviudalprice,setorderProductIndiviudalprice] = useState('');
+    const [orderProductquanity,setorderProductquanity] = useState('');
+    const [orderProductSUbscriptiontype,setorderProductSUbscriptiontype] = useState('');
+    const [orderProductStartdate,setorderProductStartdate] = useState('');
+    const [orderProductEnddate,setorderProductEnddate] = useState('');
+    const [orderProductSize,setorderProductSize] = useState('');
+    const [orderProducttimeslot,setorderProducttimeslot] = useState('');
+    const [orderProductTotalAmounttobePaid,setorderProductTotalAmounttobePaid] = useState('');
 
+    
     // const countries = Country.getAllCountries();
     const states = State.getStatesOfCountry('IN') ;
     const cities = selectedStateISCode ? City.getCitiesOfState('IN',selectedStateISCode) : [];
@@ -72,22 +85,40 @@ const Location = () => {
     setSelectedState(stateIsoCode);
     setSelectedCity('');
   }
-  console.log(selectedStateName);
+
 
   const handleCityChange = (event) => {
     const cityName = event.target.value;
     setSelectedCity(cityName);
   }
 
+  useEffect(()=>{ 
+    const orderProductId = localStorage.getItem('order-selectedproductId');
+    const orderProductIndiviudalprice = localStorage.getItem('order-productindividualprice');
+    const orderProductquanity = localStorage.getItem('order-quantityofproduct');
+    const orderProductSUbscriptiontype = localStorage.getItem('order-selectedsubscriptiontype');
+    const orderProductStartdate = localStorage.getItem('order-selectedStartdate');
+    const orderProductEnddate = localStorage.getItem('order-selectedEnddate');
+    const orderProductSize = localStorage.getItem('order-selectedSizeofproduct');
+    const orderProducttimeslot = localStorage.getItem('order-selectedtimeslot');
+    const orderProductTotalAmounttobePaid = localStorage.getItem('order-TotalAmounttobePaid');
+    setorderProductId(orderProductId);
+    setorderProductIndiviudalprice(orderProductIndiviudalprice);
+    setorderProductquanity(orderProductquanity);
+    setorderProductSUbscriptiontype(orderProductSUbscriptiontype);
+    setorderProductStartdate(orderProductStartdate);
+    setorderProductEnddate(orderProductEnddate);
+    setorderProductSize(orderProductSize);
+    setorderProducttimeslot(orderProducttimeslot);
+    setorderProductTotalAmounttobePaid(orderProductTotalAmounttobePaid);
+  },[]);
 
-    const amounttobepaid = localStorage.getItem('selectedproductPrice');
-    const selectedproductPrice = localStorage.getItem('selectedproductPrice');
-    const selectedSizeofproduct = localStorage.getItem('selectedSizeofproduct');
-    const quantityofproduct = localStorage.getItem('quantityofproduct');
-    console.log(`selpropri`,{selectedproductPrice});
-    console.log(`selprosiz`,{selectedSizeofproduct});
-    console.log(`selproqun`,{quantityofproduct});
-    console.log(`tot amnt`,{amounttobepaid});
+    
+     
+  
+    // const selectedproductPrice = localStorage.getItem('selectedproductPrice');
+    // const selectedSizeofproduct = localStorage.getItem('selectedSizeofproduct');
+    // const quantityofproduct = localStorage.getItem('quantityofproduct');
 
 
 
@@ -105,7 +136,7 @@ const Location = () => {
         setUserId(storeduserdata.userId);
       }
     }, []);
-    console.log('userid',userid);
+  
 
     useEffect(()=>{
       if (userid) {
@@ -142,44 +173,6 @@ const Location = () => {
      console.error(error);
    }
   }
-  console.log(userid);
-  console.log(savedAddresses);
-
-    const addresses = [
-      { 
-        addressId: 1,
-        name: 'John Doe',
-        mobile: '+919876543210',
-        pincode: '500082',
-        houseNo: 'A-123',
-        locality: 'Madhapur',
-        city: 'Hyderabad',
-        state: 'Telangana',
-    
-      },
-      { 
-        addressId: 2,
-        name: 'Jane Smith',
-        mobile: '+919912345678',
-        pincode: '400001',
-        houseNo: 'B-456',
-        locality: 'Colaba',
-        city: 'Mumbai',
-        state: 'Maharashtra',
-    
-      },
-      { 
-        addressId: 3,
-        name: 'Alice Johnson',
-        mobile: '+919812345678',
-        pincode: '600002',
-        houseNo: 'C-789',
-        locality: 'Egmore',
-        city: 'Chennai',
-        state: 'Tamil Nadu',
-    
-      }
-    ];
 
     useEffect(() => {
       if (locationData) {
@@ -187,7 +180,7 @@ const Location = () => {
         setLongitude(locationData.longitude);
       }
     }, [gettingSavedAddresses,setLocationData,locationData,setSelectedStateName,selectedStateName]);
-    console.log(locationData);
+   
 
    
 
@@ -214,11 +207,39 @@ const Location = () => {
       }
     };
   
+    const handleSupplierClick = (supr) => {
+      // setSelectedAddressId((prevId) => (prevId === id ? null : id));
+      alert('handleSavedAddressClick hitted');
+      alert(supr.supplierId);
+      setSelectedSupplierId((prevId) => (prevId === supr.supplierId ? null : supr.supplierId));
+    //   const settingAddressData = {
+    // addressId: addr.addressId,
+    // userId: addr.userId,
+    // country: addr.country,
+    // state: addr.state,
+    // city: addr.city,
+    // area: addr.area,
+    // pincode: addr.pincode,
+    // houseNo: addr.houseNo,
+    // longitude: addr.longitude,
+    // latitude: addr.latitude,
+    // username: addr.username,
+    // mobileNumber: addr.mobileNumber 
+    // };
+    // console.log(settingAddressData);
+    // const settingAddressDataString = JSON.stringify(settingAddressData);
+    // localStorage.setItem('order-SelectedAddressforSubscription',settingAddressDataString);
+    // localStorage.setItem('order-SelectedAddressIDforSubscription',selectedAddressId);
+
+    };
 
     const handleSavedAddressClick = (addr) => {
       // setSelectedAddressId((prevId) => (prevId === id ? null : id));
+      alert('handleSavedAddressClick hitted');
+      alert(addr.addressId);
       setSelectedAddressId((prevId) => (prevId === addr.addressId ? null : addr.addressId));
-  const settingAddressData = {
+      setSelectedAddressPincode((prevId)=>(prevId === addr.pincode ? null : addr.pincode));
+      const settingAddressData = {
     addressId: addr.addressId,
     userId: addr.userId,
     country: addr.country,
@@ -231,13 +252,18 @@ const Location = () => {
     latitude: addr.latitude,
     username: addr.username,
     mobileNumber: addr.mobileNumber 
-  };
-  localStorage.setItem('SelectedAddressOfSubscription',settingAddressData);
+    };
+    console.log(settingAddressData);
+    const settingAddressDataString = JSON.stringify(settingAddressData);
+    localStorage.setItem('order-SelectedAddressforSubscription',settingAddressDataString);
+    localStorage.setItem('order-SelectedAddressPinCodeforSubscription',selectedAddressPinCode);
+  
+
+    // localStorage.setItem('order-SelectedAddressIDforSubscription',selectedAddressId);
 
     };
-
- 
-
+    
+    
     const handleToggleAddreessForm = () => {
       setShowForm(prevState => !prevState);
       setSelectedAddressId(null);
@@ -269,11 +295,11 @@ const Location = () => {
     }
 
     const handlecontinuetopaymentbysavedadress = ()=>{
+      alert(selectedAddressId);
       if(selectedAddressId!= null){
-        const Orderdata ={
+        localStorage.setItem('order-SelectedAddressIDforSubscription',selectedAddressId);
 
-        }
-        navigate('/home2');
+        navigate('/mysusbcription');
       }
       else{
         return;
@@ -340,10 +366,12 @@ const Location = () => {
         mobileNumber:mobilenumofAddress 
        }
        console.log(settingadressdata);
-       localStorage.setItem('SelectedAddressOfSubscription', JSON.stringify(settingadressdata));     
-       const setteddata = JSON.parse(localStorage.getItem('SelectedAddressOfSubscription'));
-    console.log(setteddata);
-navigate('/home2');
+       localStorage.setItem('order-SelectedAddressforSubscription',settingadressdata);
+       localStorage.setItem('order-SelectedAddressIDforSubscription',response.data.addressId);
+   
+       const setteddata = JSON.parse(localStorage.getItem('order-SelectedAddressforSubscription'));
+        console.log(setteddata);
+navigate('/mysusbcription');
      } 
      else 
      {
@@ -359,6 +387,37 @@ navigate('/home2');
    }
   
    }
+
+   const suppliersdata = [
+    { 
+      supplierId: 1,
+      name: 'Supplier 1',
+      pincodesofsupply: ['500084', '500049', '500082'],
+      locality: 'Madhapur',
+      state: 'Telangana',
+      mobilenumber: '+919876543210'
+    },
+    { 
+      supplierId: 2,
+      name: 'Supplier 2',
+      pincodesofsupply: ['400001', '400002', '400003'],
+      locality: 'Colaba',
+      state: 'Maharashtra',
+      mobilenumber: '+919912345678'
+    },
+    { 
+      supplierId: 3,
+      name: 'Supplier 3',
+      pincodesofsupply: ['500084', '600003', '600004'],
+      locality: 'Egmore',
+      state: 'Tamil Nadu',
+      mobilenumber: '+919812345678'
+    }
+  ];
+  const filteredSuppliers = suppliersdata.filter(supr => {
+    return supr.pincodesofsupply.includes(selectedAddressPinCode.toString());
+  });
+  
 
   // Function to get address from latitude and longitude
   const getAddressFromLatLng = (lat, lng) => {
@@ -376,15 +435,29 @@ navigate('/home2');
   };
 
 console.log('loca data',locationData);
-
-
-
-
-
 console.log('sele adr id',selectedAddressId);
   console.log('add lbl',addresslbl);
 console.log('currentlat',latitude);
 console.log('curr lon',longitude);
+console.log(selectedStateName);
+
+console.log('userid',userid);
+console.log(savedAddresses);
+console.log(locationData);
+
+
+
+console.log(`orderProductId`,{orderProductId});
+console.log(`orderProductIndiviudalprice`,{orderProductIndiviudalprice});
+console.log(`orderProductquanity`,{orderProductquanity});
+console.log(`orderProductSUbscriptiontype`,{orderProductSUbscriptiontype});
+console.log(`orderProductStartdate`,{orderProductStartdate});
+console.log(`orderProductEnddate`,{orderProductEnddate});
+console.log(`orderProductSize`,{orderProductSize});
+console.log(`orderProducttimeslot`,{orderProducttimeslot});
+console.log(`orderProductTotalAmounttobePaid`,{orderProductTotalAmounttobePaid});
+console.log('sel addr pincode',selectedAddressPinCode);
+// console.log("filteredSuppliers",filteredSuppliers);
 
   return (
     <>
@@ -416,6 +489,25 @@ console.log('curr lon',longitude);
               </div>
             
             </div>
+            <h3>Selected supplierID{selectedSupplierId}</h3>
+            <div className='savedaddress-scroll-div'>
+            {filteredSuppliers.map((supr) => (
+              <div
+                key={supr.supplierId}
+                className={`Saved-AddressDisplay ${supr.supplierId === selectedSupplierId ? 'selected' : ''}`}
+                onClick={() => handleSupplierClick(supr)}
+              >
+                {supr.supplierId === selectedSupplierId ? (
+                  <TbCurrentLocation style={{ width: '70px', height: '20px' }} />
+                ) : (
+                  <BiCircle style={{ width: '70px', height: '20px' }} />
+                )}
+                <p className='Address-Paragraph'>{supr.name}, {supr.locality} ,{supr.state}, {supr.mobilenumber}
+                </p>        
+                          </div>
+            ))}
+          </div>
+
          
       </div>
     

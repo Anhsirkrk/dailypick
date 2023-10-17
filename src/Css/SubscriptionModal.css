@@ -1,19 +1,28 @@
 .susbcriptionmodal {
     position: fixed;
-    top: 50%;
+    top: 42%;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: #fefefe;
     border: 1px solid #888;
-    max-width: 700px; /* Adjust the width as needed */
-    width: 600px;
-    display: block;
+    max-width: 900px;
     height: 450px;
-    padding: 0PX 20PX 20PX 20PX;
+    width: 860px;
+    display: block;
+    padding:0px 0px 0px 0px;
+    display: block;
+  
+    padding-left: 0px;
+    padding-right: 0px;
+
   }
   .susbcriptionmodal-header{
     display: flex;
    justify-content: center;
+   padding: 5px 0px 15px 0px;
+   /* border-radius: 10px 10px 0px 0px; */
+background: #024172;
+color: white;
   }
   .susbcriptionmodal-Title{
     PADDING: 5PX 0PX 0PX 0PX;
@@ -26,12 +35,20 @@
     height: min-content;
   }
   .susbcriptionmodal-body{
-    PADDING: 15PX 0PX 0PX 0PX;
+    /* margin: 15px 0px 0px 0px;
+    PADDING: 0PX 0PX 0PX 0PX; */
+  }
+  .productbox-container-backgrounddiv{
+    background: #F1F1F1;
+    PADDING: 20PX 0PX 15PX 0PX;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   .susbcriptionmodal-body .productbox-container
     {
-    padding: 0px 0px 0px 129px;
-    width: 300px;
+      padding: 0px 0px 0px 0px;
+      width: 300px;
     display: flex;
     flex-wrap: wrap;
   }
@@ -141,61 +158,77 @@ height: 129px;
     width: 50px;
    }
    .susbcriptionmodal-footer{
-    padding: 50px;
+    background: #F1F1F1;
+    padding: 38px 0px 20px 0px;
+    display: block;
    }
 
    .subscriptionModal-btndiv{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
    }
    .subscriptionmodal-closeBtn{
-    HEIGHT: 30PX;
+   
     BACKGROUND: #FFF;;
-    BORDER-RADIUS: 10%;
-    WIDTH: 20%;
+    HEIGHT: 40PX;
+    width: 15%;
+    font-size: large;
+    font-weight: 700;
+    border-radius: 0px;
    }
    .subscriptionmodal-Addtocartbtn{
-    HEIGHT: 30PX;
+
     BACKGROUND: #66BCFF;;
-    BORDER-RADIUS: 10%;
-    WIDTH: 20%;
+    border-radius: 0px;
+    HEIGHT: 40PX;
+    width: 15%;
+    font-size: large;
+    font-weight: 700;
     color: #FFF;
    }
    .subscriptionmodal-paynowbtn{
-    HEIGHT: 30PX;
+
     BACKGROUND: var(--P01, #024172);
-    BORDER-RADIUS: 10%;
-    WIDTH: 20%;
+    border-radius: 0px;
+    HEIGHT: 40PX;
+    width: 15%;
+    font-size: large;
+    font-weight: 700;
     color: #FFF;
    }
-   .SubscriptionTypes-div{
-    display: flex;
-    margin: 10px 0px 0px 0px;
-    padding: 10px 0px 0px 0px;
+   .SubscriptionTypes-background-div{
+    padding: 10px 10px 10px 10px;
    }
-  .subscription-type-card{
-      /* width: 16rem; */
+   .SubscriptionTypes-background-div h3{
+    margin: 0px 0px;
+    padding: 0px 0px;
+    color: var(--P1, #024172);
+   }
+   .SubscriptionTypes-div{
+    padding: 15px 10px 10px 10px;
+    justify-content: space-around;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+   }
+  .subscription-type-card{  
       overflow: hidden;
       border: 1px solid #e2e0e0;
-      /* margin-bottom: 20px; */
       transition: 0.5s;
       cursor: pointer;
-      /* margin-right: 10px; */
       border-radius: 10px;
   border: 0.5px solid #848484;  
   background: #F1F1F1;
   position: relative;
   /* max-height: 400px; */
-      margin: 0px 10px 0px 5px;
-      width: 300px;
-      padding: 10px 10px 10px 10px;
-      Width: 18rem;
-    padding: 15px 10px 10px 10px;
-    height: 120px;
+    width: 10rem;
+    padding: 5px 5px 5px 5px;
+    height: 105px;
+    margin: 0px 0px;
 
   }
   .selected{
-    background-color:aqua;
+    background: var(--P2_02, rgba(102, 188, 255, 0.40));
   }
   .subscription-type-card-title{
     margin: 0px 0px 0px 0px;
@@ -238,8 +271,52 @@ height: 129px;
     margin: 0px 0px 0px 0px;
     font-weight: 200;
   }
-  .CalendarandTimeSLot-div{
-    display: flex;
-    margin: 10px 0px 0px 0px;
+  .CalendarandTimeSLot-background-div{
+    background: #F1F1F1;
     padding: 10px 0px 0px 0px;
   }
+  .CalendarandTimeSLot-background-div h3{
+   margin: 0px 0px;
+   padding:  0px 0px;
+  }
+  .CalendarandTimeSLot-div{
+    justify-content: space-evenly;
+    align-content: center;
+    align-items: center;
+    margin: 0px 0px;
+    padding: 20px 0px 0px 0px;
+    background: #F1F1F1;
+    display: flex;
+  }
+  .date-picker-container {
+    position: relative;
+    font-size: larger;
+  }
+  
+  .icon-container {
+    position: absolute;
+    right: 0px;
+    left: 150px;
+    top: 55%;
+    transform: translateY(-50%);
+  }
+  
+  .calendar-icon {
+    font-size: 1.1em; /* Adjust the size as needed */
+  }
+  .react-datepicker__input-container{
+    font-weight: bold;
+    font-size: larger;
+  }
+  .react-datepicker__input-container.input{
+    font-size: large;
+    padding: 10px 10px 10px 10px;
+  }
+  .datepickerclass{
+    font-weight: 400;
+    font-size: large;
+    width: 160px;
+    padding: 10px 10px 10px 10px;
+  }
+  
+  
