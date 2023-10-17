@@ -35,12 +35,12 @@ const Products = ({detail, view, close, setClose, addtocart}) => {
 
 
    const GetWishList = async () => {
-    alert(userid);
-    alert('get wish list hitted');
+    // alert(userid);
+    // alert('get wish list hitted');
     if (userid) {
       const url = `https://localhost:7041/api/Wishlist/GetUserWishlistProducts?userid=${userid}`;
       try {
-         alert("hitte getwishkist tyry");
+        //  alert("hitte getwishkist tyry");
         const response = await axios.get(url);
         console.log('API Response:', response.data); 
         // const parsedData = JSON.parse(response.data);
@@ -78,7 +78,7 @@ useEffect(() => {
 
 
   const GetAllProducts =()=>{
-    alert("getall products hitted");
+    // alert("getall products hitted");
     const url = "https://localhost:7041/api/Admin/GetAllProducts";
     axios.get(url)
     .then((response)=>{

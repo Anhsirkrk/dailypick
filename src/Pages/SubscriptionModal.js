@@ -7,6 +7,14 @@ import axios from 'axios';
 import { AiOutlineHeart, AiOutlineCloseCircle } from 'react-icons/ai';
 import { FaUnderline } from 'react-icons/fa';
 import { Link, useAsyncError, useNavigate } from "react-router-dom";
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
+import TimePicker from 'react-time-picker';
+import 'react-time-picker/dist/TimePicker.css';
+
+
 
 
 const SubscriptionModal = ({ product,Priceofselectedproduct,subscriptiontypes,handleClose }) => {
@@ -36,6 +44,15 @@ const SubscriptionModal = ({ product,Priceofselectedproduct,subscriptiontypes,ha
   const [selectedsubscriptionplan,SetSelectedsetSubscriptionplan]= useState('');
   const [selectedfinalsizeofproduct,setSelectedFinalSizeofProduct]= useState('');
   const [selectedfinalQtyofproduct,setFinalQtyofProduct]= useState('');
+
+   const [selectedDate, setSelectedDate] = useState(null);
+  const [timeSlotSelected, setTimeSlotSelected] = useState('Morning');
+
+
+  const handleTimeSlotChange = (selectedSlot) => {
+    setTimeSlotSelected(selectedSlot);
+  };
+
 
   const [show,setShow]=useState(true);
 
@@ -148,6 +165,8 @@ const SubscriptionModal = ({ product,Priceofselectedproduct,subscriptiontypes,ha
    updatingprices();
   },[handleDropdownChange,handlequantitydecrement,handlequantityincrement]);
 
+
+
   return (
     <>
 
@@ -244,7 +263,41 @@ const SubscriptionModal = ({ product,Priceofselectedproduct,subscriptiontypes,ha
               </div>
               <div className='CalendarandTimeSLot-div'>
                 <>
-                  
+                <div className="calendar">
+                <DatePicker
+                selected={selectedDate}
+                onChange={date => setSelectedDate(date)}
+                dateFormat="dd/MM/yyyy"
+              />
+        
+              </div>
+              <div className="time-slots">
+              <label>
+                <input
+                  type="radio"
+                  name="timeSlot"
+                  value="Morning"
+                  checked={timeSlotSelected === 'Morning'}
+                  onChange={() => handleTimeSlotChange('Morning')}
+                />
+                Morning (6.30 AM to 9.00 AM)
+              </label>
+              <br />
+              <label>
+                <input
+                  type="radio"
+                  name="timeSlot"
+                  value="Evening"
+                  checked={timeSlotSelected === 'Evening'}
+                  onChange={() => handleTimeSlotChange('Evening')}
+                />
+                Evening (5.30 PM to 9.00 PM)
+              </label>
+              <div>
+                Selected Time Slot: {timeSlotSelected}
+              </div>
+            </div>
+              
                 </>
               </div>
 
