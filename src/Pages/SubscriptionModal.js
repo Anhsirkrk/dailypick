@@ -7,6 +7,15 @@ import axios from 'axios';
 import { AiOutlineHeart, AiOutlineCloseCircle } from 'react-icons/ai';
 import { FaUnderline } from 'react-icons/fa';
 import { Link, useAsyncError, useNavigate } from "react-router-dom";
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+// import Calendar from 'react-calendar';
+// import 'react-calendar/dist/Calendar.css';
+// import TimePicker from 'react-time-picker';
+// import 'react-time-picker/dist/TimePicker.css';
+import { FaCalendar } from 'react-icons/fa'
+import { toast } from 'react-toastify';
+
 
 
 
@@ -38,6 +47,23 @@ const SubscriptionModal = ({ product,Priceofselectedproduct,subscriptiontypes,ha
   const [selectedfinalsizeofproduct,setSelectedFinalSizeofProduct]= useState('');
   const [selectedfinalQtyofproduct,setFinalQtyofProduct]= useState('');
 
+   const [subscriptionStartDate, setSelectedsubscriptionStartDate] = useState(null);
+   const [subscriptionEndDate, setSelectedsubscriptionEndDate] = useState('');
+   const [timeSlotSelected, setTimeSlotSelected] = useState('Morning');
+
+
+   const subscriptionWithId1 = subscriptionTypesData.find(subscription => subscription.subscriptionId === 1);
+   const subscriptionName1 = subscriptionWithId1 ? subscriptionWithId1.subscriptionType1 : '';
+   const subscriptionWithId2 = subscriptionTypesData.find(subscription => subscription.subscriptionId === 2);
+   const subscriptionName2 = subscriptionWithId2 ? subscriptionWithId2.subscriptionType1 : '';
+   const subscriptionWithId3 = subscriptionTypesData.find(subscription => subscription.subscriptionId === 3);
+   const subscriptionName3 = subscriptionWithId3 ? subscriptionWithId3.subscriptionType1 : '';
+
+  const handleTimeSlotChange = (selectedSlot) => {
+    setTimeSlotSelected(selectedSlot);
+  };
+
+
   const [show,setShow]=useState(true);
 
   const navigate = useNavigate();
@@ -52,12 +78,7 @@ const SubscriptionModal = ({ product,Priceofselectedproduct,subscriptiontypes,ha
   })
   console.log(subscriptionTypesData);
  }
- const subscriptionWithId1 = subscriptionTypesData.find(subscription => subscription.subscriptionId === 1);
- const subscriptionName1 = subscriptionWithId1 ? subscriptionWithId1.subscriptionType1 : '';
- const subscriptionWithId2 = subscriptionTypesData.find(subscription => subscription.subscriptionId === 2);
- const subscriptionName2 = subscriptionWithId2 ? subscriptionWithId2.subscriptionType1 : '';
- const subscriptionWithId3 = subscriptionTypesData.find(subscription => subscription.subscriptionId === 3);
- const subscriptionName3 = subscriptionWithId3 ? subscriptionWithId3.subscriptionType1 : '';
+
 
   useEffect(()=>{ 
     const selectedSize = product.priceOfEachUnits.includes(Number(Priceofselectedproduct)) ? product.sizeOfEachUnits[product.priceOfEachUnits.indexOf(Number(Priceofselectedproduct))] : "";
@@ -75,49 +96,60 @@ const SubscriptionModal = ({ product,Priceofselectedproduct,subscriptiontypes,ha
 
   const handleCardClick = (cardId) => {
     setSelectedCard(cardId);
-    if(cardId===1){
-      SetSelectedsetSubscriptionplan(1);
-    }
-    if(cardId===2){
-      SetSelectedsetSubscriptionplan(2);
-    }
-    if(cardId===3){
-      SetSelectedsetSubscriptionplan(3);
-    }
-  }
+    // Use a callback function to ensure that the state is updated correctly
+    SetSelectedsetSubscriptionplan(cardId);
+    handleStartDateEndDate(subscriptionStartDate);
+  };
+  
   console.log(`selecetdplan ${selectedsubscriptionplan}`);
 
   const handleSubscribe = () => {
+    alert(subscriptionEndDate);
     // Implement your logic for subscribing here
     if (selectedsubscriptionplan) {
 
       if(selectedsubscriptionplan===1){
         setAmounttobePaid(discountedsingleDayPrice);
-        localStorage.setItem('selectedproductPrice', discountedsingleDayPrice);
+        localStorage.setItem('order-TotalAmounttobePaid', discountedsingleDayPrice);
       }
       if(selectedsubscriptionplan===2){
         setAmounttobePaid(discountedweekPrice);
-        localStorage.setItem('selectedproductPrice', discountedweekPrice);
+        localStorage.setItem('order-TotalAmounttobePaid', discountedweekPrice);
       }
       if(selectedsubscriptionplan===3){
         setAmounttobePaid(discountedmonthPrice);
-        localStorage.setItem('selectedproductPrice', discountedmonthPrice);
+        localStorage.setItem('order-TotalAmounttobePaid', discountedmonthPrice);
       }
       setSelectedFinalSizeofProduct(selectedSizeofproduct);
       setFinalQtyofProduct(quantityofproduct);
+      
+
 
        // Save the required state variables to localStorage
-    localStorage.setItem('selectedSizeofproduct', selectedSizeofproduct);
-    localStorage.setItem('quantityofproduct', quantityofproduct);
-      alert(`Subscribed to ${selectedsubscriptionplan} plan for ${product.productName}  totalamount${amounttobepaid} finaqty${selectedfinalQtyofproduct} finalsize${selectedfinalsizeofproduct}`);
+    localStorage.setItem('order-selectedproductId',product.productId);
+    localStorage.setItem('order-productindividualprice',selectedproductPrice);
+    localStorage.setItem('order-quantityofproduct', quantityofproduct);
+    localStorage.setItem('order-selectedsubscriptiontype',selectedsubscriptionplan);
+    localStorage.setItem('order-selectedStartdate',subscriptionStartDate);
+    localStorage.setItem('order-selectedEnddate',subscriptionEndDate);
+    localStorage.setItem('order-selectedSizeofproduct', selectedSizeofproduct);
+    localStorage.setItem('order-selectedtimeslot',timeSlotSelected);
+
+      // alert(`Subscribed to ${selectedsubscriptionplan} plan for ${product.productName}  totalamount${amounttobepaid} finaqty${selectedfinalQtyofproduct} finalsize${selectedfinalsizeofproduct}`);
       navigate('/location');
     } else {
       alert('Please select a subscription plan.');
     }
   };
-  console.log(`amounttobepaid${amounttobepaid}`);
-  console.log(`finalqty${selectedfinalQtyofproduct}`);
-  console.log(`finalsize${selectedfinalsizeofproduct}`);
+  console.log('order-selectedproductId',product.productId);
+    console.log('order-productindividualprice',selectedproductPrice);
+    console.log('order-quantityofproduct', quantityofproduct);
+    console.log('order-selectedsubscriptiontype',selectedsubscriptionplan);
+    console.log('order-selectedStartdate',subscriptionStartDate);
+    console.log('order-selectedEnddate',subscriptionEndDate);
+    console.log('order-TotalAmounttobePaid',amounttobepaid);
+    console.log('order-selectedSizeofproduct', selectedSizeofproduct);
+    console.log('order-selectedtimeslot',timeSlotSelected);
 
   const handleDropdownChange = (productId, newSize) => {
     const selectedPrice = product ? product.priceOfEachUnits[product.sizeOfEachUnits.indexOf(Number(newSize))] : '';
@@ -135,7 +167,6 @@ const SubscriptionModal = ({ product,Priceofselectedproduct,subscriptiontypes,ha
   }
 
   const updatingprices=()=>{
-  
     setActualSingleDayPrice(quantityofproduct*selectedproductPrice);
     setDiscountedSingleDayPrice(Math.round((quantityofproduct*selectedproductPrice)*1));
 
@@ -145,10 +176,45 @@ const SubscriptionModal = ({ product,Priceofselectedproduct,subscriptiontypes,ha
     setActualmonthPrice(quantityofproduct*selectedproductPrice*30);
     setDiscountedmonthPrice(Math.round((quantityofproduct*selectedproductPrice*30)*0.9));
   }
+
+  const handleStartDateEndDate =(date)=>{
+    alert(selectedsubscriptionplan);
+    if(selectedsubscriptionplan){
+
+   
+    if(selectedsubscriptionplan===1)
+    {
+      setSelectedsubscriptionStartDate(date);
+      setSelectedsubscriptionEndDate(date);
+     alert(`plan -1`);
+    }
+    if(selectedsubscriptionplan===2)
+    {
+      setSelectedsubscriptionStartDate(date);
+      setSelectedsubscriptionEndDate(new Date(date.getTime() + (7 * 24 * 60 * 60 * 1000)));
+      alert(`plan -2`);
+    }
+    if(selectedsubscriptionplan===3)
+    {
+      setSelectedsubscriptionStartDate(date);
+      setSelectedsubscriptionEndDate(new Date(date.getTime() + (30* 24 * 60 * 60 * 1000)));
+      alert(`plan -3`);
+    }
+  }
+  else
+  {
+    alert("select any subscription plan");
+  }
+      }
+
+      console.log('date+7',subscriptionEndDate);
   
   useEffect(()=>{
    updatingprices();
-  },[handleDropdownChange,handlequantitydecrement,handlequantityincrement]);
+
+  },[handleDropdownChange,handlequantitydecrement,handlequantityincrement,handleStartDateEndDate]);
+
+
 
   return (
     <>
@@ -158,6 +224,7 @@ const SubscriptionModal = ({ product,Priceofselectedproduct,subscriptiontypes,ha
       <Modal.Title className='susbcriptionmodal-Title'><h2>Select your Subscription</h2></Modal.Title>
     </Modal.Header>
     <Modal.Body className='susbcriptionmodal-body'>
+    <div className='productbox-container-backgrounddiv'>
     <div className='productbox-container'>
                         <Card className='subscriptionmodal-product-card'>
                         <Card.Body className='product-card-body'>
@@ -186,12 +253,14 @@ const SubscriptionModal = ({ product,Priceofselectedproduct,subscriptiontypes,ha
                         </Card.Body>
                       </Card>                 
               </div>
+              </div>
+              <div className='SubscriptionTypes-background-div'>
+              <h3 >Select Subscription type </h3>
               <div className='SubscriptionTypes-div'>
               {subscriptionTypesData && (
                 <>
               <Card  key={1}
               className={`subscription-type-card ${selectedCard === 1 ? 'selected' : ''}`}
-              style={{ width: '18rem' }}
               onClick={() => handleCardClick(1)}>
               <Card.Body>
                 <Card.Title><Button className='subscriptiontype-button'>{subscriptionName1}</Button></Card.Title>
@@ -199,7 +268,7 @@ const SubscriptionModal = ({ product,Priceofselectedproduct,subscriptiontypes,ha
                   <div className='susbcriptionpricedeiv'>
                   <h2 className='susbcriptiontotalprice'>{discountedsingleDayPrice}</h2>
                   <div className='susbcriptiondiscount-div'>
-                  <h5 >{}</h5>
+                  
                   <h4 ></h4>
                   </div>
                   </div>
@@ -209,7 +278,6 @@ const SubscriptionModal = ({ product,Priceofselectedproduct,subscriptiontypes,ha
             </Card>    
             <Card  key={2}
             className={`subscription-type-card ${selectedCard === 2 ? 'selected' : ''}`}
-            style={{ width: '18rem' }}
             onClick={() => handleCardClick(2)}>
             <Card.Body>
               <Card.Title><Button className='subscriptiontype-button'>{subscriptionName2}</Button></Card.Title>
@@ -226,7 +294,6 @@ const SubscriptionModal = ({ product,Priceofselectedproduct,subscriptiontypes,ha
           </Card>
           <Card  key={3}
           className={`subscription-type-card ${selectedCard === 3 ? 'selected' : ''}`}
-          style={{ width: '18rem' }}
           onClick={() => handleCardClick(3)}>
           <Card.Body>
             <Card.Title className='subscription-type-card-title'><Button className='subscriptiontype-button'>{subscriptionName3}</Button></Card.Title>
@@ -244,8 +311,63 @@ const SubscriptionModal = ({ product,Priceofselectedproduct,subscriptiontypes,ha
         </>
         )}
               </div>
+              </div>
+              <div className='CalendarandTimeSLot-background-div'>
+              <h3>Select Date & Time</h3>
+              <div className='CalendarandTimeSLot-div'>
+                <>
+                
+                <div className="calendar">
+                <div className="date-picker-container">
+                <DatePicker
+                className='datepickerclass'
+                  placeholderText='Select date'
+                  selected={subscriptionStartDate}
+                  onChange={date => {setSelectedsubscriptionStartDate(date);
+                    handleStartDateEndDate(date);}}
+                  dateFormat="dd/MM/yyyy"
+                />
+                <div className="icon-container">
+                  <FaCalendar className="calendar-icon" />
+                </div>
+                
+              </div>
+        
+              </div>
+              <div className="time-slots">
+              <label>
+                <input
+                  type="radio"
+                  name="timeSlot"
+                  value="Morning"
+                  checked={timeSlotSelected === 'Morning'}
+                  onChange={() => handleTimeSlotChange('Morning')}
+                />
+                Morning (6.30 AM to 9.00 AM)
+              </label>
+              <br />
+              <label>
+                <input
+                  type="radio"
+                  name="timeSlot"
+                  value="Evening"
+                  checked={timeSlotSelected === 'Evening'}
+                  onChange={() => handleTimeSlotChange('Evening')}
+                />
+                Evening  (5.30 PM to 9.00 PM)
+              </label>
+              <div>
+                Selected Time Slot: {timeSlotSelected}
+              </div>
+            </div>
+              
+                </>
+              </div>
+              </div>
 
-      
+
+
+  
     </Modal.Body>
     <Modal.Footer className='susbcriptionmodal-footer'>
           <div className='subscriptionModal-btndiv'>
