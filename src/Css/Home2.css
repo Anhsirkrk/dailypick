@@ -126,7 +126,7 @@ height: 250px;
 margin-top: 20px;
 
 
-overflow-x: auto;  /* Enable horizontal overflow */
+ /*overflow-x: auto;  Enable horizontal overflow */
   white-space: nowrap; /* Prevent items from wrapping to the next line */
 }
 
@@ -140,8 +140,8 @@ border-style: solid;
 border-color: rgba(105, 105, 105, 0.30);
 border-width: 1px;
 flex-shrink: 0;
-width: 280px;
-height: 140px;
+width: 250px;
+height: 150px;
 position: relative;
 box-shadow: 2px 2px 4px 0px rgba(76, 76, 76, 0.25);
 margin-left: 20px;
@@ -152,8 +152,8 @@ margin-left: 20px;
     overflow: hidden;
 }
 .daily-needs .group .rectangle .DN-field .img-box{
-    width: 280px;
-    height: 140px;
+    width: 250px;
+    height: 150px;
     padding: 10px 10px 10px 10px;
 }
 .daily-needs .group .rectangle .DN-field .img-box .Dailyneed-Images{
@@ -166,6 +166,10 @@ height: 125px;
 .daily-needs .group .rectangle .detail h3{
     margin: 0px;
 } 
+
+
+
+/* Best sellers */
 
 
 .Best-Sellers{
@@ -182,11 +186,11 @@ height: 125px;
     justify-content: space-between;
     padding-left: 100px;
     padding-right: 100px;  
-flex-direction: row;
-overflow: hidden;
-overflow-x: auto;
-height: 250px;
-margin-top: 20px;
+    flex-direction: row;
+    /* overflow: hidden;
+    overflow-x: auto; */
+    height: 250px;
+    margin-top: 20px;
 
 /*overflow-x: auto;  Enable horizontal overflow */
   white-space: nowrap; /* Prevent items from wrapping to the next line */
@@ -201,7 +205,7 @@ margin-top: 20px;
     border-color: rgba(105, 105, 105, 0.30);
     border-width: 1px;
     flex-shrink: 0;
-    width: 280px;
+    width: 250px;
     height: 150px;
     position: relative;
     box-shadow: 2px 2px 4px 0px rgba(76, 76, 76, 0.25);
@@ -212,7 +216,7 @@ margin-top: 20px;
     overflow: hidden;
 }
 .Best-Sellers .group .rectangle .DN-field .img-box{
-    width: 280px;
+    width: 250px;
     height: 150px;
     padding: 10px 10px 10px 10px;
 }
@@ -227,6 +231,10 @@ margin-top: 20px;
     margin: 0px;
 } 
 
+
+
+
+/* Brands */
 
 .Brands{
     margin: 50px 50px 0px 0px;
@@ -244,10 +252,10 @@ margin-top: 20px;
     padding-left: 100px;
     padding-right: 100px;
     flex-direction: row;
-overflow-x: auto;
-height: 250px;
-margin-top: 20px;
-white-space: nowrap;
+    /* overflow-x: auto; */
+    height: 250px;
+    margin-top: 20px;
+    white-space: nowrap;
 }
 
 .Brands .group .scroll-container {
@@ -256,17 +264,17 @@ white-space: nowrap;
   }
 .Brands .group .rectangle{
     border-radius: 30px;
-border-style: solid;
-border-color: rgba(105, 105, 105, 0.30);
-border-width: 1px;
-flex-shrink: 0;
-width: 180px;
-height: 120px;
-position: relative;
-overflow: hidden;
-box-shadow: 2px 2px 4px 0px rgba(76, 76, 76, 0.25);
-box-shadow: 2px 2px 4px 0px rgba(76, 76, 76, 0.25);
-margin-left: 20px;
+    border-style: solid;
+    border-color: rgba(105, 105, 105, 0.30);
+    border-width: 1px;
+    flex-shrink: 0;
+    width: 180px;
+    height: 120px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 2px 2px 4px 0px rgba(76, 76, 76, 0.25);
+    box-shadow: 2px 2px 4px 0px rgba(76, 76, 76, 0.25);
+    margin-left: 20px;
 }
 .Brands .group .rectangle .DN-field{
     display: flex;
