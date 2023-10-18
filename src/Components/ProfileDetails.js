@@ -27,7 +27,6 @@ const ProfileDetails = () => {
 
   const [error, setError] = useState(null);
 
-  const [storeddata, setStoredData] = useState(null); // Declare storeddata state
 
 
   useEffect(() => {
@@ -55,7 +54,6 @@ const ProfileDetails = () => {
   }, [isEditMode]);
 
 
-
   const updateUserDetails = async () => {
     try {
       const response = await axios.post('https://localhost:7041/api/User/UpdateUserDetails', {
@@ -71,24 +69,8 @@ const ProfileDetails = () => {
       });
 
       if (response.status === 200) {
+        
         console.log('User details updated successfully:', response.data);
-        setEmail(updatedEmail);
-        setMobile(updatedMobile);
-
-
-        const newStoredData = {
-          firstName:storeddata.firstName,
-          userId:storeddata.userId,
-          userTypeId:storeddata.userTypeId,
-          username:storeddata.username,
-          password:storeddata.password,
-          lastName:storeddata.lastName,
-          email: updatedEmail,
-          mobile: updatedMobile,
-        };
-        localStorage.setItem('userdata', JSON.stringify(newStoredData));
-
-
       } else {
         console.error('Failed to update user details:', response.data);
       }
@@ -99,18 +81,13 @@ const ProfileDetails = () => {
   };
 
 
-
-
-     
-
-
-
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     setIsSaving(true);
     try {
       // Call the API to update user details
       await updateUserDetails();
+      
       // After successful save, exit edit mode
       setIsEditMode(false);
       // Show a success message or update UI as needed
@@ -123,9 +100,6 @@ const ProfileDetails = () => {
     }
   };
   
-
-
-
 
   return (
     <div>

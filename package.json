@@ -27,6 +27,7 @@
     "react-google-maps": "^9.4.5",
     "react-horizontal-scrolling": "^0.1.13",
     "react-icons": "^4.11.0",
+    "react-multi-carousel": "^2.8.4",
     "react-otp-field": "^3.0.1",
     "react-otp-input": "^3.0.4",
     "react-phone-number-input": "^3.3.6",

@@ -10,6 +10,7 @@ import Profile from '../Pages/Profile';
 import MySubscriptions from '../Pages/MySubscriptions';
 import MyCart from '../Pages/MyCart';
 import MyWishlist from '../Pages/MyWishList';
+import PaymentStatus from '../Pages/PaymentStatus'
 
 const Rout = () => {
   return (
@@ -22,8 +23,6 @@ const Rout = () => {
           <Route path='/home' element={<Home />} />
           <Route path='/login2' element={<Login2 />} />
           <Route path='/home2' element={<Home2/>}/>
-
-
           <Route path='/products' element={<Products/>}/>
           <Route path="/*" element={<Navigate to="/popup" replace />} />
           <Route path="/location" element={<Location/>}/>
@@ -31,6 +30,7 @@ const Rout = () => {
           <Route path='/mysusbcription' element={<MySubscriptions/>}/>
           <Route path='/mycart' element={<MyCart/>}/>
           <Route path='/mywishlist' element={<MyWishlist/>}/>
+          <Route path='/paymentstatus' element={<PaymentStatus/>}/>
         </Routes>
     </>
   )
