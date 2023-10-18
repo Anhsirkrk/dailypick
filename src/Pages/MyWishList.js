@@ -15,9 +15,6 @@ import Card from 'react-bootstrap/Card';
 import {ToastContainer,toast } from 'react-toastify';
 
 
-
-
-
 const MyWishlist =()=>{
 
     const [product,setProduct]= useState([]);
