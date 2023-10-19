@@ -55,28 +55,90 @@ width: 453px;
 .line{
     margin: 0px 65px 0px 65px;
 }
+.your-order{
+    color: #024172;
+    text-align: center;
+    font-weight: 600;
+    font-family: Poppins;
+}
 .payment-order-div{
     position: relative;
-font-size: 14px;
-font-weight: 600;
-font-family: Poppins;
-color: #024172;
-text-align: center;
-margin: 0px 65px 0px 65px;
+margin: 10px 180px;
+height: 200px;
+overflow-y: auto;
 }
 .my-orders-div{
     display: flex;
-    justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+    flex-direction: column;
 }
+.Paymentstatus-product-card{
+    display: flex;
+    width: 250px;
+    height: 80px;
+    border-radius: 7.5px;
+background-color: #f1f1f1;
+border: 0.4px solid #848484;
+box-sizing: border-box;
+text-align: center;
+color: #191919;
+font-family: Poppins;
+margin-top: 10px;
+}
+.Paymentstatus-product-card-image{
+    width: 100px;
+    height: 80px;
+    border-radius: 7.5px;
+    padding:2px;
+}
+.Paymentstatus-product-card-body{
+width: 150px;
+}
+.Paymentstatus-product-card-title{
+    display: flex;
+    align-items: baseline;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: space-evenly;
+    
+}
+.payment-product-title{
+    position: relative;
+font-size: 15px;
+font-weight: 500;
+font-family: Poppins;
+color: #171717;
+text-align: left;
+}
+.payment-product-size{
+    display: flex;
+    position: relative;
+font-size: 11px;
+font-weight: 300;
+font-family: Poppins;
+color: #171717;
+text-align: left;
+display: inline-block;
+width: 25.5px;
+height: 14.25px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .payment-summary-div{
     position: relative;
-    font-size: 14px;
-    font-weight: 600;
-    font-family: Poppins;
-    color: #024172;
-    text-align: center;
     margin: 0px 65px 0px 65px;
 }
 
@@ -94,6 +156,12 @@ margin: 0px 65px 0px 65px;
 
 
 
+
+
+
+
+
+/* button */
 .payment-button-field{
     display: flex;
     justify-content: space-between;
