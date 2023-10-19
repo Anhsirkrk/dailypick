@@ -87,24 +87,29 @@ const Location = () => {
         setorderProductTotalAmounttobePaid(orderProductTotalAmounttobePaid);
     },[]);
 
-    const Redirecttopayemnt= ()=>{
+    const createorderIdfororder= ()=>{
       const url= "";
       const data ={
+        orderId:0,
         userId:userid,
-        productId:orderProductId,
-        productSize: orderProductSize,
-        Quantity:orderProductquanity,
-        TotalAMount : orderProductTotalAmounttobePaid,
-        productprice:orderProductIndiviudalprice,
         subscriptiontype:orderProductSUbscriptiontype,
+        TotalAMount : orderProductTotalAmounttobePaid,
+        OrderDate:'2020-10-10',
         startdate:orderProductStartdate,
         enddate:orderProductEnddate,
+        OrderpaymentStatus:'pending',
+        productId:orderProductId,
+        productprice:orderProductIndiviudalprice,
+        Quantity:orderProductquanity,
+        productSize: orderProductSize,
         timeslot:orderProducttimeslot,
         addressID : selectedAddressId,
         supplierId: selectedSupplierId,
-        addresspincode: selectedAddressPinCode
+        // addresspincode: selectedAddressPinCode
       }
       const response = axios.post(url,data);
+
+      
      }
 
     const handleCountryChange = (event) => {
