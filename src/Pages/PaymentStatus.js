@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import Nav from '../Components/Nav';
 import '../Css/Paymentstatus.css';
 import paymentsuccessimage from '../Images/payment-done 1.png';
@@ -9,19 +9,34 @@ import { AiOutlineHeart, AiOutlineCloseCircle } from 'react-icons/ai';
 import axios, { all } from 'axios';
 import { useLocation } from 'react-router-dom';
 
+
 const PaymentStatus = () => {
 
 
     const [filteredProduct, setFilteredProduct] = useState([]);
     const [product,setProduct]=useState([]);
     const [selectedSizes, setSelectedSizes] = useState({}); 
-  const [selectedPrices, setSelectedPrices] = useState({}); 
-  const [selectedproductPrice, setSelectedproductPrice] = useState([]);
-  const [wishlistData,setWishListData]= useState([]);
-  const location = useLocation();
-  const [userid,setUserId]=useState('');
+    const [selectedPrices, setSelectedPrices] = useState({}); 
+    const [selectedproductPrice, setSelectedproductPrice] = useState([]);
+    const [wishlistData,setWishListData]= useState([]);
+    const location = useLocation();
+    const [userid,setUserId]=useState('');
 
 
+    useEffect(() => {
+      // Get item from local storage on component mount
+      const storeddata = localStorage.getItem('userdata');
+      if (storeddata) {
+        const storeduserdata = JSON.parse(storeddata);
+        setUserId(storeduserdata.userId);
+      }
+      // Call GetWishList only if userid is available
+      if (userid)
+      {
+        GetWishList();
+      }
+      GetAllProducts();
+    }, [userid]);
 
     const GetAllProducts =()=>{
         // alert("getall products hitted");
@@ -152,8 +167,9 @@ const PaymentStatus = () => {
             <div className='line'>
                 <hr/>
             </div>
+            <div className='your-order'>Your Orders</div>
             <div className='payment-order-div'>
-                <div className='your-order'>Your Orders</div>
+                
                 <div className='my-orders-div'>
                 {
                   filteredProduct.map((curElm) => 
@@ -166,25 +182,28 @@ const PaymentStatus = () => {
                       
                         return(
                             <>
-                            <Card className='product-card'>
-                            <div >
-                            <li style={{ backgroundColor: isInWishlist ? 'green' : '' }}><AiOutlineHeart className='li-icon' /></li>
-                          </div>
-                            <Card.Img variant="top" src={`data:image/jpeg;base64,${curElm.base64Image}`} alt={curElm.Title} />
-                            <Card.Body className='product-card-body'>
-                              <Card.Title className='product-card-title'>{curElm.productName}</Card.Title>
-                              <Card.Text className='product-card-text'>
-                                      <div className='Price-QtyDiv'>
+                            <Card className='Paymentstatus-product-card'>
+                            {/* <div >
+                              <li style={{ backgroundColor: isInWishlist ? 'green' : '' }}><AiOutlineHeart className='li-icon' /></li>
+                            </div> */}
+                            <Card.Img className='Paymentstatus-product-card-image' variant="top" src={`data:image/jpeg;base64,${curElm.base64Image}`} alt={curElm.Title} />
+                            <Card.Body className='Paymentstatus-product-card-body'>
+                              <Card.Title className='Paymentstatus-product-card-title'><h4 className='payment-product-title'>{curElm.productName}</h4><p className='payment-product-size'>({selectedSize} {curElm.unit})</p></Card.Title>
+                              {/* <Card.Text className='Paymentstatus-product-card-text'>
+                                      <div className='Paymentstatus-Price-QtyDiv'> */}
                                       {/*}      <h4>${product.priceOfEachUnits[curElm.sizeOfEachUnits.indexOf(selectedSize)]}</h4> */}
-                                      <h4>$ {selectedPrice}</h4>
-                                      {filteredProduct.length > 0 && (
-                                        <select value={selectedSize} className='QuantitySelectDropdown'>
+                                      {/* <h4 className='paymnet-product-price'>$ {selectedPrice}</h4> */}
+                                      {/* {filteredProduct.length > 0 && (
+                                        <p className='Paymentstatus-SelectedSize'> {selectedSize} {curElm.unit}</p>
+                                        )} */}
+                                      {/* {filteredProduct.length > 0 && ( 
+                                        <select value={selectedSize} className='Paymentstatus-QuantitySelectDropdown'>
                                         {curElm.sizeOfEachUnits.map((size) => (
                                           <option key={size} value={size}>{size} {curElm.unit}</option>
                                         ))}
-                                      </select> )}
-                                      </div>
-                              </Card.Text>
+                                      </select> )} */}
+                                      {/* </div>
+                              </Card.Text> */}
                             </Card.Body>
                           </Card>
                        
@@ -196,6 +215,11 @@ const PaymentStatus = () => {
             </div>
             <div className='payment-summary-div'>
                 <div className='your-order'>Payment summary</div>
+                <div className='payment-summary-deytails'>
+                  <h4><strong>Payment Id:</strong></h4>
+                  <h4><strong>Time      :</strong></h4>
+                </div>
+
             </div>
             <div className='payment-button-field'>
                 <button className='paymnet-done' type='button'>Done</button>
