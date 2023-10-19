@@ -41,7 +41,6 @@ const Location = () => {
   const [selectedStateName, setSelectedStateName] = useState('');
   const [selectedCity, setSelectedCity] = useState('');
   const [addresslbl, setAddresslbl] = useState('');
-  const [selectedSupplierId, setSelectedSupplierId] = useState(null);
 
 
   const [filteredSuppliers,setFilteredSuppliers] = useState([]);
@@ -56,6 +55,7 @@ const Location = () => {
     const states = State.getStatesOfCountry('IN') ;
     const cities = selectedStateISCode ? City.getCitiesOfState('IN',selectedStateISCode) : [];
 
+    const [orderOrderId,setOrderOrderId] = useState('');
     const [orderProductId,setorderProductId] = useState('');
     const [orderProductIndiviudalprice,setorderProductIndiviudalprice] = useState('');
     const [orderProductquanity,setorderProductquanity] = useState('');
@@ -65,6 +65,9 @@ const Location = () => {
     const [orderProductSize,setorderProductSize] = useState('');
     const [orderProducttimeslot,setorderProducttimeslot] = useState('');
     const [orderProductTotalAmounttobePaid,setorderProductTotalAmounttobePaid] = useState('');
+    const [orderselectedSupplierId, setorderSelectedSupplierId] = useState(null);
+    const [orderPaymentId,setOrderpaymentId]= useState('');
+    const [orderUserSubscriptionId,setorderUserSubscriptionId]=useState('');
 
     useEffect(()=>{ 
         const orderProductId = localStorage.getItem('order-selectedproductId');
@@ -87,30 +90,7 @@ const Location = () => {
         setorderProductTotalAmounttobePaid(orderProductTotalAmounttobePaid);
     },[]);
 
-    const createorderIdfororder= ()=>{
-      const url= "";
-      const data ={
-        orderId:0,
-        userId:userid,
-        subscriptiontype:orderProductSUbscriptiontype,
-        TotalAMount : orderProductTotalAmounttobePaid,
-        OrderDate:'2020-10-10',
-        startdate:orderProductStartdate,
-        enddate:orderProductEnddate,
-        OrderpaymentStatus:'pending',
-        productId:orderProductId,
-        productprice:orderProductIndiviudalprice,
-        Quantity:orderProductquanity,
-        productSize: orderProductSize,
-        timeslot:orderProducttimeslot,
-        addressID : selectedAddressId,
-        supplierId: selectedSupplierId,
-        // addresspincode: selectedAddressPinCode
-      }
-      const response = axios.post(url,data);
-
-      
-     }
+   
 
     const handleCountryChange = (event) => {
       const countryIsoCode = event.target.value;
@@ -260,11 +240,11 @@ const Location = () => {
   const handleSupplierClick = (supr) => {
     alert('handleSupplier click hitted');
     alert(supr.supplierId);
-    setSelectedSupplierId((prevId) => (prevId === supr.supplierId ? null : supr.supplierId));
+    setorderSelectedSupplierId((prevId) => (prevId === supr.supplierId ? null : supr.supplierId));
   };
 
   const handlenewaddresssubmitform= async (e)=>{
-        if(selectedSupplierId!=null)
+        if(orderselectedSupplierId!=null)
         {
             e.preventDefault();
             alert("add sub form hitted ");
@@ -354,14 +334,14 @@ const Location = () => {
    const handlecontinuetopaymentbysavedadress = ()=>{
     alert('selectedAddressId',selectedAddressId);
     alert('selectedAddresspincode',selectedAddressPinCode);
-    alert('selectedsupplierid',selectedSupplierId);
+    alert('selectedsupplierid',orderselectedSupplierId);
     if(selectedAddressPinCode!= null)
     {
-      if(selectedSupplierId!=null){
+      if(orderselectedSupplierId!=null){
         localStorage.setItem('order-SelectedAddressIDforSubscription',selectedAddressId);
         localStorage.setItem('order-SelectedAddressPincodeforSubscription',selectedAddressPinCode);
-        localStorage.setItem('order-SelectedSupplierIdforSubscription',selectedSupplierId);
-        navigate('/mysusbcription');
+        localStorage.setItem('order-SelectedorderSupplierIdforSubscription',orderselectedSupplierId);
+        createorderIdfororder();
       }
       else
       {
@@ -377,15 +357,162 @@ const Location = () => {
      
   }
 
-   
- 
+  const createorderIdfororder= ()=>{
+    if(userid)
+    {
+      if(orderProductSUbscriptiontype)
+      {
+            if(orderProductTotalAmounttobePaid)
+            {
+              if(orderProductStartdate!=null && orderProductEnddate!=null)
+              {
+                if(orderProducttimeslot!=null && selectedAddressId!=null && orderselectedSupplierId!=null)
+                {      
+                          const url= "";
+                        const data ={
+                          orderId:0,
+                          userId:userid,
+                          subscriptiontype:orderProductSUbscriptiontype,
+                          TotalAMount : orderProductTotalAmounttobePaid,
+                          OrderDate:'2020-10-10',
+                          startdate:orderProductStartdate,
+                          enddate:orderProductEnddate,
+                          OrderpaymentStatus:'pending',
+                          timeslot:orderProducttimeslot,
+                          addressID : selectedAddressId,
+                          supplierId: orderselectedSupplierId,
+                          productId:orderProductId,
+                          productprice:orderProductIndiviudalprice,
+                          Quantity:orderProductquanity,
+                          productSize: orderProductSize,
+                          // addresspincode: selectedAddressPinCode
+                        }
+                        const response = axios.post(url,data);
+                        console.log(response.data);
+                        alert("orderId axios completed");
+                        if (response.status === 200) 
+                        {
+                          alert("axios 200");
+                          setOrderOrderId(response.data.orderId);
+                          console.log('orderId',response.data.orderId);
+                          localStorage.setItem('order-SelectedProductOrderId',response.data.orderId); 
+                          const selProOrderIDsetteddata = JSON.parse(localStorage.getItem('order-SelectedProductOrderId'));
+                          console.log('selProOrderIDsetteddata',selProOrderIDsetteddata);
+                          //actually here  we have to redirect to payemnt page , but due to payejnt page unavailable we are directly inserting payment table form ehere
+                          createpaymentIdandUserSubscrtiptionId();
+                        
+                        } 
+                        else 
+                        {
+                          alert("orderid axios not  200");
+                          setResultMessage("order Not created");
+                        } 
+                }
+                else
+                {
+                  alert("timeslot or addressid or supplierId is null");
+                  return;  
+                }
 
+            }
+            else
+            {
+              alert("start date or end date null");
+              return; 
+            }
+          } 
+          else
+          {
+            alert("total amount deatils not found");
+            return; 
+          }
+      }
+      else
+      {
+        alert("please select susbcription ");
+            return; 
 
+      }
+   }
+  else
+  {
+      alert("user id not found");
+      return;
+    }
+   }
 
+   const createpaymentIdandUserSubscrtiptionId =()=>{
+    if(orderOrderId)
+    {
 
+          const url="";
+          const data = {
+            orderId:orderOrderId,
+            payemntMethod:'UPI',
+            amount:orderProductTotalAmounttobePaid,
+            TransactionId:'abc24152',
+            paymentstatus:'Successfull'
+          }
+          const response = axios.post(url,data);
+          console.log(response.data);
+          alert('insert paymnt axios completed');
+          if(response.status===200){
+            alert('paymentid :', response.data.paymentID );
+            setOrderpaymentId(response.data.paymentID);
+            console.log('ord pay id:', response.data.paymentid);
+            localStorage.setItem('order-SelectedProductPaymentId',response.data.paymentid);
+            const orderpamentidsetteddata = JSON.parse(localStorage.getItem('order-SelectedProductPaymentId'));
+              console.log(orderpamentidsetteddata);
+            console.log('user susc id',response.data.UserSubscriptionId);
+            setorderUserSubscriptionId(response.data.UserSubscriptionId);
+            localStorage.setItem('order-SelectedProductUserSubscriptionId',response.data.UserSubscriptionId);
+            const orderusersusbcidsetteddata = JSON.parse(localStorage.getItem('order-SelectedProductUserSubscriptionId'));
+              console.log('orderusersusbcidsetteddata',orderusersusbcidsetteddata);
+            createsupplierorderId();
+          }
+          else
+          {
+            alert('pay axios not 200');
+            setResultMessage('paymnet id not generated');
+          }
+    }
+    else
+    {
+      alert('ordr id not found');
+      return;
+    }
 
+   }
 
-
+   const createsupplierorderId =()=>{
+    if(orderUserSubscriptionId!=null)
+    {
+      const url="";
+       const data ={
+        supplierId: orderselectedSupplierId,
+        orderId:orderOrderId,
+        amountperorder:orderProductTotalAmounttobePaid * 0.95,
+        orderstatus:'To be Delivered',
+        orderpaymentstatus:'Not Recieved',
+        ordertype:orderProductSUbscriptiontype,
+        order_startdate:orderProductStartdate,
+        order_enddate:orderProductEnddate
+       }
+        const response = axios.post(url,data);
+        console.log(response.data);
+        alert('create supl order axios done');
+        alert('created supl id',response.data.supplierId);
+        console.log('created supl id',response.data.supplierId);
+        localStorage.setItem('order-SelectedProductUserSupplierId',response.data.supplierId);
+        const ordersupplieridsetteddata = JSON.parse(localStorage.getItem('order-SelectedProductUserSupplierId'));
+        console.log('ordersupplieridsetteddata',ordersupplieridsetteddata);
+    }
+    else
+    {
+      alert("user susbc id not generated check payent stauts ");
+      setResultMessage("user susbc id not generated");
+    }
+   }
 
 
   const handleToggleAddreessForm = () => {
@@ -508,15 +635,15 @@ const quantityofproduct = localStorage.getItem('quantityofproduct');
           <div>
           
           <div className='supplierdata-div'>
-              <h3>Selected supplierID{selectedSupplierId}</h3>
+              <h3>Selected supplierID{orderselectedSupplierId}</h3>
             <div className='supplierdata-scroll-div'>
               {filteredSuppliers.map((supr) => (
                 <div
                     key={supr.supplierId}
-                    className={`Supplier-dataDisplay ${supr.supplierId === selectedSupplierId ? 'selected' : ''}`}
+                    className={`Supplier-dataDisplay ${supr.supplierId === orderselectedSupplierId ? 'selected' : ''}`}
                       onClick={() => handleSupplierClick(supr)}
                                                         >
-                  {supr.supplierId === selectedSupplierId ? (
+                  {supr.supplierId === orderselectedSupplierId ? (
                       <TbCurrentLocation style={{ width: '70px', height: '20px' }} />
                     ) : (
                       <BiCircle style={{ width: '70px', height: '20px' }} />
