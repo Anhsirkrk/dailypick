@@ -8,9 +8,16 @@ import Card from 'react-bootstrap/Card';
 import { AiOutlineHeart, AiOutlineCloseCircle } from 'react-icons/ai';
 import axios, { all } from 'axios';
 import { useLocation } from 'react-router-dom';
+import {useNavigate } from "react-router-dom";
+import {IoIosArrowForward} from 'react-icons/io';
+import {IoIosArrowDown} from 'react-icons/io';
+
+
 
 
 const PaymentStatus = () => {
+
+    const[paymentstatus,setpaymentstatus]=useState('');
 
 
     const [filteredProduct, setFilteredProduct] = useState([]);
@@ -21,6 +28,8 @@ const PaymentStatus = () => {
     const [wishlistData,setWishListData]= useState([]);
     const location = useLocation();
     const [userid,setUserId]=useState('');
+
+    const navigate = useNavigate();
 
 
     useEffect(() => {
@@ -147,6 +156,35 @@ const PaymentStatus = () => {
       };
 
  
+
+//back to home button
+
+const handlebacktohome =()=>{
+  navigate('/home2');
+}
+
+
+
+//show orders
+
+const [showPaymentOrder, setShowPaymentOrder] = useState(false);
+
+  const handleYourOrder = () => {
+    // Toggle the state to show/hide 'payment-order-div'
+    setShowPaymentOrder(!showPaymentOrder);
+  };
+
+
+ //show payment summary 
+
+
+ const [showPaymentSummary, setShowPaymentSummary] = useState(false);
+
+  const handlepaymentsummary = () => {
+    // Toggle the state to show/hide 'payment-order-div'
+    setShowPaymentSummary(!showPaymentSummary);
+  };
+
   return (
     <>
     <Nav/>
@@ -154,20 +192,41 @@ const PaymentStatus = () => {
         <div className='payment-status-dialog-box'>
             <div>
                 <div className='payment-status-image-div'>
-                    {/* <img className='payment-status-image' src={paymentsuccessimage} alt='payment-status-image'/> */}
-                    <img className='payment-status-image' src={paymentfailedimage} alt='payment-status-image'/> 
+
+                {paymentstatus === 'success' ? 
+                  (<img className='payment-status-image' src={paymentsuccessimage} alt='payment-success-image' />) 
+                  :
+                  (<img className='payment-status-image' src={paymentfailedimage} alt='payment-failed-image' />)
+                }
+
                 </div>
                 <div className='payment-status-message'>
-                    {/* <h4 className='Success'>Payment successful</h4> */}
-                    <h4 className='Failed'>Oh no, your Payment Failed</h4>
-                    {/* <p>The order confirmation has been sent to your number</p> */}
-                    <p className='failed-message'>Don't worry your money is safe! If money was debited from your account, it will be refunded automatically in 5-7 working days.</p>
+                
+                {paymentstatus === 'success' ? 
+                  (
+                    <div>
+                      <h4 className='Success'>Payment successful</h4>
+                      <p>The order confirmation has been sent to your number</p>
+                    </div>
+                  ) 
+                  : 
+                  (
+                    <div>
+                      <h4 className='Failed'>Oh no, your Payment Failed</h4>
+                      <p className='failed-message'>Don't worry, your money is safe! If money was debited from your account, it will be refunded automatically in 5-7 working days.</p>
+                    </div>
+                  )
+                }
+
+                    
+                    
                 </div>
             </div>
             <div className='line'>
                 <hr/>
             </div>
-            <div className='your-order'>Your Orders</div>
+            <div className='your-order' onClick={handleYourOrder}>Your Orders {showPaymentOrder ? <IoIosArrowDown /> : <IoIosArrowForward />}</div>
+            {showPaymentOrder && (
             <div className='payment-order-div'>
                 
                 <div className='my-orders-div'>
@@ -213,17 +272,20 @@ const PaymentStatus = () => {
                 }
                 </div>
             </div>
+            )}
             <div className='payment-summary-div'>
-                <div className='your-order'>Payment summary</div>
+                <div className='your-order' onClick={handlepaymentsummary}>Payment summary {showPaymentOrder ? <IoIosArrowDown /> : <IoIosArrowForward />}</div>
+                {showPaymentSummary && (
                 <div className='payment-summary-deytails'>
-                  <h4><strong>Payment Id:</strong></h4>
-                  <h4><strong>Time      :</strong></h4>
+                  <h4 className='payment-id'><strong>Payment Id:</strong>MOJO7404005A55294472</h4>
+                  <h4 className='payment-date'><strong>Time:</strong>Oct 04, 2023 at 4:50pm</h4>
                 </div>
+                )}
 
             </div>
             <div className='payment-button-field'>
                 <button className='paymnet-done' type='button'>Done</button>
-                <button className='paymnet-go-to-home' type='button'>Go to Home</button>
+                <button className='paymnet-go-to-home' type='button' onClick={handlebacktohome}>Go to Home</button>
             </div>
         </div>
     </div>
