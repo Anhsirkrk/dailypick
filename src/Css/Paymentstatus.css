@@ -10,7 +10,7 @@
     background-color: #fff;
     box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.25);
     width: 630px;
-    height: 787px;
+    height: auto;
 }
 .payment-status-image-div{
     display: flex;
@@ -139,7 +139,30 @@ height: 14.25px;
 
 .payment-summary-div{
     position: relative;
-    margin: 0px 65px 0px 65px;
+    display: flex;
+    flex-direction: column;
+    height: 125px;
+}
+.payment-summary-deytails{
+    margin: 0px 170px;
+}
+.payment-id{
+    position: relative;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: Poppins;
+    color: #535353;
+}
+.payment-date{
+    flex: 1;
+    width: 100%;
+    position: relative;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: Poppins;
+    color: #535353;
+    text-align: left;
+    display: inline-block;
 }
 
 
