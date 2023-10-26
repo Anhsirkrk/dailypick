@@ -94,6 +94,9 @@ useEffect(()=>{
 })
    
 
+
+
+
       const isProductInWishlist = (productId) => {
          return wishlistData.some(item => item.productId === productId);
        };
