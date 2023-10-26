@@ -1,0 +1,150 @@
+.supplier-page{
+    padding: 10px 10px;
+    margin-top: 100px;
+    display: flex;
+    gap:50px;
+}
+.supplierpage-left-side{
+    width: 320px;
+    height: auto;
+    background-color: #d9d9d9;
+}
+.Supplier-Options-list{
+    display: flex;
+    flex-direction: column;
+}
+.Supplier-Options{
+    background: var(--p-1, #f6f6f6);
+    padding: 20px 10px 20px 30px;
+    cursor: pointer;
+    font-family: Poppins;
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+align-items: center; 
+}
+.Supplier-Options:hover{
+    background:  #024172;
+    color: white;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.supplier-main-cointent-toprow{
+    display: flex;
+    gap:20px;       
+}
+.supplier-today-list-content{
+    display: flex;
+    flex-direction: column;
+}
+.supplier-today-list-content-heading{
+    display: flex;
+    justify-content: space-between;
+}
+.todaylist{
+    position: relative;
+    font-size: 20px;
+    font-family: Poppins;
+    color: #171717;
+    text-align: left;
+    cursor: pointer;
+}
+.viewall{
+    position: relative;
+    font-size: 12px;
+    font-family: Poppins;
+    color: #171717;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+.supplier-today-list{
+    width: 720px;
+    height: 380px;
+    border-radius: 10px;
+    background-color: #d9d9d9;
+}
+.supplier-notification{
+    width: 300px;
+    height: 380px;
+    border-radius: 10px;
+    background-color: #d9d9d9;
+    margin-top: 5px;
+}
+.notification-heading{
+    position: relative;
+    font-size: 20px;
+    font-family: Poppins;
+    color: #171717;
+    text-align: left;
+    cursor: pointer;
+}
+.supplier-available-stocks{
+    border-radius: 10px;
+    background-color: #d9d9d9;
+    width:1040px;
+    height: 193px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* order history */
+
+.orderhistory-heading{
+   
+     position: relative;
+     font-size: 25px;
+     font-family: Poppins;
+     color: #000;
+     text-align: left;  
+  
+}
+.Supplier-order-table{
+    text-align: center;
+    width: 1200px;
+    border: 1px solid #ccc; /* Add border with a color of your choice */
+    border-collapse: collapse; /* Collapse borders into a single border line */
+
+}
+
+.Supplier-order-table th, .Supplier-order-table td {
+    border: 1px solid #ccc; /* Add border to table cells */
+    padding: 8px; /* Add padding to table cells for better spacing */
+  }
+.table-header{
+    height: 100%;
+    position: relative;
+    background-color: #49c5dd;
+    border-top: 1px solid #7d7d7d;
+    border-left: 1px solid #7d7d7d;
+    box-sizing: border-box;
+    width: 100%;
+    
+    text-align: center;
+    font-size: 16px;
+    color: #171717;
+    font-family: Poppins;
+    padding: 10px 10px;
+}

@@ -17,7 +17,7 @@ import {IoIosArrowDown} from 'react-icons/io';
 
 const PaymentStatus = () => {
 
-    const[paymentstatus,setpaymentstatus]=useState('');
+  
 
 
     const [filteredProduct, setFilteredProduct] = useState([]);
@@ -32,128 +32,73 @@ const PaymentStatus = () => {
     const navigate = useNavigate();
 
 
-    useEffect(() => {
-      // Get item from local storage on component mount
-      const storeddata = localStorage.getItem('userdata');
-      if (storeddata) {
-        const storeduserdata = JSON.parse(storeddata);
-        setUserId(storeduserdata.userId);
-      }
-      // Call GetWishList only if userid is available
-      if (userid)
-      {
-        GetWishList();
-      }
-      GetAllProducts();
-    }, [userid]);
 
-    const GetAllProducts =()=>{
-        // alert("getall products hitted");
-        const url = "https://localhost:7041/api/Admin/GetAllProducts";
-        axios.get(url)
-        .then((response)=>{
-          console.log(response.data);
-       // Initialize selected sizes with the first size for each product
-       const initialSelectedSizes = {};
-       const initialSelectedPrices ={};
-    
-       response.data.forEach(item => {
-        initialSelectedSizes[item.productId] = item.sizeOfEachUnits[0];
-        initialSelectedPrices[item.productId] = item.priceOfEachUnits[0]; // Assuming the first price is the default
-      });
-    
-      setSelectedSizes(initialSelectedSizes);
-      setSelectedPrices(initialSelectedPrices);
-    
-         // Set the initial price when products are loaded
-         if (response.data.length > 0) {
-          setSelectedproductPrice(response.data[0].priceOfEachUnits[0]);
-        }
-        console.log(window.location.state && window.location.state.brand);
-         console.log(window.location.state && window.location.state.category);
-         const category = location.state && location.state.category;
-    const brand = location.state && location.state.brand;
-        
-        if (category) 
-        {
-          setFilteredProduct(response.data.filter(item => item.categoryName === category));
-          setProduct(response.data);
-        } 
-        else 
-        {
-          if(brand){
-            setFilteredProduct(response.data.filter(item => item.brandName === brand));
-            console.log(filteredProduct);
-            setProduct(response.data);
-          }
-          else
-        {
-          setFilteredProduct(response.data);
-          setProduct(response.data);
-        }}});
-     }
-     
+//local storage
 
 
-     const filtterproduct = (category) =>
-     {
-         const update = product.filter((x) => 
-         {
-            return x.categoryName === category;
-         })
-         setFilteredProduct(update);
-     }
-
-     const GetWishList = async () => {
-        // alert(userid);
-        // alert('get wish list hitted');
-        if (userid) {
-          const url = `https://localhost:7041/api/Wishlist/GetUserWishlistProducts?userid=${userid}`;
-          try {
-            //  alert("hitte getwishkist tyry");
-            const response = await axios.get(url);
-            console.log('API Response:', response.data); 
-            // const parsedData = JSON.parse(response.data);
-               // Update the wishlist data state
-               setWishListData(response.data);
-            localStorage.removeItem('wishlistdata');
-            localStorage.setItem('wishlistdata', JSON.stringify(response.data));
-          } catch (error) {
-            alert("hitte getwishkist catch");
-            console.error('GetWishList axios error', error);
-          }
-        }
-      };
 
 
-     const filterProducts = (categories, brands, ratings) => {
-        let filtered = product;
-        if (categories.length > 0) {
-          filtered = filtered.filter(item => categories.includes(item.categoryName));
-        }
-        if (brands.length > 0) {
-          filtered = filtered.filter(item => brands.includes(item.brandName));
-        }
-        if (ratings.length > 0) {
-          filtered = filtered.filter(item => ratings.includes(item.rating));
-        }
-    
-        setFilteredProduct(filtered);
-      }
+const [paymentTransactionId, setPaymentTransactionId] = useState('');
+const [paymentStatus, setPaymentStatus] = useState('');
+const [paymentId, setPaymentId] = useState('');
 
+const [selectedProduct, setSelectedProduct] = useState([]);
+const [selectedProductId, setSelectedProductId] = useState('');
+const [productIndividualPrice, setProductIndividualPrice] = useState('');
+const [quantityOfProduct, setQuantityOfProduct] = useState('');
+const [selectedSubscriptionType, setSelectedSubscriptionType] = useState('');
+const [selectedStartDate, setSelectedStartDate] = useState('');
+const [selectedEndDate, setSelectedEndDate] = useState('');
+const [selectedSizeOfProduct, setSelectedSizeOfProduct] = useState('');
+const [selectedTimeSlot, setSelectedTimeSlot] = useState('');
+const [selectedProductOrderId, setSelectedProductOrderId] = useState('');
+
+const [selectedProductUserSubscriptionId, setSelectedProductUserSubscriptionId] = useState('');
+const [selectedAddressId, setSelectedAddressId] = useState('');
+const [selectedAddressPinCode, setSelectedAddressPinCode] = useState('');
+const [orderSelectedSupplierId, setOrderSelectedSupplierId] = useState('');
+
+
+const [selectedsubscriptionplan, setSelectedSubscriptionPlan] = useState('');
+
+
+
+
+
+useEffect(()=>{
+  setPaymentTransactionId(localStorage.getItem('order-SelectedProductPaymentTransactionId'))
+  console.log(paymentTransactionId)
+  setPaymentStatus(localStorage.getItem('order-SelectedProductPaymentStatus'))
+  setPaymentId(localStorage.getItem('order-SelectedProductPaymentId'))
+
+
+  setSelectedProduct(localStorage.getItem('selectedproduct'))
+  console.log(selectedProduct);
+  setSelectedProductId(localStorage.getItem('order-selectedproductId'))
+  setProductIndividualPrice(localStorage.getItem('order-productindividualprice'))
+  setQuantityOfProduct(localStorage.getItem('order-quantityofproduct'))
+  setSelectedSubscriptionType(localStorage.getItem('order-selectedsubscriptiontype'))
+  setSelectedStartDate(localStorage.getItem('order-selectedStartdate'))
+  setSelectedEndDate(localStorage.getItem('order-selectedEnddate'))
+  setSelectedSizeOfProduct(localStorage.getItem('order-selectedSizeofproduct'))
+  setSelectedTimeSlot(localStorage.getItem('order-selectedtimeslot'))
+  setSelectedProductOrderId(localStorage.getItem('order-SelectedProductOrderId')) 
+
+
+  setSelectedProductUserSubscriptionId(localStorage.getItem('order-SelectedProductUserSubscriptionId'))
+  setSelectedAddressId(localStorage.getItem('order-SelectedAddressIDforSubscription'))
+  setSelectedAddressPinCode(localStorage.getItem('order-SelectedAddressPincodeforSubscription'))
+  setOrderSelectedSupplierId(localStorage.getItem('order-SelectedorderSupplierIdforSubscription'))
+
+
+})
+   
 
       const isProductInWishlist = (productId) => {
-        return wishlistData.some(item => item.productId === productId);
-      };
+         return wishlistData.some(item => item.productId === productId);
+       };
 
-      const isProductInWishlist2 = (productId) => {
-        for (let i = 0; i < wishlistData.length; i++) {
-          if (wishlistData[i].productId === productId) {
-            return { isInWishlist: true, index: i };
-          }
-        }
-        return { isInWishlist: false, index: -1 };
-      };
+   
 
  
 
@@ -193,7 +138,7 @@ const [showPaymentOrder, setShowPaymentOrder] = useState(false);
             <div>
                 <div className='payment-status-image-div'>
 
-                {paymentstatus === 'success' ? 
+                {paymentStatus === 'success' ? 
                   (<img className='payment-status-image' src={paymentsuccessimage} alt='payment-success-image' />) 
                   :
                   (<img className='payment-status-image' src={paymentfailedimage} alt='payment-failed-image' />)
@@ -202,7 +147,7 @@ const [showPaymentOrder, setShowPaymentOrder] = useState(false);
                 </div>
                 <div className='payment-status-message'>
                 
-                {paymentstatus === 'success' ? 
+                {paymentStatus === 'success' ? 
                   (
                     <div>
                       <h4 className='Success'>Payment successful</h4>
@@ -231,7 +176,7 @@ const [showPaymentOrder, setShowPaymentOrder] = useState(false);
                 
                 <div className='my-orders-div'>
                 {
-                  filteredProduct.map((curElm) => 
+                  selectedProduct.map((curElm) => 
                     {
                       const selectedSize = selectedSizes[curElm.productId];
                       const selectedPrice = curElm.sizeOfEachUnits.includes(Number(selectedSize))
@@ -277,14 +222,14 @@ const [showPaymentOrder, setShowPaymentOrder] = useState(false);
                 <div className='your-order' onClick={handlepaymentsummary}>Payment summary {showPaymentOrder ? <IoIosArrowDown /> : <IoIosArrowForward />}</div>
                 {showPaymentSummary && (
                 <div className='payment-summary-deytails'>
-                  <h4 className='payment-id'><strong>Payment Id:</strong>MOJO7404005A55294472</h4>
+                  <h4 className='payment-id'><strong>Payment Id:</strong>{paymentTransactionId}</h4>
                   <h4 className='payment-date'><strong>Time:</strong>Oct 04, 2023 at 4:50pm</h4>
                 </div>
                 )}
 
             </div>
             <div className='payment-button-field'>
-                <button className='paymnet-done' type='button'>Done</button>
+                <button className='paymnet-done' type='button' onClick={handlebacktohome}>Done</button>
                 <button className='paymnet-go-to-home' type='button' onClick={handlebacktohome}>Go to Home</button>
             </div>
         </div>
