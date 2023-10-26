@@ -28,6 +28,8 @@ const SubscriptionModal = ({ product,Priceofselectedproduct,subscriptiontypes,ha
   console.log(Priceofselectedproduct);
   console.log(product.selectedPrice);
 
+  localStorage.setItem('selectedproduct',product);
+
   const [subscriptionType, setSubscriptionType] = useState(null);
   const [selectedproductPrice,setSelectedproductPrice] = useState('');
   const [selectedSizeofproduct, setSelectedSizeofproduct]= useState([]);
@@ -182,26 +184,38 @@ const SubscriptionModal = ({ product,Priceofselectedproduct,subscriptiontypes,ha
   }
 
   const handleStartDateEndDate =(date)=>{
+    alert(date);
     alert(selectedsubscriptionplan);
     if(selectedsubscriptionplan){
 
    
     if(selectedsubscriptionplan===1)
     {
+      // const formattedDate = formatDate(date);
       setSelectedsubscriptionStartDate(date);
       setSelectedsubscriptionEndDate(date);
-     alert(`plan -1`);
+      alert(`plan -1`);
     }
     if(selectedsubscriptionplan===2)
     {
+      // const formattedDate = formatDate(date);
+      // setSelectedsubscriptionStartDate(formattedDate);
       setSelectedsubscriptionStartDate(date);
-      setSelectedsubscriptionEndDate(new Date(date.getTime() + (7 * 24 * 60 * 60 * 1000)));
+      const endDate = new Date(date.getTime() + (7 * 24 * 60 * 60 * 1000));
+      setSelectedsubscriptionEndDate(endDate);
+      // const formattedenddate = formatDate(endDate);
+      // setSelectedsubscriptionEndDate(formattedenddate);
       alert(`plan -2`);
     }
     if(selectedsubscriptionplan===3)
     {
+      // const formattedDate = formatDate(date);
+      // setSelectedsubscriptionStartDate(formattedDate);
       setSelectedsubscriptionStartDate(date);
-      setSelectedsubscriptionEndDate(new Date(date.getTime() + (30* 24 * 60 * 60 * 1000)));
+      const endDate = new Date(date.getTime() + (30 * 24 * 60 * 60 * 1000));
+      setSelectedsubscriptionEndDate(endDate);
+      // const formattedenddate = formatDate(endDate);
+      // setSelectedsubscriptionEndDate(formattedenddate);
       alert(`plan -3`);
     }
   }
@@ -210,6 +224,17 @@ const SubscriptionModal = ({ product,Priceofselectedproduct,subscriptiontypes,ha
     alert("select any subscription plan");
   }
       }
+
+      // const formatDate = (date) => {
+      //   if (date) {
+      //     return `${String(date.getDate()).padStart(2, '0')}-${
+      //       String(date.getMonth() + 1).padStart(2, '0')}-${
+      //       date.getFullYear()
+      //     }`;
+      //   } 
+      //   return '';
+      // }; 
+
 
       console.log('date+7',subscriptionEndDate);
   
@@ -327,8 +352,9 @@ const SubscriptionModal = ({ product,Priceofselectedproduct,subscriptiontypes,ha
                 className='datepickerclass'
                   placeholderText='Select date'
                   selected={subscriptionStartDate}
-                  onChange={date => {setSelectedsubscriptionStartDate(date);
+                  onChange={date => { setSelectedsubscriptionStartDate(date);
                     handleStartDateEndDate(date);}}
+                    
                   dateFormat="dd/MM/yyyy"
                 />
                 <div className="icon-container">
