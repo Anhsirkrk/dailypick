@@ -68,6 +68,8 @@ const Location = () => {
     const [orderselectedSupplierId, setorderSelectedSupplierId] = useState(null);
     const [orderPaymentId,setOrderpaymentId]= useState('');
     const [orderUserSubscriptionId,setorderUserSubscriptionId]=useState('');
+    const [ orderpaymentstatus,setOrderpaymentStatus]= useState('');
+    const [ orderpaymenttransactionid,setOorderPaymenttransactionid]= useState('');
 
     const currentDate = new Date(); // This will create a new Date object with the current date and time
 const TodayDate = currentDate.toISOString().split('T')[0]; // This will format it as 'YYYY-MM-DD'
@@ -340,11 +342,13 @@ const TodayDate = currentDate.toISOString().split('T')[0]; // This will format i
     alert(`selectedsupplierid,${orderselectedSupplierId}`);
     if(selectedAddressPinCode!= null)
     {
-      if(orderselectedSupplierId!=null){
+      if(orderselectedSupplierId!=null)
+      {
         localStorage.setItem('order-SelectedAddressIDforSubscription',selectedAddressId);
         localStorage.setItem('order-SelectedAddressPincodeforSubscription',selectedAddressPinCode);
         localStorage.setItem('order-SelectedorderSupplierIdforSubscription',orderselectedSupplierId);
         createorderIdfororder();
+        
       }
       else
       {
@@ -360,7 +364,7 @@ const TodayDate = currentDate.toISOString().split('T')[0]; // This will format i
      
   }
 
-  const createorderIdfororder= ()=>{
+  const createorderIdfororder= async ()=>{
     if(userid!=null)
     {
       if(orderProductSUbscriptiontype!=null)
@@ -371,44 +375,58 @@ const TodayDate = currentDate.toISOString().split('T')[0]; // This will format i
               {
                 if(orderProducttimeslot!=null && selectedAddressId!=null && orderselectedSupplierId!=null)
                 {      
-                          const url= "";
+                          const url= "https://localhost:7041/api/Order/CreateOrder";
                         const data ={
-                          orderId:0,
+                          orderId:1,
                           userId:userid,
-                          subscriptiontype:orderProductSUbscriptiontype,
-                          TotalAMount : orderProductTotalAmounttobePaid,
-                          OrderDate:'2020-10-10',
-                          startdate:orderProductStartdate,
-                          enddate:orderProductEnddate,
-                          OrderpaymentStatus:'pending',
-                          timeslot:orderProducttimeslot,
-                          addressID : selectedAddressId,
-                          supplierId: orderselectedSupplierId,
                           productId:orderProductId,
-                          productprice:orderProductIndiviudalprice,
-                          Quantity:orderProductquanity,
-                          productSize: orderProductSize,
-                          // addresspincode: selectedAddressPinCode
+                          productPrice:orderProductIndiviudalprice,
+                          quantity:orderProductquanity,
+                          sizeOfProduct:orderProductSize,
+                          subscriptionTypeId:orderProductSUbscriptiontype,
+                          totalAmount:orderProductTotalAmounttobePaid,
+                          orderDate:'2023-10-26T06:37:09.647Z',
+                          startDate:'2023-10-26T06:37:09.647Z',
+                          endDate:'2023-10-26T06:37:09.647Z',
+                          orderPaymentStatus:'Pending',
+                          timeSlot:orderProducttimeslot,
+                          addressId:selectedAddressId,
+                          supplierId:orderselectedSupplierId,
+                         
                         }
-                        const response = axios.post(url,data);
+                        console.log(data);
+                        try{
+                          const response = await axios.post(url,data);
                         console.log(response.data);
                         alert("orderId axios completed");
                         if (response.status === 200) 
                         {
                           alert("axios 200");
-                          setOrderOrderId(response.data.orderId);
-                          console.log('orderId',response.data.orderId);
-                          localStorage.setItem('order-SelectedProductOrderId',response.data.orderId); 
+                          alert(response.data.supplier.orderId);
+                          setOrderOrderId(response.data.supplier.orderId);
+                          console.log('orderId',response.data.supplier.orderId);  
+                          localStorage.setItem('order-SelectedProductOrderId',response.data.supplier.orderId); 
                           const selProOrderIDsetteddata = JSON.parse(localStorage.getItem('order-SelectedProductOrderId'));
+                          alert("here1");
                           console.log('selProOrderIDsetteddata',selProOrderIDsetteddata);
+                          alert("here2");
                           //actually here  we have to redirect to payemnt page , but due to payejnt page unavailable we are directly inserting payment table form ehere
-                          createpaymentIdandUserSubscrtiptionId();
+                          console.log('order-orderid',selProOrderIDsetteddata);
+                          alert(`order-order id:'${selProOrderIDsetteddata}`)
+                          createpaymentIdandUserSubscrtiptionId(selProOrderIDsetteddata);
                         } 
                         else 
                         {
                           alert("orderid axios not  200");
                           setResultMessage("order Not created");
-                        } 
+                        }
+
+                        }
+                        catch(error){
+                          console.log(error);
+                          alert("orderid catch axios not  200");
+                          setResultMessage("order Not created");
+                        }
                 }
                 else
                 {
@@ -443,35 +461,54 @@ const TodayDate = currentDate.toISOString().split('T')[0]; // This will format i
     }
    }
   
-   const createpaymentIdandUserSubscrtiptionId =()=>{
-    if(orderOrderId)
+   const createpaymentIdandUserSubscrtiptionId = async(currentorderid)=>{
+    alert(currentorderid);
+    if(currentorderid)
     {
-          const url="";
+          const url="https://localhost:7041/api/Payment/UserPayment";
           const data = {
-            orderId:orderOrderId,
-            paymentdate:TodayDate,
-            payemntMethod:'UPI',
+            paymentId:0,
+            orderId:currentorderid,
+            paymentMethod:'UPI',
             amount:orderProductTotalAmounttobePaid,
-            TransactionId:'abc24152',
-            paymentstatus:'completed'
+            transactionId:'abc24152',
+          paymentstatus:'completed'
           }
-          const response = axios.post(url,data);
+          console.log(data);
+          const response =await axios.post(url,data);
           console.log(response.data);
           alert('insert payment axios completed');
           if(response.status===200)
           {
-            alert('paymentid :', response.data.paymentID );
-            setOrderpaymentId(response.data.paymentID);
-            console.log('ord pay id:', response.data.paymentid);
-            localStorage.setItem('order-SelectedProductPaymentId',response.data.paymentid);
-            const orderpamentidsetteddata = JSON.parse(localStorage.getItem('order-SelectedProductPaymentId'));
+            alert('paymentid :', response.data.paymentId );
+            setOrderpaymentId(response.data.paymentId);
+            console.log('ord pay id:', response.data.paymentId);
+            alert('paymnt console  485 ');
+            localStorage.setItem('order-SelectedProductPaymentId',response.data.paymentId);
+            const orderpamentidsetteddata = localStorage.getItem('order-SelectedProductPaymentId');
               console.log(orderpamentidsetteddata);
+
             console.log('user susc id',response.data.UserSubscriptionId);
             setorderUserSubscriptionId(response.data.UserSubscriptionId);
             localStorage.setItem('order-SelectedProductUserSubscriptionId',response.data.UserSubscriptionId);
-            const orderusersusbcidsetteddata = JSON.parse(localStorage.getItem('order-SelectedProductUserSubscriptionId'));
+            const orderusersusbcidsetteddata = localStorage.getItem('order-SelectedProductUserSubscriptionId');
               console.log('orderusersusbcidsetteddata',orderusersusbcidsetteddata);
-            createsupplierorderId();
+
+              console.log('order payment status',response.data.PaymentStatus);
+              setOrderpaymentStatus(response.data.PaymentStatus);
+              localStorage.setItem('order-SelectedProductPaymentStatus',response.data.PaymentStatus);
+              const orderproductpaymentstatus = localStorage.getItem('order-SelectedProductPaymentStatus');
+                console.log('orderproductpaymentstatus :',orderproductpaymentstatus);
+
+                console.log('order payment status',response.data.TransactionId);
+              setOorderPaymenttransactionid(response.data.TransactionId);
+              localStorage.setItem('order-SelectedProductPaymentTransactionId',response.data.TransactionId);
+              const orderproductpaymentTransactionId = localStorage.getItem('order-SelectedProductPaymentTransactionId');
+                console.log('orderproductpaymentTransactionId :',orderproductpaymentTransactionId);
+
+                navigate('/paymentstatus');
+        
+            //createsupplierorderId();
           }
           else
           {
@@ -662,19 +699,8 @@ const quantityofproduct = localStorage.getItem('quantityofproduct');
 
 </div>
 
-
-
-
-
-
           </div>
        
-
-
-
-
-
-
     <div className='Addresses-div'>
      
     <div>
