@@ -28,7 +28,10 @@ const SubscriptionModal = ({ product,Priceofselectedproduct,subscriptiontypes,ha
   console.log(Priceofselectedproduct);
   console.log(product.selectedPrice);
 
-  localStorage.setItem('selectedproduct',product);
+
+  localStorage.setItem('selectedproduct',JSON.stringify(product));
+
+
 
   const [subscriptionType, setSubscriptionType] = useState(null);
   const [selectedproductPrice,setSelectedproductPrice] = useState('');
