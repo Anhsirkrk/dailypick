@@ -118,6 +118,7 @@ align-items: center;
   justify-content: flex-start;
   padding-left: 30px;
   margin: auto;
+  cursor: pointer;
 }
 .Location{
   display: flex;
