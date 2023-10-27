@@ -69,7 +69,7 @@ const Location = () => {
     const [orderPaymentId,setOrderpaymentId]= useState('');
     const [orderUserSubscriptionId,setorderUserSubscriptionId]=useState('');
     const [ orderpaymentstatus,setOrderpaymentStatus]= useState('');
-    const [ orderpaymenttransactionid,setOorderPaymenttransactionid]= useState('');
+    const [ orderpaymenttransactionid,setorderPaymenttransactionid]= useState('');
 
     const currentDate = new Date(); // This will create a new Date object with the current date and time
 const TodayDate = currentDate.toISOString().split('T')[0]; // This will format it as 'YYYY-MM-DD'
@@ -501,7 +501,7 @@ const TodayDate = currentDate.toISOString().split('T')[0]; // This will format i
                 console.log('orderproductpaymentstatus :',orderproductpaymentstatus);
 
                 console.log('order payment status',response.data.TransactionId);
-              setOorderPaymenttransactionid(response.data.TransactionId);
+              setorderPaymenttransactionid(response.data.TransactionId);
               localStorage.setItem('order-SelectedProductPaymentTransactionId',response.data.TransactionId);
               const orderproductpaymentTransactionId = localStorage.getItem('order-SelectedProductPaymentTransactionId');
                 console.log('orderproductpaymentTransactionId :',orderproductpaymentTransactionId);
