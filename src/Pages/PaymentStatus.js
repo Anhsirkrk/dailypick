@@ -55,9 +55,7 @@ const [selectedsubscriptionplan, setSelectedSubscriptionPlan] = useState('');
 
 
 useEffect(()=>{
-  const fetchdata=()=>{
-    try{
-
+  
       setPaymentTransactionId(localStorage.getItem('order-SelectedProductPaymentTransactionId'))
      
       setPaymentStatus(localStorage.getItem('order-SelectedProductPaymentStatus'))
@@ -96,12 +94,6 @@ useEffect(()=>{
       setSelectedAddressPinCode(localStorage.getItem('order-SelectedAddressPincodeforSubscription'))
       
       setOrderSelectedSupplierId(localStorage.getItem('order-SelectedorderSupplierIdforSubscription'))
-      
-    }catch(error){
-    console.error('Error fetching data:', error);
-  }
-  fetchdata();
-  }
 },[]);
    
 console.log(paymentTransactionId)

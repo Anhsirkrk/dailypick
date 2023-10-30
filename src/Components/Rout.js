@@ -5,6 +5,7 @@ import Login2 from '../Pages/Login2';
 import Home2 from '../Pages/Home2';
 import Popup from '../Pages/PopUp';
 import Products from '../Pages/Products';
+import SingleProduct from '../Pages/SingleProduct';
 import Location from '../Pages/Location';
 import Profile from '../Pages/Profile';
 import MySubscriptions from '../Pages/MySubscriptions';
@@ -23,6 +24,7 @@ const Rout = () => {
           <Route path='/login2' element={<Login2 />} />
           <Route path='/home2' element={<Home2/>}/>
           <Route path='/products' element={<Products/>}/>
+          <Route path='/singleproduct' element={<SingleProduct/>}/>
           <Route path="/*" element={<Navigate to="/popup" replace />} />
           <Route path="/location" element={<Location/>}/>
           <Route path='/profile' element={<Profile/>}/>

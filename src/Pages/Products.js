@@ -15,6 +15,7 @@ import HeritageCurd1 from '../Images/Dummy/Heritage_Curd_1 copy.jpg';
 import {ToastContainer,toast } from 'react-toastify';
 import { faL } from '@fortawesome/free-solid-svg-icons';
 
+
 const Products = ({detail, view, close, setClose, addtocart}) => {
 
   const [product,setProduct]=useState([]);
@@ -33,6 +34,8 @@ const Products = ({detail, view, close, setClose, addtocart}) => {
    const [wishlistIds, setWishlistIds] = useState([]);
    const [userid,setUserId]=useState('');
 
+
+   const navigate = useNavigate();
 
    const GetWishList = async () => {
     // alert(userid);
@@ -288,6 +291,13 @@ const isProductInWishlist2 = (productId) => {
   return { isInWishlist: false, index: -1 };
 };
 
+
+
+const handlesingleproduct=(productId)=>{
+console.log(productId);
+  navigate(`/singleproduct?productId=${productId}`);
+};
+
   return (
     <>
     <Nav/>
@@ -402,7 +412,7 @@ const isProductInWishlist2 = (productId) => {
                             <div onClick={()=>handleaddorremovewishlist(curElm.productId)} className={`overlay-icon ${isModalOpen ? 'hidden' : ''}`}>
                             <li style={{ backgroundColor: isInWishlist ? 'green' : '' }}><AiOutlineHeart className='li-icon' /></li>
                           </div>
-                            <Card.Img variant="top" src={`data:image/jpeg;base64,${curElm.base64Image}`} alt={curElm.Title} />
+                            <Card.Img variant="top" src={`data:image/jpeg;base64,${curElm.base64Image}`} alt={curElm.Title} onClick={()=>handlesingleproduct(curElm.productId)} />
                             <Card.Body className='product-card-body'>
                               <Card.Title className='product-card-title'>{curElm.productName}</Card.Title>
                               <Card.Text className='product-card-text'>
