@@ -36,10 +36,21 @@ const MyWishlist =()=>{
      const location = useLocation();
      const navigate = useNavigate();
     
+    //  useEffect(()=>{ 
+    //   const selectedSize = filteredProduct.priceOfEachUnits;
+    //   const selectedPrice = filteredProduct.sizeOfEachUnits.includes(Number(selectedSize))
+    //     ? filteredProduct.priceOfEachUnits[filteredProduct.sizeOfEachUnits.indexOf(Number(selectedSize))]
+    //     : '';
+    //     setSelectedproductPrice(selectedPrice);
+    //     // setSelectedSizeofproduct(selectedSize);
+
+  
+    // },[]);
+    // console.log(selectedproductPrice);
+    // console.log(selectedSizeofproduct);
+    // console.log(subscriptionTypesData);
   
     
-  
-
     useEffect(()=>{
           // Get item from local storage on component mount
     const storeddata = localStorage.getItem('userdata');
@@ -86,6 +97,16 @@ const MyWishlist =()=>{
                // Update the wishlist data state
                setWishListData(response.data);
                setFilteredProduct(response.data);
+               const initialSelectedSizes = {};
+               const initialSelectedPrices ={};
+            
+               response.data.forEach(item => {
+                initialSelectedSizes[item.productId] = item.sizeOfEachUnits[0];
+                initialSelectedPrices[item.productId] = item.priceOfEachUnits[0]; // Assuming the first price is the default
+              });
+
+              setSelectedSizes(initialSelectedSizes);
+              setSelectedPrices(initialSelectedPrices);
             localStorage.removeItem('wishlistdata');
             localStorage.setItem('wishlistdata', JSON.stringify(response.data));
           } catch (error) {
