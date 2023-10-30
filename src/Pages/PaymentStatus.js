@@ -55,9 +55,7 @@ const [selectedsubscriptionplan, setSelectedSubscriptionPlan] = useState('');
 
 
 useEffect(()=>{
-  const fetchdata=()=>{
-    try{
-
+  
       setPaymentTransactionId(localStorage.getItem('order-SelectedProductPaymentTransactionId'))
      
       setPaymentStatus(localStorage.getItem('order-SelectedProductPaymentStatus'))
@@ -65,9 +63,10 @@ useEffect(()=>{
       setPaymentId(localStorage.getItem('order-SelectedProductPaymentId'))
       
       const storedProduct = JSON.parse(localStorage.getItem('selectedproduct'));
-      if (storedProduct) {
+      
         setSelectedProduct(storedProduct);
-      }
+    
+      console.log(storedProduct);
       
       setSelectedProductId(localStorage.getItem('order-selectedproductId'))
       
@@ -97,13 +96,16 @@ useEffect(()=>{
       
       setOrderSelectedSupplierId(localStorage.getItem('order-SelectedorderSupplierIdforSubscription'))
       
-    }catch(error){
-    console.error('Error fetching data:', error);
-  }
-  fetchdata();
-  }
 },[]);
    
+
+console.log(JSON.parse(localStorage.getItem('selectedproduct')));
+console.log(localStorage.getItem('order-productindividualprice'));
+console.log(localStorage.getItem('order-quantityofproduct'));
+console.log(localStorage.getItem('order-TotalAmounttobePaid'));
+console.log(localStorage.getItem('order-SelectedProductPaymentTransactionId'));
+console.log(localStorage.getItem('order-SelectedProductPaymentStatus'));
+
 console.log(paymentTransactionId)
 console.log(paymentStatus)
 console.log(paymentId)
