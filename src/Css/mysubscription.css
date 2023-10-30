@@ -1,0 +1,252 @@
+.mysubscription-product-card{
+    margin: 5px 20px 20px 25px;
+    width: 16rem;
+    overflow: hidden;
+    border: 1px solid #e2e0e0;
+    /* margin-bottom: 20px; */
+    transition: 0.5s;
+    cursor: pointer;
+    /* margin-right: 10px; */
+    border-radius: 10px;
+border: 0.5px solid #848484;  
+background: #F1F1F1;
+position: relative;
+height: 255px; 
+position: relative;
+}
+
+.overlay {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Change color and opacity as needed */
+    opacity: 0; /* Initially transparent */
+    transition: opacity 0.3s ease;
+    pointer-events: none; /* Allows clicks to go through the overlay */
+    z-index: 1; /* Place it above the image */
+}
+.overlay.visible {
+    opacity: 1;
+}
+
+.overlay-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 2; /* Ensure it's on top of the overlay */
+}
+
+/* .products .products-container .productbox .contant .box
+{
+    overflow: hidden;
+    width: 250px;
+    height: 280px;
+    border: 1px solid #e2e0e0;
+    margin-bottom: 20px;
+    transition: 0.5s;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-right: 20px;
+    border-radius: 10px;
+border: 0.5px solid #848484;
+background: #F1F1F1;
+} */
+.mysubscription-product-card:hover
+{
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+/* .products .products-container .productbox .contant .box:hover
+{
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+} */
+.overlay-icon{
+    position: absolute;
+    padding: 4px; /* Adjust padding as needed */
+    position: absolute;
+    top: 96px; /* Adjust this value to position the icon vertically */
+    right: 0px; /* Adjust this value to position the icon horizontally */
+    z-index: 1;
+  
+}
+.overlay-icon.hidden {
+    display: none;
+  }
+.overlay-icon li{
+    border-radius: 30px 0 0 0;
+    background: rgb(2, 65, 114,0.89);
+    list-style: none;
+    padding: 10px 5px 5px 10px;
+    color: #010f1c;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    transition: 0.5s;
+    font-size: 25px;
+}
+.overlay-icon li:hover{
+    background: #0989ff;
+    color: #fff;
+}
+
+.overlay-icon li .li-icon{
+    color:aliceblue;
+    padding-top: 5px;
+}
+.mysubscription-product-card-container{
+    height: 500px;
+}
+
+.mysubscription-product-card img
+{
+    /* padding: 10px 20px; */
+    /* display: flex;
+    justify-content: space-between; */
+    border-bottom: 1px solid #e2e0e0;
+    position: relative;
+    display: inline-block;
+    width: 250px;
+    height: 150px;
+    object-fit: cover;
+    box-shadow: 0px 2.7767px 2.7767px 0px rgba(0, 0, 0, 0.25);
+}
+/* .products .products-container .productbox .contant .box .img_box
+{
+   
+    border-bottom: 1px solid #e2e0e0;
+    position: relative;
+    display: inline-block;
+    width: 250px;
+    height: 150px;
+    box-shadow: 0px 2.7767px 2.7767px 0px rgba(0, 0, 0, 0.25);
+} */
+
+
+
+.mysubscription-product-card .mysubscription-product-card-body {
+    padding: 0px 10px 0px 10px;
+}
+.mysubscription-product-card-title {
+    padding-top: 10px;
+    color: black;
+    font-size: large;
+    font-weight: 700;
+}
+.mysubscription-product-card:hover .mysubscription-product-card-title
+{
+    color: #0989ff;
+}
+
+.mysubscription-product-card-text .mysubscription-Price-QtyDiv{
+    display: flex;
+   justify-content: flex-start;
+   align-items: center;
+   padding: 5px 0px 5px 0px;
+   margin-top: 10px;
+}
+
+.mysubscription-product-card-text .mysubscription-Price-QtyDiv h4 {
+    font-size: 19px;
+    margin: 0px 0px 0px 0px;
+    color: #010f1c;
+    transition: 0.5s;
+}
+.mysubscription-product-card-buttonsdiv{
+    margin: 5px 20px 20px 25px;
+}
+.subscriptionshowBtn{
+    width: 200px;
+    color: var(--Full_white, #FFF);
+    font-family: Poppins;
+    /* font-size: 16px; */
+    font-weight: 600;
+    line-height: normal;
+    border-radius: 5px;
+    border: 0.694px solid var(--P1, #024172);
+    background: var(--P1, #024172);
+    height: 35px; 
+}
+.mysubscription-product-card-buttonsdiv{
+    display: flex;
+    justify-content: space-around;
+}
+.subcriptionDetailShowingArrowBtn{
+    padding: 5px 5px 5px 5px;
+    color: var(--Full_white, #FFF);
+    font-family: sans-serif;
+    /* font-size: 40px; */
+    /* font-weight: 900; */
+    /* line-height: normal; */
+    border-radius: 5px;
+    border: 0.694px solid var(--P1, #024172);
+    background: var(--P1, #024172);
+    height: 35px;
+    overflow: hidden;
+    width: 35px;
+}
+.subcriptionDetailShowingArrowBtn-icon{
+    color: var(--Full_white, #FFF);
+    font-family: Poppins;
+    font-size: 25px;
+    font-weight: 600;
+}
+
+
+
+
+
+.wishlistproductbox-container{display: flex;
+    flex-wrap: wrap;
+    min-height: 600px;}.wishlistpage-container{
+        margin: 100px 0px 0px 0px;
+        padding: 10px 50px 50px 100px;
+    }
+    .wishlist-page-heading{
+        color: #024172;
+    }
+    .Addwishlisticondiv{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .AddWIshlist-icon{
+        margin: 0px 0px;
+            padding: 0px 20px 0px 0px;
+        font-size: 129px;
+        color: #024172;
+    }
+    
+    .addwishlisttext{
+        MARGIN: 0PX 0PX;
+        COLOR: #024172;
+    }
+    .wishlistgotohomebtn-div{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 39px 0px 0px 20px;
+    }
+    .wishlistgotohomebtn{
+        width: 150px;
+        height: 35px;
+        background: #024172;
+        color: white;
+        border-radius: 10px;
+        font-family: system-ui;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+    }
+    .wishlistgotohomebtn2{
+        width: 150px;
+        height: 35px;
+        background: #024172;
+        color: white;
+        border-radius: 10px;
+        font-family: system-ui;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+    }
