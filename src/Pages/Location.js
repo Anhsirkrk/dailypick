@@ -482,10 +482,14 @@ const TodayDate = currentDate.toISOString().split('T')[0]; // This will format i
           console.log(data);
           const response =await axios.post(url,data);
           console.log(response.data);
+
+          console.log('order payment status', response.data.paymentStatus);
+console.log('order payment status', response.data.transactionId);
+
           // alert('insert payment axios completed');
           if(response.status===200)
           {
-            // alert('paymentid :', response.data.paymentId );
+            alert('paymentid :', response.data.paymentId );
             setOrderpaymentId(response.data.paymentId);
             console.log('ord pay id:', response.data.paymentId);
             // alert('paymnt console  485 ');
@@ -499,15 +503,16 @@ const TodayDate = currentDate.toISOString().split('T')[0]; // This will format i
             const orderusersusbcidsetteddata = localStorage.getItem('order-SelectedProductUserSubscriptionId');
               console.log('orderusersusbcidsetteddata',orderusersusbcidsetteddata);
 
-              console.log('order payment status',response.data.PaymentStatus);
-              setOrderpaymentStatus(response.data.PaymentStatus);
-              localStorage.setItem('order-SelectedProductPaymentStatus',response.data.PaymentStatus);
+              console.log('order payment status',response.data.paymentStatus);
+              setOrderpaymentStatus(response.data.paymentStatus);
+              localStorage.setItem('order-SelectedProductPaymentStatus',response.data.paymentStatus);
               const orderproductpaymentstatus = localStorage.getItem('order-SelectedProductPaymentStatus');
                 console.log('orderproductpaymentstatus :',orderproductpaymentstatus);
 
-                console.log('order payment status',response.data.TransactionId);
-              setorderPaymenttransactionid(response.data.TransactionId);
-              localStorage.setItem('order-SelectedProductPaymentTransactionId',response.data.TransactionId);
+                console.log('order payment status',response.data.transactionId
+                );
+              setorderPaymenttransactionid(response.data.transactionId);
+              localStorage.setItem('order-SelectedProductPaymentTransactionId',response.data.transactionId);
               const orderproductpaymentTransactionId = localStorage.getItem('order-SelectedProductPaymentTransactionId');
                 console.log('orderproductpaymentTransactionId :',orderproductpaymentTransactionId);
 

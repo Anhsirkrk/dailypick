@@ -32,6 +32,7 @@ const MySubscriptions =()=>{
      const [selectedRatings,setSelectedRatings] = useState([]);
      const [isModalOpen, setIsModalOpen] = useState(false);
 
+     const [subscriptionlistData,setSubscriptionListData]= useState([]);
      const [wishlistData,setWishListData]= useState([]);
      const [userid,setUserId]=useState('');
 
@@ -52,137 +53,48 @@ const MySubscriptions =()=>{
     }
       // Call GetWishList only if userid is available
   if (userid) {
-    GetWishList();
+    
+    GetSubscriptionsList();
   }
-        // const retrievewishlistdata = JSON.parse(localStorage.getItem('wishlistdata'));
-        // setFilteredProduct(retrievewishlistdata);
-        // setWishListData(retrievewishlistdata);
        },[userid]);
     
-    const handleSubscribeClick = () => {
-   
-      };
+ 
 
-      const handleDropdownChange = (productId, newSize) => {
-        const selectedProduct = filteredProduct.find(p => p.sizeOfEachUnits.includes(Number(newSize)));
-        const selectedPrice = selectedProduct ? selectedProduct.priceOfEachUnits[selectedProduct.sizeOfEachUnits.indexOf(Number(newSize))] : '';
-      
-        setSelectedSizes(prevSelectedSizes => ({
-          ...prevSelectedSizes,
-          [productId]: newSize
-        }));
-      }
+  
       const handleaddnewproduct = ()=>{
         navigate('/products');
       }
 
-      const GetWishList = async () => {
-        // alert(userid);
+        
+      const GetSubscriptionsList = async () => {
+        alert(userid);
         if (userid) {
-          const url = `https://localhost:7041/api/Wishlist/GetUserWishlistProducts?userid=${userid}`;
+        
+          const url = `https://localhost:7041/api/User/GetUserSubscribedProducts?userid=${userid}`;
+
+          const data = {
+            userId:userid,
+          }
           try {
-            // alert("hitte getwishkist tyry");
+             alert("hitte get subsc tyry");
             const response = await axios.get(url);
             console.log('API Response:', response.data); 
             // const parsedData = JSON.parse(response.data);
                // Update the wishlist data state
-               setWishListData(response.data);
+               setSubscriptionListData(response.data);
                setFilteredProduct(response.data);
-               const initialSelectedSizes = {};
-               const initialSelectedPrices ={};
-            
-               response.data.forEach(item => {
-                initialSelectedSizes[item.productId] = item.sizeOfEachUnits[0];
-                initialSelectedPrices[item.productId] = item.priceOfEachUnits[0]; // Assuming the first price is the default
-              });
-
-              setSelectedSizes(initialSelectedSizes);
-              setSelectedPrices(initialSelectedPrices);
-            localStorage.removeItem('wishlistdata');
-            localStorage.setItem('wishlistdata', JSON.stringify(response.data));
+               
+            localStorage.removeItem('subscriptionlistdata');
+            localStorage.setItem('subscriptionlistdata', JSON.stringify(response.data));
           } catch (error) {
-            alert("hitte getwishkist catch");
-            console.error('GetWishList axios error', error);
+            alert("hitte getsubscList catch");
+            console.error('Getsubscriptionlist axios error', error);
           }
         }
       };
-      console.log('setwishlistdata',wishlistData);
-      const handleaddorremovewishlist= async (Pid)=>{
-        // Id.preventDefault();
-        alert(Pid);
-        alert("handleaddtowishlist hitted");
-        const isInWishlist = isProductInWishlist2(Pid);
-        alert(isInWishlist);
-        console.log(isInWishlist);
-        if (isInWishlist.isInWishlist===true)
-         {
-            const data={
-              wishlistId:0,
-              userId:userid,
-              productId:Pid,
-              isInWishlist:false
-            }
-            const url="https://localhost:7041/api/Wishlist/CreateWishlist";
-            try{
-              const response = await axios.post(url,data );
-              alert("axios done");
-              console.log(response);
-              if(response.status === 200)
-              {
-              alert("axios rem wishlist done");
-              await GetWishList();
-                toast.error("item removed from wishlist");
-              
-              }
-            }
-            catch(error)
-            {
-              alert("catch hitted");
-              console.error('handleaddtowishlist axios error',error);
-            }
-        }
-        if (isInWishlist.isInWishlist===false)
-         {
-            const data={
-              wishlistId:0,
-              userId:userid,
-              productId:Pid,
-              isInWishlist:true
-            }
-             const url="https://localhost:7041/api/Wishlist/CreateWishlist";
-             try{
-              const response = await axios.post(url,data );
-              alert("axios done");
-              console.log(response);
-              if(response.status === 200)
-              {
-               alert("axios adding wishlist done");
-               await GetWishList();
-                toast.success("item added to wishlist");
-                return;
-              }
-             }
-             catch(error)
-             {
-              alert("catch hitted");
-              console.error('handleaddtowishlist axios error',error);
-             }
-            }
-            
-      }
-      
-      const isProductInWishlist = (productId) => {
-        return wishlistData.some(item => item.productId === productId);
-      };
+      console.log('setsubscriptionlistdata',subscriptionlistData);
 
-      const isProductInWishlist2 = (productId) => {
-        for (let i = 0; i < wishlistData.length; i++) {
-          if (wishlistData[i].productId === productId) {
-            return { isInWishlist: true, index: i };
-          }
-        }
-        return { isInWishlist: false, index: -1 };
-      };
+    
 
     return (
                 <>
@@ -193,30 +105,22 @@ const MySubscriptions =()=>{
                     <ToastContainer/>
                         <div className='wishlistproductbox-container'>
                         {
-                            filteredProduct.map((curElm) => 
+                            subscriptionlistData.map((curElm) => 
                               {
-                                const selectedSize = selectedSizes[curElm.productId];
-                                const selectedPrice = curElm.sizeOfEachUnits.includes(Number(selectedSize))
-                                  ? curElm.priceOfEachUnits[curElm.sizeOfEachUnits.indexOf(Number(selectedSize))]
-                                  : '';
-                                  const isInWishlist = isProductInWishlist(curElm.productId);
 
-                                
                                   return(
                                       <>
                                       <div className="mysubscription-product-card-container">
                                       <Card className='mysubscription-product-card'>
-                                      <div onClick={()=>handleaddorremovewishlist(curElm.productId)} className={`overlay-icon ${isModalOpen ? 'hidden' : ''}`}>
-                            <li style={{ backgroundColor: isInWishlist ? 'green' : '' }}><AiOutlineHeart className='li-icon' /></li>
-                                    </div>
+                                    
                                     <div className={`overlay : visible`}></div>
-                                      <Card.Img variant="top" src={`data:image/jpeg;base64,${curElm.base64Image}`} alt={curElm.Title} />
+                                      <Card.Img variant="top" src={`data:image/jpeg;base64,${curElm.image}`} alt={curElm.Title} />
                                       <Card.Body className='mysubscription-product-card-body'>
                                         <Card.Title className='mysubscription-product-card-title'>{curElm.productName}</Card.Title>
                                         <Card.Text className='mysubscription-product-card-text'>
                                                 <div className='mysubscription-Price-QtyDiv'>
                                                 {/*}      <h4>${product.priceOfEachUnits[curElm.sizeOfEachUnits.indexOf(selectedSize)]}</h4> */}
-                                                <h4>$ {selectedPrice}</h4>
+                                                <h4>$ {curElm.productindividualprice}</h4>
                                                 
                                                 </div>
                                         </Card.Text>
