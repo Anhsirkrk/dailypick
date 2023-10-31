@@ -252,6 +252,11 @@ const TodayDate = currentDate.toISOString().split('T')[0]; // This will format i
   };
 
   const handlenewaddresssubmitform= async (e)=>{
+    e.preventDefault();
+    if(longitude==null || latitude==null)
+    {
+      if(orderselectedSupplierId!=null)
+      {
         if(orderselectedSupplierId!=null)
         {
             e.preventDefault();
@@ -314,9 +319,12 @@ const TodayDate = currentDate.toISOString().split('T')[0]; // This will format i
               console.log(settingadressdata);
               localStorage.setItem('order-SelectedAddressforSubscription',settingadressdata);
               localStorage.setItem('order-SelectedAddressIDforSubscription',response.data.addressId);
-          
+              // setSelectedAddressId((prevId) => (prevId === response.data.addressId ? null : response.data.addressId));
+              setSelectedAddressPincode((prevId)=>(prevId === pincode ? null : pincode));
+                
               const setteddata = JSON.parse(localStorage.getItem('order-SelectedAddressforSubscription'));
                 console.log(setteddata);
+                createorderIdfororder();
             navigate('/mysusbcription');
             } 
             else 
@@ -335,14 +343,24 @@ const TodayDate = currentDate.toISOString().split('T')[0]; // This will format i
       else
       {
         alert("select anyone of supplier");
-        return;
+        return
       }
+    }
+    else{
+      alert("select sany one of supplier");
+      return;
+    }
+    }
+    else{
+      alert("select location from map");
+      return;
+    }
    }
 
    const handlecontinuetopaymentbysavedadress = ()=>{
-    alert(`selectedAddressId,${selectedAddressId}`);
+    //alert(`selectedAddressId,${selectedAddressId}`);
     // alert('selectedAddresspincode',selectedAddressPinCode);
-    alert(`selectedsupplierid,${orderselectedSupplierId}`);
+    //alert(`selectedsupplierid,${orderselectedSupplierId}`);
     if(selectedAddressPinCode!= null)
     {
       if(orderselectedSupplierId!=null)

@@ -113,7 +113,7 @@ const SubscriptionModal = ({ product,Priceofselectedproduct,subscriptiontypes,ha
   console.log(`selecetdplan ${selectedsubscriptionplan}`);
 
   const handleSubscribe = () => {
-    alert(subscriptionEndDate);
+    //alert(subscriptionEndDate);
     // Implement your logic for subscribing here
     if (selectedsubscriptionplan) {
 
@@ -187,8 +187,8 @@ const SubscriptionModal = ({ product,Priceofselectedproduct,subscriptiontypes,ha
   }
 
   const handleStartDateEndDate =(date)=>{
-    alert(date);
-    alert(selectedsubscriptionplan);
+   // alert(date);
+   // alert(selectedsubscriptionplan);
     if(selectedsubscriptionplan){
 
    
@@ -197,7 +197,7 @@ const SubscriptionModal = ({ product,Priceofselectedproduct,subscriptiontypes,ha
       // const formattedDate = formatDate(date);
       setSelectedsubscriptionStartDate(date);
       setSelectedsubscriptionEndDate(date);
-      alert(`plan -1`);
+      //alert(`plan -1`);
     }
     if(selectedsubscriptionplan===2)
     {
@@ -208,7 +208,7 @@ const SubscriptionModal = ({ product,Priceofselectedproduct,subscriptiontypes,ha
       setSelectedsubscriptionEndDate(endDate);
       // const formattedenddate = formatDate(endDate);
       // setSelectedsubscriptionEndDate(formattedenddate);
-      alert(`plan -2`);
+      //alert(`plan -2`);
     }
     if(selectedsubscriptionplan===3)
     {
@@ -219,7 +219,7 @@ const SubscriptionModal = ({ product,Priceofselectedproduct,subscriptiontypes,ha
       setSelectedsubscriptionEndDate(endDate);
       // const formattedenddate = formatDate(endDate);
       // setSelectedsubscriptionEndDate(formattedenddate);
-      alert(`plan -3`);
+     // alert(`plan -3`);
     }
   }
   else
