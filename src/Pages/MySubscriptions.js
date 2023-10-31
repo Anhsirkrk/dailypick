@@ -121,8 +121,7 @@ const MySubscriptions =()=>{
                                       <div className="mysubscription-product-card-container">
                                       <Card className='mysubscription-product-card'>
                                     
-                                    <div className={`overlay : visible`}></div>
-                                      <Card.Img variant="top" src={`data:image/jpeg;base64,${curElm.image}`} alt={curElm.Title} />
+                                      <div className={`overlay ${!curElm.isSubscriptionActive ? 'visible' : ''}`}></div>                                      <Card.Img variant="top" src={`data:image/jpeg;base64,${curElm.image}`} alt={curElm.Title} />
                                       <Card.Body className='mysubscription-product-card-body'>
                                         <Card.Title className='mysubscription-product-card-title'>{curElm.productName}</Card.Title>
                                         <Card.Text className='mysubscription-product-card-text'>
@@ -136,9 +135,10 @@ const MySubscriptions =()=>{
                                       </Card.Body>
                                     </Card>
                                     <div className="mysubscription-product-card-buttonsdiv">
-                                    <Button className="subscriptionshowBtn"> {curElm.subscriptionType === 'SingleDay' ? 'daily subscription' : curElm.subscriptionType === 'Weekly' ? 'subscription for 1 week' : 'subscription for 1 month'}
+                                    <Button className={`subscriptionshowBtn ${curElm.isSubscriptionActive ? '' : 'subscriptioninactive'}`}> {curElm.isSubscriptionActive 
+                                      ? (curElm.subscriptionType === 'SingleDay' ? 'daily subscription' : curElm.subscriptionType === 'Weekly' ? 'subscription for 1 week' : 'subscription for 1 month'):'Inactive'}
                                     </Button>
-                                    <Button className="subcriptionDetailShowingArrowBtn" onClick={()=>handlesusbcriptiondata(index)}><AiOutlineDown className="subcriptionDetailShowingArrowBtn-icon"/></Button>
+                                    <Button className={`subcriptionDetailShowingArrowBtn ${curElm.isSubscriptionActive ? '' : 'subscriptioninactive'}`} onClick={()=>handlesusbcriptiondata(index)}><AiOutlineDown className="subcriptionDetailShowingArrowBtn-icon"/></Button>
 
 
                                     </div>

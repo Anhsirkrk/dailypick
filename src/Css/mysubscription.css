@@ -200,6 +200,18 @@ background: #F1F1F1;
     font-size: 25px;
     font-weight: 600;
 }
+.subscriptioninactive {
+    border-radius: 5px;
+    border: 0.694px solid #7E7F80;
+    background: #7E7F80;
+  }
+  This will apply the red background color to the button when curElm.isActive is false. Make sure to adjust the class names and styles according to your specific CSS setup.
+  
+  
+  
+  
+  
+  
 
 
 
