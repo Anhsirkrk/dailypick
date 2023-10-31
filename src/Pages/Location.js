@@ -218,8 +218,8 @@ const TodayDate = currentDate.toISOString().split('T')[0]; // This will format i
 
   const handleSavedAddressClick = (addr) => {
         // setSelectedAddressId((prevId) => (prevId === id ? null : id));
-        alert('handleSavedAddressClick hitted');
-        alert(addr.addressId);
+        //alert('handleSavedAddressClick hitted');
+       // alert(addr.addressId);
         setSelectedAddressId((prevId) => (prevId === addr.addressId ? null : addr.addressId));
         setSelectedAddressPincode((prevId)=>(prevId === addr.pincode ? null : addr.pincode));
         const settingAddressData = {
@@ -246,16 +246,21 @@ const TodayDate = currentDate.toISOString().split('T')[0]; // This will format i
 
   
   const handleSupplierClick = (supr) => {
-    alert('handleSupplier click hitted');
-    alert(supr.supplierId);
+    //alert('handleSupplier click hitted');
+   // alert(supr.supplierId);
     setorderSelectedSupplierId((prevId) => (prevId === supr.supplierId ? null : supr.supplierId));
   };
 
   const handlenewaddresssubmitform= async (e)=>{
+    e.preventDefault();
+      if(latitude!="" && longitude!="")
+    {
+      if(orderselectedSupplierId!=null)
+      {
         if(orderselectedSupplierId!=null)
         {
             e.preventDefault();
-            alert("add sub form hitted ");
+            //alert("add sub form hitted ");
             const values={personnameofAddress,mobilenumofAddress,pincode,locality,houseNo,selectedCity,selectedStateName,addresslbl};
             //alert("check console 243 for values");
             console.log(values);
@@ -265,14 +270,14 @@ const TodayDate = currentDate.toISOString().split('T')[0]; // This will format i
           if(Object.keys(validationErrors).length>0)
           {
             console.log(validationErrors);
-            alert("validation err recieved");
+           // alert("validation err recieved");
             console.log(validationErrors);
             setValidationErrors(validationErrors);
             return;
           }
           try 
           {
-            alert("entered to axios");
+           // alert("entered to axios");
             const url = 'https://localhost:7041/api/User/AddingAdressDetails';
             const data = {
               addressId: 0,
@@ -289,13 +294,14 @@ const TodayDate = currentDate.toISOString().split('T')[0]; // This will format i
               mobileNumber:mobilenumofAddress 
             };
             console.log(data);
-            alert('axios data ready');
+            //alert('axios data ready');
             const response = await axios.post(url, data);
             console.log(response.data);
-            alert("axios completed");
+            //alert("axios completed");
             if (response.status === 200) 
             {
-              alert("axios 200");
+             // alert("axios 200");
+              const seladdrid= response.data.addressId;
               setSelectedAddressId(response.data.addressId);
               const settingadressdata={
                 addressId: response.data.addressId,
@@ -314,10 +320,13 @@ const TodayDate = currentDate.toISOString().split('T')[0]; // This will format i
               console.log(settingadressdata);
               localStorage.setItem('order-SelectedAddressforSubscription',settingadressdata);
               localStorage.setItem('order-SelectedAddressIDforSubscription',response.data.addressId);
-          
-              const setteddata = JSON.parse(localStorage.getItem('order-SelectedAddressforSubscription'));
+              // setSelectedAddressId((prevId) => (prevId === response.data.addressId ? null : response.data.addressId));
+              setSelectedAddressPincode((prevId)=>(prevId === pincode ? null : pincode));
+                
+              const setteddata = localStorage.getItem('order-SelectedAddressforSubscription');
                 console.log(setteddata);
-            navigate('/mysusbcription');
+                createorderIdfororder(seladdrid,orderselectedSupplierId);
+            
             } 
             else 
             {
@@ -335,23 +344,35 @@ const TodayDate = currentDate.toISOString().split('T')[0]; // This will format i
       else
       {
         alert("select anyone of supplier");
-        return;
+        return
       }
+    }
+    else{
+      alert("select sany one of supplier");
+      return;
+    }
+  }
+  else{
+    alert("select loc from map");
+      return;
+  }
+    
+    
    }
 
    const handlecontinuetopaymentbysavedadress = ()=>{
-    alert(`selectedAddressId,${selectedAddressId}`);
+    //alert(`selectedAddressId,${selectedAddressId}`);
     // alert('selectedAddresspincode',selectedAddressPinCode);
-    alert(`selectedsupplierid,${orderselectedSupplierId}`);
-    if(selectedAddressPinCode!= null)
+    //alert(`selectedsupplierid,${orderselectedSupplierId}`);
+    if(selectedAddressId!= null)
     {
       if(orderselectedSupplierId!=null)
       {
-        alert('raghy')
+       
         localStorage.setItem('order-SelectedAddressIDforSubscription',selectedAddressId);
         localStorage.setItem('order-SelectedAddressPincodeforSubscription',selectedAddressPinCode);
         localStorage.setItem('order-SelectedorderSupplierIdforSubscription',orderselectedSupplierId);
-        createorderIdfororder();
+        createorderIdfororder(selectedAddressId,orderselectedSupplierId);
         
       }
       else
@@ -368,7 +389,7 @@ const TodayDate = currentDate.toISOString().split('T')[0]; // This will format i
      
   }
 
-  const createorderIdfororder= async ()=>{
+  const createorderIdfororder= async (selectedAddressId,orderselectedSupplierId)=>{
     if(userid!=null)
     {
       if(orderProductSUbscriptiontype!=null)
@@ -377,6 +398,7 @@ const TodayDate = currentDate.toISOString().split('T')[0]; // This will format i
             {
               if(orderProductStartdate!=null && orderProductEnddate!=null)
               {
+                
                 if(orderProducttimeslot!=null && selectedAddressId!=null && orderselectedSupplierId!=null)
                 {      
                           const url= "https://localhost:7041/api/Order/CreateOrder";
@@ -464,6 +486,10 @@ const TodayDate = currentDate.toISOString().split('T')[0]; // This will format i
       return;
     }
    }
+
+   console.log(orderProducttimeslot);
+                console.log(selectedAddressId);
+                console.log(orderselectedSupplierId);
   
    const createpaymentIdandUserSubscrtiptionId = async(currentorderid)=>{
     // alert(currentorderid);
@@ -489,7 +515,7 @@ console.log('order payment status', response.data.transactionId);
           // alert('insert payment axios completed');
           if(response.status===200)
           {
-            alert('paymentid :', response.data.paymentId );
+            //alert('paymentid :', response.data.paymentId );
             setOrderpaymentId(response.data.paymentId);
             console.log('ord pay id:', response.data.paymentId);
             // alert('paymnt console  485 ');
@@ -625,15 +651,15 @@ console.log('order payment status', response.data.transactionId);
 
 
   const gettingsupplierdata =async ()=>{
-    alert("get sup hitted");
+   // alert("get sup hitted");
     const url="https://localhost:7041/api/Supplier/GetAllSuppliers";
     try{
-      alert('hit try');
+     // alert('hit try');
       const response = await axios.get(url);
-      alert('axios done');
+     // alert('axios done');
       console.log(response.data);
       if(response.status===200){
-        alert('asioxs 200')
+        //alert('asioxs 200')
         setSupplierData(response.data);
       }
     }
@@ -723,10 +749,10 @@ const quantityofproduct = localStorage.getItem('quantityofproduct');
           <MapComponent  setAddress={setLocationData} coordinates={coordinates} />
       
         </div>
-        {/*} <div>
+         <div>
                 <div>Latitude: {latitude}</div>
                 <div>Longitude: {longitude}</div>
-  </div> */}
+  </div> 
 
           
 
