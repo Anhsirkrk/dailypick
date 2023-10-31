@@ -55,6 +55,10 @@ width: 453px;
 .line{
     margin: 0px 65px 0px 65px;
 }
+.paymentstatus-subscriptionplan-details{
+    display: flex;
+  justify-content: center;
+}
 .your-order{
     color: #024172;
     text-align: center;
@@ -64,7 +68,7 @@ width: 453px;
 .payment-order-div{
     position: relative;
 margin: 10px 180px;
-height: 200px;
+height: 100px;
 overflow-y: auto;
 }
 .my-orders-div{

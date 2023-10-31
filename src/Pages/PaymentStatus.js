@@ -75,10 +75,45 @@ useEffect(()=>{
       setQuantityOfProduct(localStorage.getItem('order-quantityofproduct'))
      
       setSelectedSubscriptionType(localStorage.getItem('order-selectedsubscriptiontype'))
+
+      const storedSubscriptionType = localStorage.getItem('order-selectedsubscriptiontype');
+
+      // Map numeric values to subscription types
+    const subscriptionTypes = {
+      1: 'Single Day',
+      2: 'Weekly',
+      3: 'Monthly'
+    };
+
+     // Set selected subscription type based on the numeric value
+     if (storedSubscriptionType && subscriptionTypes[storedSubscriptionType]) {
+      setSelectedSubscriptionType(subscriptionTypes[storedSubscriptionType]);
+    }
       
       setSelectedStartDate(localStorage.getItem('order-selectedStartdate'))
-      
+
+      const storedStartDate = localStorage.getItem('order-selectedStartdate');
+
+      if (storedStartDate) {
+        const parsedStartDate = new Date(storedStartDate);
+        
+        // Format the date as "Wed Nov 01 2023"
+        const formattedStartDate = parsedStartDate.toDateString();
+        setSelectedStartDate(formattedStartDate);
+
+      }
       setSelectedEndDate(localStorage.getItem('order-selectedEnddate'))
+
+      const storedEndDate = localStorage.getItem('order-selectedEnddate');
+
+      if (storedEndDate) {
+        const parsedEndDate = new Date(storedEndDate);
+        
+        // Format the date as "Wed Nov 01 2023"
+        const formattedEndtDate = parsedEndDate.toDateString();
+        setSelectedEndDate(formattedEndtDate);
+
+      }
       
       setSelectedSizeOfProduct(localStorage.getItem('order-selectedSizeofproduct'))
       
@@ -185,10 +220,13 @@ const [showPaymentOrder, setShowPaymentOrder] = useState(false);
             <div className='line'>
                 <hr/>
             </div>
+            <div className='paymentstatus-subscriptionplan-details'>
+                  <p>Selected Plan:{selectedSubscriptionType} from :{selectedStartDate} to:{selectedEndDate}</p>
+                </div>
             <div className='your-order' onClick={handleYourOrder}>Your Orders {showPaymentOrder ? <IoIosArrowDown /> : <IoIosArrowForward />}</div>
             {showPaymentOrder && (
             <div className='payment-order-div'>
-                
+                 
                 <div className='my-orders-div'>
                 {selectedProduct.length === 0 ?(
                   <p>No products selected</p>
