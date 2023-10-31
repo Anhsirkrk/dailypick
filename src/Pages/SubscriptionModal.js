@@ -115,7 +115,10 @@ const SubscriptionModal = ({ product,Priceofselectedproduct,subscriptiontypes,ha
   const handleSubscribe = () => {
     //alert(subscriptionEndDate);
     // Implement your logic for subscribing here
+    if(timeSlotSelected!=null){
+    if(subscriptionStartDate!=null){
     if (selectedsubscriptionplan) {
+     
 
       if(selectedsubscriptionplan===1){
         setAmounttobePaid(discountedsingleDayPrice);
@@ -149,6 +152,14 @@ const SubscriptionModal = ({ product,Priceofselectedproduct,subscriptiontypes,ha
     } else {
       alert('Please select a subscription plan.');
     }
+  }
+  else{
+    alert('Please select a start date');
+  }
+}
+else{
+  alert('Please select a time slot');
+}
   };
   console.log('order-selectedproductId',product.productId);
     console.log('order-productindividualprice',selectedproductPrice);
