@@ -19,6 +19,7 @@ const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [location, setLocation] = useState(null);
   const [city, setCity] = useState(null);
+  const [noofproductsinwhislist,setNoofproductsinwhislist]=useState('');
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -67,12 +68,17 @@ const Nav = () => {
     const recieveddata = localStorage.getItem('userdata');
     const storeddata=(JSON.parse(recieveddata));
     console.log(storeddata);
+
+    setNoofproductsinwhislist(localStorage.getItem('noofproductsinwhislist'));
+    
+
     if (storeddata) {
       setUsername(storeddata.firstName);
     }
     console.log(username);
   }, []);
 
+ 
   const handlesignout = async (e) => {
     e.preventDefault();
     localStorage.removeItem('userdata');
@@ -167,6 +173,7 @@ const handleMyWishListroute =()=>{
             <Button className='MySubscriptionsBtn' onClick={handleMysubscriptionsroute} >My Subscriptions</Button>
             <BsCart2 className='Cart-icon' onClick={handleMyCartroute}></BsCart2>
             <AiOutlineHeart className='wishlist-icon' onClick={handleMyWishListroute}></AiOutlineHeart>
+            <p>{noofproductsinwhislist}</p>
             <div className="_1Us3XD" onClick={toggleDropdown}>
                         <img className='profile-image' src={profilepic}  alt='profile-image' />
                            {/*<div className="H6-NpN">

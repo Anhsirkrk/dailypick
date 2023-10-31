@@ -97,6 +97,9 @@ const MyWishlist =()=>{
                // Update the wishlist data state
                setWishListData(response.data);
                setFilteredProduct(response.data);
+               console.log(filteredProduct.length);
+               localStorage.setItem('noofproductsinwhislist',filteredProduct.length);
+               
                const initialSelectedSizes = {};
                const initialSelectedPrices ={};
             
