@@ -50,11 +50,15 @@ const [orderSelectedSupplierId, setOrderSelectedSupplierId] = useState('');
 
 const [selectedsubscriptionplan, setSelectedSubscriptionPlan] = useState('');
 
+const [storeddata,setStoreddata]=useState([]);
+
 
 
 
 
 useEffect(()=>{
+
+ 
   
       setPaymentTransactionId(localStorage.getItem('order-SelectedProductPaymentTransactionId'))
      
@@ -102,6 +106,7 @@ useEffect(()=>{
         setSelectedStartDate(formattedStartDate);
 
       }
+
       setSelectedEndDate(localStorage.getItem('order-selectedEnddate'))
 
       const storedEndDate = localStorage.getItem('order-selectedEnddate');
@@ -131,9 +136,42 @@ useEffect(()=>{
       
       setOrderSelectedSupplierId(localStorage.getItem('order-SelectedorderSupplierIdforSubscription'))
 
-},[]);
+      const recieveddata = localStorage.getItem('userdata');
+      setStoreddata(JSON.parse(recieveddata));
+
+      SendEmail();
+},[storeddata.userId]);
+
+
+const SendEmail = async () => {
+  if (storeddata.userId && paymentStatus && productIndividualPrice) {
+    try {
+      const url = `https://localhost:7041/api/Payment/PaymentStatusEmail`;
+      const data = {
+        userid: storeddata.userId,
+        status: paymentStatus,
+        amount: productIndividualPrice.toString(),
+      };
+
+      console.log("Sending email with data:", data);
+
+      if (data.amount && data.status) {
+        const response = await axios.post(url, data);
+        console.log("Email sent successfully:", response);
+      } else {
+        console.error("Amount and status are required fields.");
+      }
+    } catch (error) {
+      console.error("Error sending email:", error);
+    }
+  } else {
+    console.error("User ID, payment status, and product individual price are required fields.");
+  }
+};
+
    
 
+console.log(storeddata);
 console.log(JSON.parse(localStorage.getItem('selectedproduct')));
 console.log(localStorage.getItem('order-productindividualprice'));
 console.log(localStorage.getItem('order-quantityofproduct'));
@@ -185,6 +223,9 @@ const [showPaymentOrder, setShowPaymentOrder] = useState(false);
     // Toggle the state to show/hide 'payment-order-div'
     setShowPaymentSummary(!showPaymentSummary);
   };
+
+
+ 
 
   return (
     <>
