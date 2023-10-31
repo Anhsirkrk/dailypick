@@ -139,29 +139,32 @@ useEffect(()=>{
       const recieveddata = localStorage.getItem('userdata');
       setStoreddata(JSON.parse(recieveddata));
 
-      SendEmail();
+      
 },[storeddata.userId]);
 
+console.log(storeddata.userId);
+console.log(paymentStatus);
+console.log(productIndividualPrice);
 
 const SendEmail = async () => {
   if (storeddata.userId && paymentStatus && productIndividualPrice) {
     try {
-      const url = `https://localhost:7041/api/Payment/PaymentStatusEmail`;
-      const data = {
-        userid: storeddata.userId,
-        status: paymentStatus,
-        amount: productIndividualPrice.toString(),
-      };
+    
 
-      console.log("Sending email with data:", data);
+const url = `https://localhost:7041/api/Payment/PaymentStatusEmail?userid=${storeddata.userId}&status=${paymentStatus}&amount=${productIndividualPrice.toString()}`;
 
-      if (data.amount && data.status) {
-        const response = await axios.post(url, data);
+  
+      const response = await axios.post(url, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+        alert('axioos done');
         console.log("Email sent successfully:", response);
-      } else {
-        console.error("Amount and status are required fields.");
-      }
-    } catch (error) {
+    
+    } 
+    catch (error)
+     {
       console.error("Error sending email:", error);
     }
   } else {
@@ -169,7 +172,9 @@ const SendEmail = async () => {
   }
 };
 
-   
+   const handlemail =()=>{
+    SendEmail();
+   }
 
 console.log(storeddata);
 console.log(JSON.parse(localStorage.getItem('selectedproduct')));
@@ -299,6 +304,7 @@ const [showPaymentOrder, setShowPaymentOrder] = useState(false);
             </div>
             <div className='payment-button-field'>
                 <button className='paymnet-done' type='button' onClick={handlebacktohome}>Done</button>
+                <button onClick={handlemail}>sendmail</button>
                 <button className='paymnet-go-to-home' type='button' onClick={handlebacktohome}>Go to Home</button>
             </div>
         </div>
