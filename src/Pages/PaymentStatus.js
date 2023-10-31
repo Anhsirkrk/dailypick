@@ -7,7 +7,7 @@ import sampleimage from '../Images/Dummy/Heritage_Milk_1.png';
 import Card from 'react-bootstrap/Card';
 import { AiOutlineHeart, AiOutlineCloseCircle } from 'react-icons/ai';
 import axios, { all } from 'axios';
-import { useLocation } from 'react-router-dom';
+import { json, useLocation } from 'react-router-dom';
 import {useNavigate } from "react-router-dom";
 import {IoIosArrowForward} from 'react-icons/io';
 import {IoIosArrowDown} from 'react-icons/io';
@@ -30,6 +30,7 @@ const PaymentStatus = () => {
 const [paymentTransactionId, setPaymentTransactionId] = useState('');
 const [paymentStatus, setPaymentStatus] = useState('Success');
 const [paymentId, setPaymentId] = useState('');
+const [useremail,setUserEmail]= useState('');
 
 const [selectedProduct, setSelectedProduct] = useState([]);
 const [selectedProductId, setSelectedProductId] = useState('');
@@ -58,7 +59,11 @@ const [storeddata,setStoreddata]=useState([]);
 
 useEffect(()=>{
 
+   const userdata= JSON.parse(localStorage.getItem('userdata'));
+   alert(userdata.email);
+   setUserEmail(userdata.email);
  
+    
   
       setPaymentTransactionId(localStorage.getItem('order-SelectedProductPaymentTransactionId'))
      
@@ -145,15 +150,14 @@ useEffect(()=>{
 console.log(storeddata.userId);
 console.log(paymentStatus);
 console.log(productIndividualPrice);
+console.log(useremail);
 
 const SendEmail = async () => {
-  if (storeddata.userId && paymentStatus && productIndividualPrice) {
+  if (storeddata.userId && paymentStatus && productIndividualPrice && useremail) {
     try {
     
+const url = `https://localhost:7041/api/Payment/PaymentStatusEmail?userid=${storeddata.userId}&status=${paymentStatus}&amount=${productIndividualPrice.toString()}&email=${useremail}`;
 
-const url = `https://localhost:7041/api/Payment/PaymentStatusEmail?userid=${storeddata.userId}&status=${paymentStatus}&amount=${productIndividualPrice.toString()}`;
-
-  
       const response = await axios.post(url, {
         headers: {
           'Content-Type': 'application/json',
