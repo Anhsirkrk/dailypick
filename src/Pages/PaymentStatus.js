@@ -28,7 +28,7 @@ const PaymentStatus = () => {
 //local storage
 
 const [paymentTransactionId, setPaymentTransactionId] = useState('');
-const [paymentStatus, setPaymentStatus] = useState('success');
+const [paymentStatus, setPaymentStatus] = useState('Success');
 const [paymentId, setPaymentId] = useState('');
 
 const [selectedProduct, setSelectedProduct] = useState([]);
@@ -158,14 +158,14 @@ const [showPaymentOrder, setShowPaymentOrder] = useState(false);
         <div className='payment-status-dialog-box'>
             <div>
                 <div className='payment-status-image-div'>
-                  {paymentStatus === 'success' ? 
+                  {paymentStatus === 'Success' ? 
                     (<img className='payment-status-image' src={paymentsuccessimage} alt='payment-success-image' />) 
                     :
                     (<img className='payment-status-image' src={paymentfailedimage} alt='payment-failed-image' />)
                   }
                 </div>
                 <div className='payment-status-message'>
-                  {paymentStatus === 'success' ? 
+                  {paymentStatus === 'Success' ? 
                     (
                       <div>
                         <h4 className='Success'>Payment successful</h4>
@@ -192,21 +192,19 @@ const [showPaymentOrder, setShowPaymentOrder] = useState(false);
                 <div className='my-orders-div'>
                 {selectedProduct.length === 0 ?(
                   <p>No products selected</p>
-                ):(
-                  selectedProduct.map((curElm) => 
-                    {
-                      return(
-                        <>
-                          <Card className='Paymentstatus-product-card'>
-                            <Card.Img className='Paymentstatus-product-card-image' variant="top" src={`data:image/jpeg;base64,${curElm.base64Image}`} alt={curElm.Title} />
-                            <Card.Body className='Paymentstatus-product-card-body'>
-                              <Card.Title className='Paymentstatus-product-card-title'><h4 className='payment-product-title'>{curElm.productName}</h4><p className='payment-product-size'>({selectedSizeOfProduct})</p></Card.Title>
-                            </Card.Body>
-                        </Card>
-                        </>
-                      )
-                    })
-                )}
+                ):
+                (
+                  <>
+                    <Card className='Paymentstatus-product-card'>
+                      <Card.Img className='Paymentstatus-product-card-image' variant="top" src={`data:image/jpeg;base64,${selectedProduct.base64Image}`} alt={selectedProduct.Title} />
+                      <Card.Body className='Paymentstatus-product-card-body'>
+                        <Card.Title className='Paymentstatus-product-card-title'><h4 className='payment-product-title'>{selectedProduct.productName}</h4><p className='payment-product-size'>({selectedSizeOfProduct})</p></Card.Title>
+                      </Card.Body>
+                    </Card>
+                  </>
+                )
+                
+                }
                 </div>
             </div>
             )}
@@ -232,3 +230,45 @@ const [showPaymentOrder, setShowPaymentOrder] = useState(false);
 }
 
 export default PaymentStatus
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// (
+                //   selectedProduct.map((curElm) => 
+                //     {
+                //       return(
+                //         <>
+                //           <Card className='Paymentstatus-product-card'>
+                //             <Card.Img className='Paymentstatus-product-card-image' variant="top" src={`data:image/jpeg;base64,${curElm.base64Image}`} alt={curElm.Title} />
+                //             <Card.Body className='Paymentstatus-product-card-body'>
+                //               <Card.Title className='Paymentstatus-product-card-title'><h4 className='payment-product-title'>{curElm.productName}</h4><p className='payment-product-size'>({selectedSizeOfProduct})</p></Card.Title>
+                //             </Card.Body>
+                //         </Card>
+                //         </>
+                //       )
+                //     })
+                // )
