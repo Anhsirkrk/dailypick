@@ -37,6 +37,9 @@ const MySubscriptions =()=>{
      const [userid,setUserId]=useState('');
 
 
+     const [showSubscriptionDataIndex, setShowSubscriptionDataIndex] = useState(null);
+
+
      const location = useLocation();
      const navigate = useNavigate();
     
@@ -94,7 +97,12 @@ const MySubscriptions =()=>{
       };
       console.log('setsubscriptionlistdata',subscriptionlistData);
 
-    
+    // const handlesusbcriptiondata=(index)=>{
+    //   setShowSubscriptionDataIndex(!showSubscriptiondata);
+    // }
+    const handlesusbcriptiondata = (index) => {
+      setShowSubscriptionDataIndex(prevIndex => prevIndex === index ? null : index);
+  }
 
     return (
                 <>
@@ -105,7 +113,7 @@ const MySubscriptions =()=>{
                     <ToastContainer/>
                         <div className='wishlistproductbox-container'>
                         {
-                            subscriptionlistData.map((curElm) => 
+                            subscriptionlistData.map((curElm,index) => 
                               {
 
                                   return(
@@ -128,11 +136,21 @@ const MySubscriptions =()=>{
                                       </Card.Body>
                                     </Card>
                                     <div className="mysubscription-product-card-buttonsdiv">
-                                    <Button className="subscriptionshowBtn">Subscription for 1 Month</Button>
-                                    <Button className="subcriptionDetailShowingArrowBtn"><AiOutlineDown className="subcriptionDetailShowingArrowBtn-icon"/></Button>
+                                    <Button className="subscriptionshowBtn"> {curElm.subscriptionType === 'SingleDay' ? 'daily subscription' : curElm.subscriptionType === 'Weekly' ? 'subscription for 1 week' : 'subscription for 1 month'}
+                                    </Button>
+                                    <Button className="subcriptionDetailShowingArrowBtn" onClick={()=>handlesusbcriptiondata(index)}><AiOutlineDown className="subcriptionDetailShowingArrowBtn-icon"/></Button>
 
 
                                     </div>
+                                    {showSubscriptionDataIndex === index && (
+                                    <div className="subscriptiondetaildiv">
+                                    <p>start date : {curElm.startDate}</p>
+                                    <p>end date : {curElm.endDate}</p>
+                                    <p>Total Amount : {curElm.totalAmount}</p>
+                                    <p>Payment Ref no :{curElm.paymentrefno}</p>
+                                    </div>
+                                    )
+                                    }
                                     </div>
 
                                       </>
