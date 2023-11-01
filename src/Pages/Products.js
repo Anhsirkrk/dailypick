@@ -215,10 +215,10 @@ useEffect(() => {
 
 const handleaddorremovewishlist= async (Pid)=>{
   // Id.preventDefault();
-  alert(Pid);
-  alert("handleaddtowishlist hitted");
+ // alert(Pid);
+  //alert("handleaddtowishlist hitted");
   const isInWishlist = isProductInWishlist2(Pid);
-  alert(isInWishlist);
+  //alert(isInWishlist);
   console.log(isInWishlist);
   if (isInWishlist.isInWishlist===true)
    {
@@ -231,11 +231,11 @@ const handleaddorremovewishlist= async (Pid)=>{
       const url="https://localhost:7041/api/Wishlist/CreateWishlist";
       try{
         const response = await axios.post(url,data );
-        alert("axios done");
+        //alert("axios done");
         console.log(response);
         if(response.status === 200)
         {
-        alert("axios rem wishlist done");
+        //alert("axios rem wishlist done");
         await GetWishList();
           toast.error("item removed from wishlist");
         
@@ -258,11 +258,11 @@ const handleaddorremovewishlist= async (Pid)=>{
        const url="https://localhost:7041/api/Wishlist/CreateWishlist";
        try{
         const response = await axios.post(url,data );
-        alert("axios done");
+        //alert("axios done");
         console.log(response);
         if(response.status === 200)
         {
-         alert("axios adding wishlist done");
+         //alert("axios adding wishlist done");
          await GetWishList();
           toast.success("item added to wishlist");
           return;

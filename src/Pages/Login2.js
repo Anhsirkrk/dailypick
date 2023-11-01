@@ -181,7 +181,7 @@ const Login = ({}) => {
     console.log(validationerrors.mobilenumber);
     return;
   }
-  alert("checking database");
+  //alert("checking database");
     const url = 'https://localhost:7041/api/Login/GetUserByMobileNumber';
     const data = {
       userId: 0,
@@ -201,7 +201,7 @@ const Login = ({}) => {
       console.log(response.data);
       if (response.status === 200) 
       {
-        alert("satus 200");
+        //alert("satus 200");
           const sendData = 
           {
             userId: response.data.userId,
@@ -215,7 +215,7 @@ const Login = ({}) => {
           };
           console.log(sendData);
           if(sendData.userFound === true){
-            alert("user found redirecting to otp gen");
+            //alert("user found redirecting to otp gen");
             getOtp(mobilenumber);
             toast.success("user found redirecting to otp gen");
           }
