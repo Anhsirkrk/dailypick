@@ -14,6 +14,8 @@ import {ToastContainer,toast } from 'react-toastify';
 import { Navigate } from 'react-router-dom';
 import { Link, useAsyncError, useNavigate } from "react-router-dom";
 import { Country, State, City }  from 'country-state-city';
+import { AiOutlineLine } from 'react-icons/ai';
+import { useLocation } from 'react-router-dom';
 
 const Location = () => {
 
@@ -71,6 +73,13 @@ const Location = () => {
     const [orderUserSubscriptionId,setorderUserSubscriptionId]=useState('');
     const [ orderpaymentstatus,setOrderpaymentStatus]= useState('');
     const [ orderpaymenttransactionid,setorderPaymenttransactionid]= useState('');
+
+    const location = useLocation();
+
+    const totalamount = localStorage.getItem('order-TotalAmounttobePaid');
+    console.log('total amount',totalamount);
+
+    
 
     const currentDate = new Date(); // This will create a new Date object with the current date and time
 const TodayDate = currentDate.toISOString().split('T')[0]; // This will format it as 'YYYY-MM-DD'
@@ -733,10 +742,16 @@ const quantityofproduct = localStorage.getItem('quantityofproduct');
     <Nav/>
     <div className='Locationpage-container'>
     <ToastContainer/>
+    <div className='displayordersummary' >
+    <span style={{ fontWeight: '600', fontSize: '25px' }}>Order Summary</span>   
+    <AiOutlineLine style={{ transform: 'rotate(90deg)',fontSize:'31px', display: 'flex', alignItems: 'center' }} /> 
+     <span style={{  fontSize: '18px' }}>Items (1 item)</span>
+     <AiOutlineLine style={{ transform: 'rotate(90deg)',fontSize:'31px', display: 'flex', alignItems: 'center' }} /> 
+     <span style={{  fontSize: '18px',display:'flex', alignItems:'center' }}>Amount :  <span style={{fontSize:'25px', fontStyle:'normal', fontWeight:'600'}}> $ {totalamount}</span></span> 
+    </div>
     <div className='location-heading '><h2>Location Information</h2></div>
     <div className='locationAndAdressArea'>
           <div className='location-MapDiv'>
-
           <div>
               		<div className="location-search-container">
               			<input className='location-search-bar-input' placeholder='search for Area,Landmark or Location'/>
