@@ -10,6 +10,16 @@
     padding: 0px 0px 0px 20px;
     color: #024172;
 }
+.displayordersummary{
+  padding: 5px 5px 5px 35px;
+  height: 52px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+  background: var(--Light_Gry, #EBE9E9);
+}
+
 .locationAndAdressArea{
     display: flex;
     padding: 20px 20px 20px 20px;
