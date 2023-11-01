@@ -36,6 +36,7 @@ const [selectedProduct, setSelectedProduct] = useState([]);
 const [selectedProductId, setSelectedProductId] = useState('');
 const [productIndividualPrice, setProductIndividualPrice] = useState('');
 const [quantityOfProduct, setQuantityOfProduct] = useState('');
+const [totalAmounttobePaid,setTotalAmounttobePaid]=useState('');
 const [selectedSubscriptionType, setSelectedSubscriptionType] = useState('');
 const [selectedStartDate, setSelectedStartDate] = useState('');
 const [selectedEndDate, setSelectedEndDate] = useState('');
@@ -61,7 +62,7 @@ const [storeddata,setStoreddata]=useState([]);
 useEffect(()=>{
 
    const userdata= JSON.parse(localStorage.getItem('userdata'));
-   alert(userdata.email);
+   //alert(userdata.email);
    setUserEmail(userdata.email);
  
     
@@ -145,6 +146,8 @@ useEffect(()=>{
       const recieveddata = localStorage.getItem('userdata');
       setStoreddata(JSON.parse(recieveddata));
 
+      setTotalAmounttobePaid((localStorage.getItem('order-TotalAmounttobePaid')));
+
       
 },[storeddata.userId]);
 
@@ -154,17 +157,17 @@ console.log(productIndividualPrice);
 console.log(useremail);
 
 const SendEmail = async () => {
-  if (storeddata.userId && paymentStatus && productIndividualPrice && useremail) {
+  if (storeddata.userId && paymentStatus && totalAmounttobePaid && useremail) {
     try {
     
-const url = `https://localhost:7041/api/Payment/PaymentStatusEmail?userid=${storeddata.userId}&status=${paymentStatus}&amount=${productIndividualPrice.toString()}&email=${useremail}`;
+const url = `https://localhost:7041/api/Payment/PaymentStatusEmail?userid=${storeddata.userId}&status=${paymentStatus}&amount=${totalAmounttobePaid.toString()}&email=${useremail}`;
 
       const response = await axios.post(url, {
         headers: {
           'Content-Type': 'application/json',
         },
       });
-        alert('axioos done');
+        //alert('axioos done');
         console.log("Email sent successfully:", response);
     
     } 
@@ -223,10 +226,7 @@ const [showPaymentOrder, setShowPaymentOrder] = useState(false);
     setShowPaymentOrder(!showPaymentOrder);
   };
 
-
  //show payment summary 
-
-
  const [showPaymentSummary, setShowPaymentSummary] = useState(false);
 
   const handlepaymentsummary = () => {
@@ -234,8 +234,6 @@ const [showPaymentOrder, setShowPaymentOrder] = useState(false);
     setShowPaymentSummary(!showPaymentSummary);
   };
 
-
- 
 
   return (
     <>
