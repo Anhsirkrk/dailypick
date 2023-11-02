@@ -84,6 +84,11 @@ const Location = () => {
     const currentDate = new Date(); // This will create a new Date object with the current date and time
 const TodayDate = currentDate.toISOString().split('T')[0]; // This will format it as 'YYYY-MM-DD'
 
+
+ console.log(orderProductStartdate);
+ console.log(orderProductEnddate);
+ console.log(TodayDate);
+
     useEffect(()=>{ 
         const orderProductId = localStorage.getItem('order-selectedproductId');
         const orderProductIndiviudalprice = localStorage.getItem('order-productindividualprice');
@@ -411,6 +416,16 @@ const TodayDate = currentDate.toISOString().split('T')[0]; // This will format i
                 if(orderProducttimeslot!=null && selectedAddressId!=null && orderselectedSupplierId!=null)
                 {      
                           const url= "https://localhost:7041/api/Order/CreateOrder";
+
+                          const adjustedStartDate = new Date(orderProductStartdate);
+adjustedStartDate.setUTCHours(0, 0, 0, 0);
+adjustedStartDate.setDate(adjustedStartDate.getDate() + 1); // Add one day
+
+const adjustedEndDate = new Date(orderProductEnddate);
+adjustedEndDate.setUTCHours(0, 0, 0, 0);
+adjustedEndDate.setDate(adjustedEndDate.getDate() + 1); // Add one day
+
+
                         const data ={
                           orderId:1,
                           userId:userid,
@@ -420,16 +435,15 @@ const TodayDate = currentDate.toISOString().split('T')[0]; // This will format i
                           sizeOfProduct:orderProductSize,
                           subscriptionTypeId:orderProductSUbscriptiontype,
                           totalAmount:orderProductTotalAmounttobePaid,
-                          orderDate:'2023-10-26T06:37:09.647Z',
-                          startDate:'2023-10-26T06:37:09.647Z',
-                          endDate:'2023-10-26T06:37:09.647Z',
+                          orderDate: new Date(TodayDate).toISOString(),
+                          startDate: new Date(adjustedStartDate).toISOString(),
+                          endDate:new Date(adjustedEndDate).toISOString(),
                           orderPaymentStatus:'Pending',
                           timeSlot:orderProducttimeslot,
                           addressId:selectedAddressId,
-                          supplierId:orderselectedSupplierId,
-                         
+                          supplierId:orderselectedSupplierId,  
                         }
-                        console.log(data);
+                        console.log("createorderIdfororder:",data);
                         try{
                           const response = await axios.post(url,data);
                         console.log(response.data);
@@ -575,24 +589,33 @@ console.log('order payment status', response.data.transactionId);
    }
 
    const createsupplierorderId =async (currentorderid,orderusersusbcidsetteddata)=>{
-    // alert('createsupplierorderId  hitted');
+     alert('createsupplierorderId  hitted');
   try{
 
     if(orderusersusbcidsetteddata!=null)
     {
       const url="https://localhost:7041/api/Supplier/SupplierOrderCreation";
+      const adjustedStartDate = new Date(orderProductStartdate);
+      adjustedStartDate.setUTCHours(0, 0, 0, 0);
+      adjustedStartDate.setDate(adjustedStartDate.getDate() + 1); // Add one day
+      
+      const adjustedEndDate = new Date(orderProductEnddate);
+      adjustedEndDate.setUTCHours(0, 0, 0, 0);
+      adjustedEndDate.setDate(adjustedEndDate.getDate() + 1); // Add one day
+      
+      
        const data ={
         supplierId: orderselectedSupplierId,
         orderId:currentorderid,
         supplierOrderAmount:orderProductTotalAmounttobePaid * 0.95,
-        orderDate:'2023-10-26T06:37:09.647Z',
-        startDate:'2023-10-26T06:37:09.647Z',
-        endDate:'2023-10-26T06:37:09.647Z',
+        orderDate: new Date(TodayDate).toISOString(),
+        startDate: new Date(adjustedStartDate).toISOString(),
+        endDate:new Date(adjustedEndDate).toISOString(),
         orderstatus:'To be Delivered',
         orderPaymentStatus:'Not Recieved',
-        subscriptionTypeId:orderProductSUbscriptiontype,
-        order_startdate:orderProductStartdate,
-        order_enddate:orderProductEnddate,
+        orderDate: new Date(TodayDate).toISOString(),
+        startDate: adjustedStartDate.toISOString(),
+        endDate: adjustedEndDate.toISOString(),
         userId:0,
         productId:0,
         productPrice:0,
@@ -602,7 +625,7 @@ console.log('order payment status', response.data.transactionId);
         addressId:'0',
         supplierOrderID:'0'
        }
-       console.log(data);
+       console.log("createsupplierorderId sendibg data :",data);
         const response = await axios.post(url,data);
         console.log(response.data);
 
@@ -626,6 +649,8 @@ console.log('order payment status', response.data.transactionId);
     console.log(err);
   }
    }
+
+   
   
 
 
