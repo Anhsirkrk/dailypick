@@ -143,7 +143,7 @@ const url = `https://localhost:7041/api/Supplier/GetSupplierOrderDetailsBySuppli
 
 useEffect(() => {
   const currentDate = '2023-11-02';
-  const filteredOrders = orderhistory.filter(order => {
+  const filteredOrders = ordersdata.filter(order => {
     const endDate = order.enddate;
 
     // Compare the current date with start and end dates
