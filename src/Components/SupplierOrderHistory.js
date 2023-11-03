@@ -1,6 +1,5 @@
 
 import React, { useEffect, useState } from 'react';
-
 import { Table } from 'react-bootstrap';
 import axios from 'axios';
 
@@ -13,12 +12,21 @@ const [supplierId,setSupplierId]= useState('1');
   const [sortDirection, setSortDirection] = useState('asc'); // Default to descending
 
 
+  const [selectedStatus, setSelectedStatus] = useState('');
+  const [filtereddata,setFilteredData]=useState([]);
+  const [sortDirection, setSortDirection] = useState('asc'); // Default to descending
+
+  const [fromDate, setFromDate] = useState('');
+  const [toDate, setTODate] = useState('');
+
+
   useEffect(() => {
     gettingOrderDetails();
       }, []);
 
-  const gettingOrderDetails = async () => {
-   
+  const gettingorderDetails = async () => {
+    alert("hitted");
+
     const supplierId = 1;
     const url = `https://localhost:7041/api/Supplier/GetSupplierOrderDetailsBySupplierId?supplierId=${supplierId}`;
     try {
@@ -33,35 +41,74 @@ const [supplierId,setSupplierId]= useState('1');
     }
   }
 
-const handleStatusChange = (e) => {
-  alert(e.target.value);
-  const selectedvalue= e.target.value;
-  setSelectedStatus(selectedvalue);
+  const formatDate = (dateString) => {
+    const months = [
+      "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    ];
+    const date = new Date(dateString);
+    const day = date.getDate();
+    const month = months[date.getMonth()];
+    const year = date.getFullYear();
+    return `${day} ${month} ${year}`;
+  };
 
-  if(selectedvalue=== ""){
-    setFilteredData(ordersdata);
-  }
-  else{
-    setFilteredData(ordersdata.filter(orders => {
-      return selectedvalue === "" || orders.orderStatus === selectedvalue;
+
+  const handleStatusChange = (e) => {
+    alert(e.target.value);
+    const selectedvalue= e.target.value;
+    setSelectedStatus(selectedvalue);
+  
+    if(selectedvalue=== ""){
+      setFilteredData(ordersdata);
+    }
+    else{
+      setFilteredData(ordersdata.filter(orders => {
+        return selectedvalue === "" || orders.orderStatus === selectedvalue;
+      }));
+    }
+   
+  
+    // Add filtering logic here based on the selected status
+  };
+
+  const handleSort = () => {
+    setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+    setFilteredData(filtereddata.slice().sort((a, b) => {
+      const dateA = new Date(a.startDate);
+      const dateB = new Date(b.startDate);
+      return sortDirection === 'asc' ? dateA - dateB : dateB - dateA;
     }));
-  }
+  };
+
  
-
-  // Add filtering logic here based on the selected status
-};
-
 const toggleSortDirection = () => {
   setSortDirection(prevDirection => prevDirection === 'desc' ? 'asc' : 'desc');
 }
-const handleSort = () => {
-  setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
-  setFilteredData(filtereddata.slice().sort((a, b) => {
-    const dateA = new Date(a.startDate);
-    const dateB = new Date(b.startDate);
-    return sortDirection === 'asc' ? dateA - dateB : dateB - dateA;
-  }));
-};
+
+  const handleFromDateChange = (e) => {
+    setFromDate(e.target.value);
+  };
+
+  const handleTODateChange = (e) => {
+    setTODate(e.target.value);
+  };
+
+  const handleFilterByDate = () => {
+    const filteredByDate = ordersdata.filter(order => {
+      const orderStartDate = new Date(order.startDate);
+      const orderEndDate = new Date(order.endDate);
+      const selectedFromDate = new Date(fromDate);
+      const selectedToDate = new Date(toDate);
+      
+    const isFromDateInRange = selectedFromDate >= orderStartDate && selectedFromDate <= orderEndDate;
+    
+    const isToDateInRange = selectedToDate >= orderStartDate && selectedToDate <= orderEndDate;
+
+    return isFromDateInRange || isToDateInRange;
+    });
+    setFilteredData(filteredByDate);
+  };
 
 const formatDate = (dateString) => {
   const months = [
@@ -76,9 +123,23 @@ const formatDate = (dateString) => {
 };
 
 
+  const handleClearFilter = () => {
+    setFromDate(''); // Reset fromDate to empty string
+    setTODate(''); // Reset toDate to empty string
+    setFilteredData(ordersdata); // Reset filtered data to original orders data
+  };
 
   return (
     <div>
+     
+     <label htmlFor="fromDate">From</label>
+      <input type="date" id="fromDate" value={fromDate} onChange={handleFromDateChange} />
+
+      <label htmlFor="toDate">To</label>
+      <input type="date" id="toDate" value={toDate} onChange={handleTODateChange} />
+      <button type='button' onClick={handleFilterByDate}>Apply Date Filter</button>
+      <button type='button' onClick={handleClearFilter}>Clear Filter</button>
+
       <h4 className='orderhistory-heading'>History</h4>
       <div>
       <label htmlFor="orderStatus">Filter by Status:</label>
@@ -99,7 +160,7 @@ const formatDate = (dateString) => {
         </select>
       </div>
       <Table className='Supplier-order-table'>
-        <thead>
+      <thead>
           <tr className='table-header'>
             <th>Order Ref No</th>
             <th>Items</th>
