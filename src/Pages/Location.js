@@ -611,7 +611,7 @@ console.log('order payment status', response.data.transactionId);
         orderDate: new Date(TodayDate).toISOString(),
         startDate: new Date(adjustedStartDate).toISOString(),
         endDate:new Date(adjustedEndDate).toISOString(),
-        orderstatus:'To be Delivered',
+        orderstatus:'Approval Pending from Supplier',
         orderPaymentStatus:'Not Recieved',
         orderDate: new Date(TodayDate).toISOString(),
         startDate: adjustedStartDate.toISOString(),
@@ -705,32 +705,7 @@ console.log('order payment status', response.data.transactionId);
   }
   console.log(supplierdata);
 
-  const suppliersdata = [
-    { 
-      supplierId: 1,
-      name: 'Supplier 1',
-      pincodesofsupply: ['500084', '500049', '500082'],
-      locality: 'Madhapur',
-      state: 'Telangana',
-      mobilenumber: '+919876543210'
-    },
-    { 
-      supplierId: 2,
-      name: 'Supplier 2',
-      pincodesofsupply: ['400001', '400002', '400003'],
-      locality: 'Colaba',
-      state: 'Maharashtra',
-      mobilenumber: '+919912345678'
-    },
-    { 
-      supplierId: 3,
-      name: 'Supplier 3',
-      pincodesofsupply: ['500084', '600003', '600004'],
-      locality: 'Egmore',
-      state: 'Tamil Nadu',
-      mobilenumber: '+919812345678'
-    }
-  ];
+ 
 
 console.log(Country.getAllCountries())
 console.log(State.getAllStates())
