@@ -12,103 +12,82 @@ const [supplierId,setSupplierId]= useState('1');
   const [sortDirection, setSortDirection] = useState('asc'); // Default to descending
 
 
-  const [selectedStatus, setSelectedStatus] = useState('');
-  const [filtereddata,setFilteredData]=useState([]);
-  const [sortDirection, setSortDirection] = useState('asc'); // Default to descending
-
-  const [fromDate, setFromDate] = useState('');
-  const [toDate, setTODate] = useState('');
-
-
   useEffect(() => {
     gettingOrderDetails();
       }, []);
 
-  const gettingorderDetails = async () => {
-    alert("hitted");
+      useEffect(() => {
+        // Update the state with filtered orders
+        //setFilteredData(filteredOrders);
+      }, []); // Empty dependency array ensures that this effect runs once after the initial render
+      
 
+  const gettingOrderDetails = async () => {
     const supplierId = 1;
     const url = `https://localhost:7041/api/Supplier/GetSupplierOrderDetailsBySupplierId?supplierId=${supplierId}`;
     try {
       const response = await axios.get(url);
-      
+      console.log(response.data)
       if (response.status === 200) {
-        setOrdersdata(response.data);
-        setFilteredData(response.data);
+        
+        const filteredOrders = response.data.filter(order => {
+          return order.orderStatus === "Delivered" || order.orderStatus==="Rejected By Supplier" || order.orderStatus==="Cancelled By User";
+        });
+        setOrdersdata(filteredOrders);
+        setFilteredData(filteredOrders);
+        
       }
     } catch (error) {
       console.error("Error fetching order history:", error);
     }
   }
 
-  const formatDate = (dateString) => {
-    const months = [
-      "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-    ];
-    const date = new Date(dateString);
-    const day = date.getDate();
-    const month = months[date.getMonth()];
-    const year = date.getFullYear();
-    return `${day} ${month} ${year}`;
-  };
-
-
   const handleStatusChange = (e) => {
-    alert(e.target.value);
-    const selectedvalue= e.target.value;
+    const selectedvalue = e.target.value;
     setSelectedStatus(selectedvalue);
-  
-    if(selectedvalue=== ""){
-      setFilteredData(ordersdata);
+    alert(selectedvalue);
+    if (selectedvalue === "") {
+      alert("if hitted");
+      // const filterdata = ordersdata.filter(order => {
+      //   const startDate = new Date(order.startDate);
+      //   return startDate.toDateString() === today.toDateString();
+      // });
+      const finalfilterdata = ordersdata.filter(order => {
+        return order.orderStatus === "Delivered" || order.orderStatus==="Rejected By Supplier" || order.orderStatus==="Cancelled By User";        
+    });
+    setFilteredData(finalfilterdata);
+  }
+    else {
+      alert("else hitted");
+      
+      const finalfilterdata = ordersdata.filter(order => {  
+        return order.orderStatus === selectedvalue;
+      });
+      console.log('statusfilteredOrders',finalfilterdata);
+      setFilteredData(finalfilterdata);
     }
-    else{
-      setFilteredData(ordersdata.filter(orders => {
-        return selectedvalue === "" || orders.orderStatus === selectedvalue;
-      }));
-    }
-   
+  };
   
-    // Add filtering logic here based on the selected status
-  };
+  // .filter(order => {
+  //   const startDate = new Date(order.startDate);
+  //   console.log('Filtered Start Date:', startDate);
 
-  const handleSort = () => {
-    setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
-    setFilteredData(filtereddata.slice().sort((a, b) => {
-      const dateA = new Date(a.startDate);
-      const dateB = new Date(b.startDate);
-      return sortDirection === 'asc' ? dateA - dateB : dateB - dateA;
-    }));
-  };
+  //   return startDate.toDateString() === currentDate.toDateString();
+  // });
 
- 
+
+
 const toggleSortDirection = () => {
   setSortDirection(prevDirection => prevDirection === 'desc' ? 'asc' : 'desc');
 }
-
-  const handleFromDateChange = (e) => {
-    setFromDate(e.target.value);
-  };
-
-  const handleTODateChange = (e) => {
-    setTODate(e.target.value);
-  };
-
-  const handleFilterByDate = () => {
-    const filteredByDate = ordersdata.filter(order => {
-      const orderStartDate = new Date(order.startDate);
-      const orderEndDate = new Date(order.endDate);
-      const selectedFromDate = new Date(fromDate);
-      const selectedToDate = new Date(toDate);
-      
-    const isFromDateInRange = selectedFromDate >= orderStartDate && selectedFromDate <= orderEndDate;
-    
-    const isToDateInRange = selectedToDate >= orderStartDate && selectedToDate <= orderEndDate;
-
-    return isFromDateInRange || isToDateInRange;
-    });
-    setFilteredData(filteredByDate);
-  };
+const handleSort = () => {
+  setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+  setFilteredData(filtereddata.slice().sort((a, b) => {
+    const dateA = new Date(a.startDate);
+    const dateB = new Date(b.startDate);
+    return sortDirection === 'asc' ? dateA - dateB : dateB - dateA;
+  }));
+};
 
 const formatDate = (dateString) => {
   const months = [
@@ -123,24 +102,10 @@ const formatDate = (dateString) => {
 };
 
 
-  const handleClearFilter = () => {
-    setFromDate(''); // Reset fromDate to empty string
-    setTODate(''); // Reset toDate to empty string
-    setFilteredData(ordersdata); // Reset filtered data to original orders data
-  };
 
   return (
     <div>
-     
-     <label htmlFor="fromDate">From</label>
-      <input type="date" id="fromDate" value={fromDate} onChange={handleFromDateChange} />
-
-      <label htmlFor="toDate">To</label>
-      <input type="date" id="toDate" value={toDate} onChange={handleTODateChange} />
-      <button type='button' onClick={handleFilterByDate}>Apply Date Filter</button>
-      <button type='button' onClick={handleClearFilter}>Clear Filter</button>
-
-      <h4 className='orderhistory-heading'>History</h4>
+      <h4 className='orderhistory-heading'>Orders History</h4>
       <div>
       <label htmlFor="orderStatus">Filter by Status:</label>
         <select
@@ -151,16 +116,12 @@ const formatDate = (dateString) => {
         >
           <option value="">All</option>
           <option value="Delivered">Delivered</option>
-          <option value="To be Delivered">To be Delivered</option>
-          <option value="Approval Pending from Supplier">Approval Pending from Supplier</option>
-          <option value="Scheduled Changed">Scheduled Changed</option>
-          <option value="User Not AVailable">User Not AVailable</option>
           <option value="Cancelled By User">Cancelled By User</option>
           <option value="Rejected By Supplier">Rejected By Supplier</option>
         </select>
       </div>
       <Table className='Supplier-order-table'>
-      <thead>
+        <thead>
           <tr className='table-header'>
             <th>Order Ref No</th>
             <th>Items</th>
