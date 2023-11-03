@@ -6,6 +6,10 @@ import axios from 'axios';
 const SupplierOrderHistory = () => {
   const today = new Date();
   const [ordersdata, setOrdersdata] = useState([]);
+const [supplierId,setSupplierId]= useState('1');
+  const [selectedStatus, setSelectedStatus] = useState('');
+  const [filtereddata,setFilteredData]=useState([]);
+  const [sortDirection, setSortDirection] = useState('asc'); // Default to descending
 
 
   const [selectedStatus, setSelectedStatus] = useState('');
@@ -17,11 +21,12 @@ const SupplierOrderHistory = () => {
 
 
   useEffect(() => {
-    gettingorderDetails();
-  }, []);
+    gettingOrderDetails();
+      }, []);
 
   const gettingorderDetails = async () => {
     alert("hitted");
+
     const supplierId = 1;
     const url = `https://localhost:7041/api/Supplier/GetSupplierOrderDetailsBySupplierId?supplierId=${supplierId}`;
     try {
@@ -35,13 +40,6 @@ const SupplierOrderHistory = () => {
       console.error("Error fetching order history:", error);
     }
   }
-
-  console.log(ordersdata);
-
-  const filteredOrders = ordersdata.filter(order => {
-    const startDate = new Date(order.startDate);
-    return startDate > today;
-  });
 
   const formatDate = (dateString) => {
     const months = [
@@ -83,10 +81,10 @@ const SupplierOrderHistory = () => {
     }));
   };
 
-
-  const toggleSortDirection = () => {
-    setSortDirection(prevDirection => prevDirection === 'desc' ? 'asc' : 'desc');
-  }
+ 
+const toggleSortDirection = () => {
+  setSortDirection(prevDirection => prevDirection === 'desc' ? 'asc' : 'desc');
+}
 
   const handleFromDateChange = (e) => {
     setFromDate(e.target.value);
@@ -97,7 +95,6 @@ const SupplierOrderHistory = () => {
   };
 
   const handleFilterByDate = () => {
-    
     const filteredByDate = ordersdata.filter(order => {
       const orderStartDate = new Date(order.startDate);
       const orderEndDate = new Date(order.endDate);
@@ -113,6 +110,17 @@ const SupplierOrderHistory = () => {
     setFilteredData(filteredByDate);
   };
 
+const formatDate = (dateString) => {
+  const months = [
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+  ];
+  const date = new Date(dateString);
+  const day = date.getDate();
+  const month = months[date.getMonth()];
+  const year = date.getFullYear();
+  return `${day} ${month} ${year}`;
+};
 
 
   const handleClearFilter = () => {
@@ -190,3 +198,4 @@ const SupplierOrderHistory = () => {
 }
 
 export default SupplierOrderHistory;
+
