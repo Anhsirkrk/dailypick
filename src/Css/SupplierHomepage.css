@@ -25,10 +25,14 @@ line-height: normal;
 align-items: center; 
 }
 .Supplier-Options:hover{
-    background:  #024172;
+    background:  #394d5cca;
     color: white;
 }
-
+.Supplier-Optionsselected {
+    background-color: #024172;
+    color: white;
+    /* Add any other styling you want for the selected option */
+  }
 
 
 
