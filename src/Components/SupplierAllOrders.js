@@ -2,6 +2,7 @@ import React,{useState,useEffect} from 'react';
 import axios   from 'axios';
 import { Table } from 'react-bootstrap';
 import { FiSearch } from 'react-icons/fi';
+import '../Css/SupplierAllOrders.css';
 
 const SupplierAllOrders = () => {
     const today = new Date();
@@ -10,6 +11,7 @@ const SupplierAllOrders = () => {
     const [selectedStatus, setSelectedStatus] = useState('');
     const [filtereddata,setFilteredData]=useState([]);
     const [sortDirection, setSortDirection] = useState('asc'); // Default to descending
+    const [datefiltereddata,setDateFiltereddata]=useState([]);
   
   
     const [fromDate, setFromDate] = useState('');
@@ -29,6 +31,7 @@ const SupplierAllOrders = () => {
         if (response.status === 200) {
           setOrdersdata(response.data);
           setFilteredData(response.data);
+          setDateFiltereddata(response.data);
         }
       } catch (error) {
         console.error("Error fetching order history:", error);
@@ -50,14 +53,19 @@ const SupplierAllOrders = () => {
   
     const handleStatusChange = (e) => {
       alert(e.target.value);
+      
       const selectedvalue= e.target.value;
-      setSelectedStatus(selectedvalue);
+     setSelectedStatus(selectedvalue);
+    // handleFilterByDate();
     
       if(selectedvalue=== ""){
-        setFilteredData(ordersdata);
+       // handleFilterByDate();
+        setFilteredData(datefiltereddata);
+       
       }
       else{
-        setFilteredData(ordersdata.filter(orders => {
+       // handleFilterByDate();
+        setFilteredData(datefiltereddata.filter(orders => {
           return selectedvalue === "" || orders.orderStatus === selectedvalue;
         }));
       }
@@ -98,6 +106,8 @@ const SupplierAllOrders = () => {
   
       return isFromDateInRange || isToDateInRange;
       });
+        setSelectedStatus("");
+      setDateFiltereddata(filteredByDate);
       setFilteredData(filteredByDate);
     };
   
@@ -106,31 +116,36 @@ const SupplierAllOrders = () => {
     const handleClearFilter = () => {
       setFromDate(''); // Reset fromDate to empty string
       setTODate(''); // Reset toDate to empty string
+      setSelectedStatus("");
       setFilteredData(ordersdata); // Reset filtered data to original orders data
+      setDateFiltereddata(ordersdata);
     };
   
     return (
       <div>
         
-      <h4 className='orderhistory-heading'>All Orders</h4>
+      <h4 className='orderhistory-heading'>All Orderssss</h4>
 
       <div className='Supplierorderhistory-headingandfilterdiv'>
 
-      <div className='navsearchinput-container'>
-      <input type='text' class='navsearchinput' placeholder='Search Order Id'></input>
-      <div className='navsearchicon'><FiSearch style={{color:'var(--Gry, #7D7D7D)'}}/></div>
+      <div className='OrderIDsearchinput-container'>
+      <h3>All Orders</h3>
+      <input type='text' class='OrderIDsearchinputsearchinput' placeholder='Search Order Id'></input>
+      <div className='SearchOrderIdsearchicondiv'><FiSearch className='SearchOrderIdsearchicon' /></div>
       </div>
 
-      <label htmlFor="fromDate">From</label>
-      <input type="date" id="fromDate" value={fromDate} onChange={handleFromDateChange} />
+      <label htmlFor="lblfromDate">From date</label>
+      <input type="date" id="inputfromDate" value={fromDate} onChange={handleFromDateChange} />
 
-      <label htmlFor="toDate">To</label>
-      <input type="date" id="toDate" value={toDate} onChange={handleTODateChange} />
-      <button type='button' onClick={handleFilterByDate}>Apply Date Filter</button>
-      <button type='button' onClick={handleClearFilter}>Clear Filter</button>
-
+      <label htmlFor="lbltoDate">To date</label>
+      <input type="date" id="inputtoDate" value={toDate} onChange={handleTODateChange} />
+      <div className='datefilterapplybuttonsdiv'>
+        <button type='button' className='Datefilterapplybtn' onClick={handleFilterByDate}>Apply </button>
+        <button type='button' className='datefilterclearbtn' onClick={handleClearFilter}>Clear</button>
+      </div>
+      
       <div>
-      <label htmlFor="orderStatus">Filter by Status:</label>
+      <label id="lblorderstatusfilter" htmlFor="orderStatus">Filter :</label>
         <select
           id="filterorderStatus"
           name="orderStatus"
