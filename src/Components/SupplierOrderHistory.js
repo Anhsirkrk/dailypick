@@ -96,8 +96,9 @@ const formatDate = (dateString) => {
 
   return (
     <div>
+    <h4 className='orderhistory-heading'>Orders History</h4>
     <div className='Supplierorderhistory-headingandfilterdiv'>
-      <h4 className='orderhistory-heading'>Orders History</h4>
+      
 
       <div className='navsearchinput-container'>
       <input type='text' class='navsearchinput' placeholder='Search Order Id'></input>

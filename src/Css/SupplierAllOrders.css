@@ -1,0 +1,92 @@
+
+.OrderIDsearchinput-container{
+    position: relative; /* Add this line */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 5px 5px 5px;
+    flex-direction: inherit;
+
+}
+.OrderIDsearchinputsearchinput{
+    margin: 5px 5px 5px 30px;
+    width: auto;
+    height: 30px;
+    border-radius: 5px;
+    border: 1px solid var(--P1, #024172);
+    background: var(--Light_Gry, #EBE9E9);
+    min-width: 210px;
+    padding: 2px 2px 2px 40px;
+    font-weight: 700;
+    font-size: larger;
+}
+.SearchOrderIdsearchicondiv {
+    position: absolute;
+    top: 38%;
+    left: 43%;
+    transform: translateX(-50px);
+  }
+  .SearchOrderIdsearchicon{
+    color: black;
+  }
+  .Supplierorderhistory-headingandfilterdiv{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+  }
+  #filterorderStatus{
+    width: 130px;
+    padding: 5px;
+    margin: 0px 0px 0px 5px;
+    height: 30px;
+    border-radius: 5px;
+    border: 1px solid var(--P1, #024172);
+    background: var(--Full_white, #FFF);
+  }
+  #inputfromDate{
+    height: 29px;
+    background: var(--Light_Gry, #EBE9E9);
+    margin: 0px 0px 0px 5px;
+    padding: 2px 2px;
+    border-radius: 5px;
+border: 1px solid var(--P1, #024172);
+background: var(--Light_Gry, #EBE9E9);
+  }
+  #lbltoDate{
+    padding: 0px 0px 0px 10px;
+  }
+  #inputtoDate{
+    height: 29px;
+    background: var(--Light_Gry, #EBE9E9);
+    margin: 0px 0px 0px 5px;
+    padding: 2px 2px;
+
+    border-radius: 5px;
+border: 1px solid var(--P1, #024172);
+background: var(--Light_Gry, #EBE9E9);
+  }
+  .datefilterapplybuttonsdiv{
+    display: flex;
+    padding: 5px 5px;
+    align-items: normal;
+  }
+
+  .Datefilterapplybtn{
+    margin: 0px 0px 5px 0px;
+    background: #024172;
+    color: white;
+    font-size: small;
+    height: 30px;
+    width: 55px;
+    
+  }
+  .datefilterclearbtn{
+    height: 30px;
+    margin: 0px 0px 5px 10px;
+    width: 55px;
+
+  }
+  #lblorderstatusfilter{
+    padding: 0px 0px 0px 10px;
+  }
