@@ -1,6 +1,7 @@
 import React,{useState,useEffect} from 'react';
 import axios   from 'axios';
 import { Table } from 'react-bootstrap';
+import { FiSearch } from 'react-icons/fi';
 
 const SupplierAllOrders = () => {
     const today = new Date();
@@ -20,7 +21,6 @@ const SupplierAllOrders = () => {
         }, []);
   
     const gettingorderDetails = async () => {
-     // alert("hitted");
       const supplierId = 1;
       const url = `https://localhost:7041/api/Supplier/GetSupplierOrderDetailsBySupplierId?supplierId=${supplierId}`;
       try {
@@ -61,10 +61,7 @@ const SupplierAllOrders = () => {
           return selectedvalue === "" || orders.orderStatus === selectedvalue;
         }));
       }
-     
-    
-      // Add filtering logic here based on the selected status
-    };
+         };
   
     const handleSort = () => {
       setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
@@ -114,34 +111,48 @@ const SupplierAllOrders = () => {
   
     return (
       <div>
+        
+      <h4 className='orderhistory-heading'>All Orders</h4>
+
+      <div className='Supplierorderhistory-headingandfilterdiv'>
+
+      <div className='navsearchinput-container'>
+      <input type='text' class='navsearchinput' placeholder='Search Order Id'></input>
+      <div className='navsearchicon'><FiSearch style={{color:'var(--Gry, #7D7D7D)'}}/></div>
+      </div>
+
+      <label htmlFor="fromDate">From</label>
+      <input type="date" id="fromDate" value={fromDate} onChange={handleFromDateChange} />
+
+      <label htmlFor="toDate">To</label>
+      <input type="date" id="toDate" value={toDate} onChange={handleTODateChange} />
+      <button type='button' onClick={handleFilterByDate}>Apply Date Filter</button>
+      <button type='button' onClick={handleClearFilter}>Clear Filter</button>
+
+      <div>
+      <label htmlFor="orderStatus">Filter by Status:</label>
+        <select
+          id="filterorderStatus"
+          name="orderStatus"
+          value={selectedStatus}
+          onChange={handleStatusChange}
+        >
+          <option value="">All</option>
+          <option value="Delivered">Delivered</option>
+          <option value="To be Delivered">To be Delivered</option>
+          <option value="Approval Pending from Supplier">Approval Pending from Supplier</option>
+          <option value="Scheduled Changed">Scheduled Changed</option>
+          <option value="User Not AVailable">User Not AVailable</option>
+          <option value="Cancelled By User">Cancelled By User</option>
+          <option value="Rejected By Supplier">Rejected By Supplier</option>
+        </select>
+      </div>
+ </div>
        
-       <label htmlFor="fromDate">From</label>
-        <input type="date" id="fromDate" value={fromDate} onChange={handleFromDateChange} />
+      
   
-        <label htmlFor="toDate">To</label>
-        <input type="date" id="toDate" value={toDate} onChange={handleTODateChange} />
-        <button type='button' onClick={handleFilterByDate}>Apply Date Filter</button>
-        <button type='button' onClick={handleClearFilter}>Clear Filter</button>
-  
-        <h4 className='orderhistory-heading'>All Orders</h4>
-        <div>
-        <label htmlFor="orderStatus">Filter by Status:</label>
-          <select
-            id="orderStatus"
-            name="orderStatus"
-            value={selectedStatus}
-            onChange={handleStatusChange}
-          >
-            <option value="">All</option>
-            <option value="Delivered">Delivered</option>
-            <option value="To be Delivered">To be Delivered</option>
-            <option value="Approval Pending from Supplier">Approval Pending from Supplier</option>
-            <option value="Scheduled Changed">Scheduled Changed</option>
-            <option value="User Not AVailable">User Not AVailable</option>
-            <option value="Cancelled By User">Cancelled By User</option>
-            <option value="Rejected By Supplier">Rejected By Supplier</option>
-          </select>
-        </div>
+       
+       
         <Table className='Supplier-order-table'>
         <thead>
             <tr className='table-header'>

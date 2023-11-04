@@ -2,6 +2,9 @@
 import React, { useEffect, useState } from 'react';
 import { Table } from 'react-bootstrap';
 import axios from 'axios';
+import {FiSearch}  from 'react-icons/fi';
+import '../Css/SupplierOrderHistory.css';
+
 
 const SupplierOrderHistory = () => {
   const today = new Date();
@@ -48,10 +51,6 @@ const [supplierId,setSupplierId]= useState('1');
     alert(selectedvalue);
     if (selectedvalue === "") {
       alert("if hitted");
-      // const filterdata = ordersdata.filter(order => {
-      //   const startDate = new Date(order.startDate);
-      //   return startDate.toDateString() === today.toDateString();
-      // });
       const finalfilterdata = ordersdata.filter(order => {
         return order.orderStatus === "Delivered" || order.orderStatus==="Rejected By Supplier" || order.orderStatus==="Cancelled By User";        
     });
@@ -67,14 +66,6 @@ const [supplierId,setSupplierId]= useState('1');
       setFilteredData(finalfilterdata);
     }
   };
-  
-  // .filter(order => {
-  //   const startDate = new Date(order.startDate);
-  //   console.log('Filtered Start Date:', startDate);
-
-  //   return startDate.toDateString() === currentDate.toDateString();
-  // });
-
 
 
 const toggleSortDirection = () => {
@@ -105,11 +96,18 @@ const formatDate = (dateString) => {
 
   return (
     <div>
+    <div className='Supplierorderhistory-headingandfilterdiv'>
       <h4 className='orderhistory-heading'>Orders History</h4>
+
+      <div className='navsearchinput-container'>
+      <input type='text' class='navsearchinput' placeholder='Search Order Id'></input>
+      <div className='navsearchicon'><FiSearch style={{color:'var(--Gry, #7D7D7D)'}}/></div>
+      </div>
+ </div>
       <div>
       <label htmlFor="orderStatus">Filter by Status:</label>
         <select
-          id="orderStatus"
+          id="filterorderStatus"
           name="orderStatus"
           value={selectedStatus}
           onChange={handleStatusChange}

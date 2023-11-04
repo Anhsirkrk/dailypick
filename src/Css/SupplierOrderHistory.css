@@ -1,0 +1,31 @@
+.navsearchicon {
+    padding-top: 5px;
+    position: absolute;
+    top: 50%;
+    left: 10px; /* Adjust as necessary based on the size of your icon */
+    transform: translateY(-50%);
+  }
+  .navsearchinput{   
+    padding: 2px 2px 2px 20px;
+    width: auto;
+    height: 35px;
+    width: 400px;
+    border-radius: 5px;
+border: 1px solid var(--P1, #024172);
+background: var(--Light_Gry, #EBE9E9);
+  
+  }
+  .navsearchinput::placeholder {
+    padding-left: 15px;
+    color: var(--Gry, #7D7D7D); /* Set the color you want for the placeholder text */
+  }
+  .Supplierorderhistory-headingandfilterdiv{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+  }
+  #filterorderStatus{
+    width: 60px;
+    padding: 5px;
+  }

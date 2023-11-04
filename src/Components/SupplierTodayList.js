@@ -16,14 +16,7 @@ const [supplierId,setSupplierId]= useState('1');
   useEffect(() => {
     gettingOrderDetails();
       }, []);
-
-      useEffect(() => {
-
-     
       
-        // Update the state with filtered orders
-        //setFilteredData(filteredOrders);
-      }, []); // Empty dependency array ensures that this effect runs once after the initial render
       
 
   const gettingOrderDetails = async () => {
@@ -35,10 +28,13 @@ const [supplierId,setSupplierId]= useState('1');
       if (response.status === 200) {
         setOrdersdata(response.data);
         const filteredOrders = response.data.filter(order => {
-          const startDate = new Date(order.startDate);
-          return startDate.toDateString() === today.toDateString();
+          const startdate = new Date(order.startDate);
+          const enddate = new Date(order.endDate);
+          return startdate <= today && enddate >= today
+
         });
         setFilteredData(filteredOrders);
+        console.log(filteredOrders);
         
       }
     } catch (error) {
@@ -51,39 +47,25 @@ const [supplierId,setSupplierId]= useState('1');
     setSelectedStatus(selectedvalue);
     if (selectedvalue === "") {
       setFilteredData(ordersdata.filter(order => {
-        const startDate = new Date(order.startDate);
-        return startDate.toDateString() === today.toDateString();
+        const startdate = new Date(order.startDate);
+        const enddate = new Date(order.endDate);
+        return startdate <= today && enddate >= today
       }));
-    } else {
-      const currentDate = new Date();
-      console.log('Current Date:', currentDate);
-  
-      const statusfilteredOrders = ordersdata.filter(order => {
-        const startDate = new Date(order.startDate);
-        console.log('Order Start Date:', startDate);
-  
+    } 
+    else
+     {
+      const statusfilteredOrdersbyselectedvalue = ordersdata.filter(order => {
         return selectedvalue === "" || order.orderStatus === selectedvalue;
       });
-      console.log('statusfilteredOrders',statusfilteredOrders);
-      const filtereddata= statusfilteredOrders.filter(order => {
-        const startDate = new Date(order.startDate);
-        return startDate.toDateString() === today.toDateString();
+      const finalfiltereddatabydate = statusfilteredOrdersbyselectedvalue.filter(order => {
+        const startdate = new Date(order.startDate);
+        const enddate = new Date(order.endDate);
+        return startdate <= today && enddate >= today
       });
-      console.log('Filtered Orders:', filtereddata);
-  
-      setFilteredData(filtereddata);
+      setFilteredData(finalfiltereddatabydate);
     }
   };
   
-  // .filter(order => {
-  //   const startDate = new Date(order.startDate);
-  //   console.log('Filtered Start Date:', startDate);
-
-  //   return startDate.toDateString() === currentDate.toDateString();
-  // });
-
- 
-
 
 const toggleSortDirection = () => {
   setSortDirection(prevDirection => prevDirection === 'desc' ? 'asc' : 'desc');
@@ -113,7 +95,7 @@ const formatDate = (dateString) => {
 
   return (
     <div>
-      <h4 className='orderhistory-heading'>Today Lists</h4>
+      <h4 className='orderhistory-heading'>Today Listss</h4>
       <div>
       <label htmlFor="orderStatus">Filter by Status:</label>
         <select
@@ -127,9 +109,10 @@ const formatDate = (dateString) => {
           <option value="To be Delivered">To be Delivered</option>
           <option value="Approval Pending from Supplier">Approval Pending from Supplier</option>
           <option value="Scheduled Changed">Scheduled Changed</option>
-          <option value="User Not AVailable">User Not AVailable</option>
+          <option value="User Not AVailable">User Not Available</option>
           <option value="Cancelled By User">Cancelled By User</option>
           <option value="Rejected By Supplier">Rejected By Supplier</option>
+          <option value="Rejected By Supplier">Failed to Delivery</option>
         </select>
       </div>
       <Table className='Supplier-order-table'>
