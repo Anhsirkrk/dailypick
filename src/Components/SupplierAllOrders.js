@@ -6,12 +6,14 @@ import '../Css/SupplierAllOrders.css';
 
 const SupplierAllOrders = () => {
     const today = new Date();
-    const [ordersdata, setOrdersdata] = useState([]);
   const [supplierId,setSupplierId]= useState('1');
+  const [ordersdata,setOrdersData]=useState([]);
     const [selectedStatus, setSelectedStatus] = useState('');
     const [filtereddata,setFilteredData]=useState([]);
     const [sortDirection, setSortDirection] = useState('asc'); // Default to descending
     const [datefiltereddata,setDateFiltereddata]=useState([]);
+    const [searchedOrderId,setSearchedOrderId]=useState('');
+    const [ordersearcherror,setOrderSearchError]=useState('');
   
   
     const [fromDate, setFromDate] = useState('');
@@ -29,14 +31,15 @@ const SupplierAllOrders = () => {
         const response = await axios.get(url);
         
         if (response.status === 200) {
-          setOrdersdata(response.data);
-          setFilteredData(response.data);
+          setOrdersData(response.data);
+        setFilteredData(response.data);
           setDateFiltereddata(response.data);
         }
       } catch (error) {
         console.error("Error fetching order history:", error);
       }
     }
+    console.log("filtereddata",filtereddata);
   
     const formatDate = (dateString) => {
       const months = [
@@ -94,7 +97,7 @@ const SupplierAllOrders = () => {
     };
   
     const handleFilterByDate = () => {
-      const filteredByDate = ordersdata.filter(order => {
+      const filteredByDate = filtereddata.filter(order => {
         const orderStartDate = new Date(order.startDate);
         const orderEndDate = new Date(order.endDate);
         const selectedFromDate = new Date(fromDate);
@@ -117,21 +120,59 @@ const SupplierAllOrders = () => {
       setFromDate(''); // Reset fromDate to empty string
       setTODate(''); // Reset toDate to empty string
       setSelectedStatus("");
-      setFilteredData(ordersdata); // Reset filtered data to original orders data
-      setDateFiltereddata(ordersdata);
+      setFilteredData(filtereddata); // Reset filtered data to original orders data
+      setDateFiltereddata(filtereddata);
     };
-  
+
+    const handlesearchorderid = (seacrhedid) => {
+      console.log("Searching for order ID:", seacrhedid);
+      setSearchedOrderId(seacrhedid);
+      if(seacrhedid === ""){
+       setFilteredData(ordersdata);
+       setOrderSearchError("");
+      }
+      else
+      {
+        const filterordereiddata = ordersdata.filter(order => 
+          order.orderID.toString().includes(seacrhedid));
+        if (filterordereiddata.length === 0) 
+        {
+          setOrderSearchError("No matching orders found");
+        }
+         else
+          {
+          setFilteredData(filterordereiddata);
+          setOrderSearchError(""); // Clear any previous error
+        }
+      }
+      
+    };
+    
+    
+    
+
     return (
       <div>
         
-      <h4 className='orderhistory-heading'>All Orderssss</h4>
+      <h4 className='SupplierAllorders-heading'>All Orderssss</h4>
+<div className='SupplierAllOrdersErrorsdiv'>
+<p>{ordersearcherror}</p>
 
-      <div className='Supplierorderhistory-headingandfilterdiv'>
+</div>
+      <div className='SupplierAllOrders-headingandfilterdiv'>
 
       <div className='OrderIDsearchinput-container'>
       <h3>All Orders</h3>
-      <input type='text' class='OrderIDsearchinputsearchinput' placeholder='Search Order Id'></input>
-      <div className='SearchOrderIdsearchicondiv'><FiSearch className='SearchOrderIdsearchicon' /></div>
+      <input 
+      type='text' 
+      className='OrderIDsearchinputsearchinput'  
+      placeholder='Search Order Id' 
+      value={searchedOrderId} 
+      onChange={e => {
+         handlesearchorderid(e.target.value);
+      }}
+    />
+          <div className='SearchOrderIdsearchicondiv'><FiSearch className='SearchOrderIdsearchicon' /></div>
       </div>
 
       <label htmlFor="lblfromDate">From date</label>
@@ -168,7 +209,7 @@ const SupplierAllOrders = () => {
   
        
        
-        <Table className='Supplier-order-table'>
+        <Table className='SupplierAllorder-table'>
         <thead>
             <tr className='table-header'>
               <th>Order Ref No</th>

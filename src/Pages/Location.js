@@ -79,8 +79,6 @@ const Location = () => {
     const totalamount = localStorage.getItem('order-TotalAmounttobePaid');
     console.log('total amount',totalamount);
 
-    
-
     const currentDate = new Date(); // This will create a new Date object with the current date and time
 const TodayDate = currentDate.toISOString().split('T')[0]; // This will format it as 'YYYY-MM-DD'
 
