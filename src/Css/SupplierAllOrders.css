@@ -1,4 +1,13 @@
 
+.SupplierAllorders-heading{
+position: relative;
+font-size: 25px;
+font-family: Poppins;
+color: #000;
+text-align: left;
+}
+
+
 .OrderIDsearchinput-container{
     position: relative; /* Add this line */
     display: flex;
@@ -29,12 +38,39 @@
   .SearchOrderIdsearchicon{
     color: black;
   }
-  .Supplierorderhistory-headingandfilterdiv{
+  .SupplierAllOrders-headingandfilterdiv{
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: start;
   }
+  .SupplierAllorder-table{
+    text-align: center;
+    width: 1200px;
+    border: 1px solid #ccc; /* Add border with a color of your choice */
+    border-collapse: collapse; /* Collapse borders into a single border line */
+
+}
+
+.SupplierAllorder-table th, .SupplierAllorder-table td {
+    border: 1px solid #ccc; /* Add border to table cells */
+    padding: 8px; /* Add padding to table cells for better spacing */
+  }
+.table-header{
+    height: 100%;
+    position: relative;
+    background-color: #49c5dd;
+    border-top: 1px solid #7d7d7d;
+    border-left: 1px solid #7d7d7d;
+    box-sizing: border-box;
+    width: 100%;
+    
+    text-align: center;
+    font-size: 16px;
+    color: #171717;
+    font-family: Poppins;
+    padding: 10px 10px;
+}
   #filterorderStatus{
     width: 130px;
     padding: 5px;
