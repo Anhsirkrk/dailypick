@@ -3,33 +3,20 @@ import '../Css/Login2.css';
 import { Link, useAsyncError, useNavigate } from "react-router-dom";
 import { Form, Alert } from "react-bootstrap";
 import { Button } from "react-bootstrap";
- import OtpInput from 'react-otp-input';
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-  signOut,
-  GoogleAuthProvider,
-  signInWithPopup,
-  RecaptchaVerifier,
-  signInWithPhoneNumber,
-} from "firebase/auth";
-import { useUserAuth } from "../Context/UserAuthContext";
 import PhoneInput from "react-phone-number-input";
 import axios, { formToJSON } from 'axios';
-import logocover from '../Images/logocover.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash, faL } from '@fortawesome/free-solid-svg-icons';
 import 'react-toastify/dist/ReactToastify.css';
 import {ToastContainer,toast } from 'react-toastify';
 import validation from '../Components/validations';
-import { useLoginAuth } from '../Components/UserAuthContext';
+import { auth } from '../firebase';
+import { createUserWithEmailAndPassword } from 'firebase/auth'; // Import from Firebase SDK
 
 
 
 const Regisatrtion = () => {
 
-    const {isLoginauthenticated, setIsLoginauthenticated}= useLoginAuth();
 
   const [error, setError] = useState("");
   const [mobilenumber, setMobileNumber] = useState("");
@@ -39,13 +26,9 @@ const Regisatrtion = () => {
   const [password,setPassword]=useState("");
   const [confirmpassword,setConfirmPassword]=useState("");
   const [flag, setFlag] = useState(false);
-  const [otp, setOtp] = useState('');
-  const [result, setResult] = useState("");
-  const { setUpRecaptha } = useUserAuth();
-  const [resultMessage, setResultMessage] = useState('');
-  const [isauthenticated, setisauthenticated] = useState('');
   const [ismobilenumberexist,setIsMobileNumberExist]=useState(false);
   const [isemailexist,setIsmailExist]=useState(false);
+  const [resultMessage, setResultMessage] = useState(""); // Define setResultMessage
   
 
   const navigate = useNavigate();
@@ -90,6 +73,29 @@ const Regisatrtion = () => {
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
+
+
+  const registerUser = async () => {
+    alert("firabse reg user hited");
+  
+
+    if (password !== confirmpassword) {
+      setError("Passwords do not match.");
+      return;
+    }
+
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      alert("user reg in fb");
+      const user = userCredential.user;
+      console.log("User registered successfully:", user);
+      // Redirect to a success page or perform other actions as needed.
+    } catch (error) {
+      setError(error.message);
+      console.error("Error registering user:", error);
+    }
+  };
+  
 
   const validateemail= async(email)=>{
     const values ={email}
@@ -240,6 +246,7 @@ const Regisatrtion = () => {
   };
   
   const UserRegistration = async (e)=>{
+    alert("user reg hitted");
       e.preventDefault();
       alert("user reg hitted");
       const values={name,email,mobilenumber,password,confirmpassword};
@@ -302,7 +309,7 @@ const Regisatrtion = () => {
  console.log(isemailexist, ismobilenumberexist) ;
  if(isemailexist === false && ismobilenumberexist === false )
  {
-  alert("here2");
+  alert("enter for axios");
    try {
      alert("entered to createuser");
      const url = 'https://localhost:7041/api/User/CreateUser';
@@ -326,6 +333,7 @@ const Regisatrtion = () => {
  
      if (response.status === 200) 
      {
+      alert("axios 200");
        const recieveddata = 
        {
          isusercreated: response.data.isusercreated,
@@ -335,22 +343,30 @@ const Regisatrtion = () => {
  
        if(recieveddata.isusercreated === true)
        {
+        alert("going for fb reg user");
+        registerUser();
          toast.success(recieveddata.resultMessage);
+
          navigate('/Login2');
        }
        else if(recieveddata.isusercreated === false)
        {
+        alert("user reg axios faileed");
          toast.error(recieveddata.resultMessage);
          setError("Account creation was not successful, Try again Later");
        }
      } 
      else 
      {
+      alert("user reg axios else faileed");
+
        setResultMessage("An unknown error occurred");
      }
    } 
    catch(error)
     {
+      alert("user reg axios catch faileed");
+
      setResultMessage('An error occurred while processing your request.');
      console.error(error);
    }

@@ -4,16 +4,19 @@ import profilepic from '../Images/vecteezy_business-man-icon-for-your-web-profil
 import {FaRegUser} from 'react-icons/fa'
 import {AiOutlineHeart} from 'react-icons/ai'
 import { Navigate, json } from 'react-router-dom';
-import { useLoginAuth } from '../Components/UserAuthContext';
 import {useNavigate } from "react-router-dom";
 import axios from 'axios';
 import {GoLocation} from 'react-icons/go';
 import {BsCart2} from 'react-icons/bs';
 import { Button } from 'react-bootstrap';
 // import { Redirect } from 'react-router-dom';
+import { useUserAuth } from '../Context/UserAuthContext';
+import { faL } from '@fortawesome/free-solid-svg-icons';
 const Nav = () => {
 
-  const {isLoginauthenticated, setIsLoginauthenticated}= useLoginAuth();
+
+
+  const { isUserLoggedIn,setIsUserLoggedIn } = useUserAuth(); // Updated
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [isOpen, setIsOpen] = useState(false);
@@ -27,8 +30,8 @@ const Nav = () => {
   
   useEffect(() => {
     // Perform any actions you want when loginwithotpshow changes here
-    console.log("nav.js is login authenticated:", isLoginauthenticated);
-  }, [isLoginauthenticated]);
+    console.log("nav.js is login authenticated:", isUserLoggedIn);
+  }, [isUserLoggedIn]);
 
 
   useEffect(() => {
@@ -84,16 +87,15 @@ const Nav = () => {
     localStorage.removeItem('userdata');
     localStorage.removeItem('isLoggedIn');
     setUsername('');
-    console.log('nav.js before setting to false', isLoginauthenticated);
-    if(isLoginauthenticated===true)
+    console.log('nav.js before setting to false', isUserLoggedIn);
+    if(isUserLoggedIn===true)
     {
-      setIsLoginauthenticated(false);
-      console.log('nav.js before setting to false',isLoginauthenticated);
+      setIsUserLoggedIn(false);
+      console.log('nav.js before setting to false',isUserLoggedIn);
        //return <Redirect to="/popup" />;
       //navigate('/popup');
      window.location.href='/popup';
      window.history.replaceState(null,'','/popup');
-     console.log(isLoginauthenticated);
     }
   }
 
@@ -101,21 +103,21 @@ const Nav = () => {
     if(localStorage.getItem('isLoggedIn') === 'true')
     {
       console.log('nav.js', JSON.parse(localStorage.getItem('isLoggedIn')));
-      setIsLoginauthenticated(true);
-      console.log('navjs' , isLoginauthenticated);
+      setIsUserLoggedIn(true);
+      console.log('navjs' , isUserLoggedIn);
     }
-  }, [isLoginauthenticated,setIsLoginauthenticated]);
-     
+  }, [isUserLoggedIn,setIsUserLoggedIn]);
+
   useEffect(() => {
     // Perform any actions you want when loginwithotpshow changes here
-    console.log("loginwithotpshow has changed:", isLoginauthenticated);
-  }, [username,isLoginauthenticated,setIsLoginauthenticated]);
+    console.log("loginwithotpshow has changed:", isUserLoggedIn);
+  }, [username,isUserLoggedIn,setIsUserLoggedIn]);
 
-console.log(isLoginauthenticated);
+console.log(" nav.js isUserLoggedIn",isUserLoggedIn);
 console.log(username);
 
 const handleprofilepicselect=()=>{
-if(isLoginauthenticated){
+if(isUserLoggedIn){
   navigate('/profile');
 }
 }
@@ -125,21 +127,21 @@ const handlebacktohome =()=>{
 }
 
 const handleMysubscriptionsroute =()=>{
-  if(isLoginauthenticated)
+  if(isUserLoggedIn)
   {
     navigate('/mysusbcription');
   }
 }
 
 const handleMyCartroute =()=>{
-  if(isLoginauthenticated)
+  if(isUserLoggedIn)
   {
     navigate('/mycart');
   }
 }
 
 const handleMyWishListroute =()=>{
-  if(isLoginauthenticated)
+  if(isUserLoggedIn)
   {
     navigate('/mywishlist');
   }
