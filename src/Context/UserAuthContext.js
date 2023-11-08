@@ -12,10 +12,12 @@ import {
 import { auth } from "../firebase";
 
 const userAuthContext = createContext();
+const googleProvider = new GoogleAuthProvider();
 
 export function UserAuthContextProvider({ children }) {
   const [user, setUser] = useState({});
-  const [number,setNumber]=useState("");
+  const [number, setNumber] = useState("");
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
 
   function logIn(email, password) {
     return signInWithEmailAndPassword(auth, email, password);
@@ -32,8 +34,6 @@ export function UserAuthContextProvider({ children }) {
   }
 
   const setUpRecaptha = async (number) => {
-
-
     const recaptchaVerifier = new RecaptchaVerifier(auth,
       "recaptcha-container",
       {}
@@ -44,9 +44,13 @@ export function UserAuthContextProvider({ children }) {
   }
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentuser) => {
-      console.log("Auth", currentuser);
-      setUser(currentuser);
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
+        setIsUserLoggedIn(true);
+      } else {
+        setIsUserLoggedIn(false);
+      }
+      setUser(currentUser);
     });
 
     return () => {
@@ -54,16 +58,27 @@ export function UserAuthContextProvider({ children }) {
     };
   }, []);
 
+  useEffect(() => {
+    console.log(" user context isUserLoggedIn has changed:", isUserLoggedIn);
+  }, [isUserLoggedIn]);
+
+
+  useEffect(() => {
+    console.log(" user conetxt isUserLoggedIn has changed:", isUserLoggedIn);
+  }, [isUserLoggedIn]);
+
   return (
     <userAuthContext.Provider
       value={{
         user,
+        isUserLoggedIn,
         logIn,
         signUp,
         logOut,
         googleSignIn,
         setUpRecaptha,
-        number
+        number,
+        setIsUserLoggedIn,
       }}
     >
       {children}

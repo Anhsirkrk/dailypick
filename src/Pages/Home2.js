@@ -18,6 +18,7 @@ import Pomegranate from '../Images/Dummy/Promogranate.png';
 import HatsunGhee from '../Images/Dummy/Hatsun_Ghee.jpg';
 import HeritageCowGhee  from  '../Images/Dummy/heritage_cow_ghee.jpg';
 import HeritageCurd1 from '../Images/Dummy/Heritage_Curd_1 copy.jpg';
+import { useUserAuth } from '../Context/UserAuthContext';
 
 
 
@@ -26,6 +27,9 @@ import "react-multi-carousel/lib/styles.css";
 
 
 const Home2 = () => {
+
+  const { isUserLoggedIn } = useUserAuth(); // Get the isUserLoggedIn state from the context
+  console.log("isUserLoggedIn : ",isUserLoggedIn)
 
   const responsive = {
     desktop: {
