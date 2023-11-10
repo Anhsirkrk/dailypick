@@ -3,7 +3,7 @@ import '../Css/Login2.css';
 import { Link,json,useAsyncError, useNavigate } from 'react-router-dom';
 import { Form, Alert } from "react-bootstrap";
 import { Button } from "react-bootstrap";
- import OtpInput from 'react-otp-input';
+import OtpInput from 'react-otp-input';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -394,6 +394,40 @@ const Login = ({}) => {
     console.log("loginwithotpshow has changed:", loginwithotpshow);
   }, []);
 
+
+//sign-in with google
+
+const [isLoggedIn, setIsLoggedIn]=useState(true);
+ 
+const SignUpUsingGoogle=()=>{
+
+const provider=new GoogleAuthProvider();
+
+  signInWithPopup(auth, provider)
+  .then((result) => {
+    
+    const user = result.user;
+    
+    console.log({user});
+    setIsUserLoggedIn(true);
+    navigate('/home2');
+  }).catch((error) => {
+    
+    console.log(error);
+  });
+  
+  console.log("Signup using google");
+
+};
+
+// signup google end
+
+
+
+
+
+
+
   return (
 <>
     <div className='Login2-container'>
@@ -496,7 +530,7 @@ const Login = ({}) => {
           
           <p style={{marginTop:'20px'}}><a>Don't have an account yet?</a>&nbsp; &nbsp;<a onClick={showregistartionform} style={{ color:'#024172',textDecoration:'underline', fontWeight:'bold'}}>Register for Free</a></p>
           <Button className='ContinueAsaGuestButton' onClick={ContinueAsaGuest} style={{textDecoration:'none'}}> Continue As a Guest ---  </Button>
-
+          <Button className='signinwithemailbutton' onClick={SignUpUsingGoogle}> continue with google</Button>
           </div>
     
         </div> 
