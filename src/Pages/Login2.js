@@ -153,15 +153,10 @@ const Login = ({}) => {
     handlePasswordReset(email);
   };
 
-
-
-
-
- 
-  const verifymobilenumber = async (e) => {
-    
-    e.preventDefault();
-    const values={mobilenumber};
+const handlesendOTP=async(e)=>{
+e.preventDefault();
+alert("handlesendOTP Hitted!!!!")
+  const values={mobilenumber};
 
     console.log(values);
   const validationErrors = validation(values,['mobilenumber']);
@@ -173,8 +168,35 @@ const Login = ({}) => {
     // alert(validationErrors.mobilenumber);
     console.log(validationerrors.mobilenumber);
     return;
+  } 
+
+getOtp(mobilenumber);
+
+
+}
+
+
+
+ 
+
+
+
+  const verifymobilenumber = async (e) => {
+    
+    const values={mobilenumber};
+
+    console.log(values);
+    const validationErrors = validation(values,['mobilenumber']);
+    console.log(validationErrors);
+  if(!(validationErrors.mobilenumber) == '')
+  {
+    alert("val err");
+    setValidationErrors(validationErrors);
+    // alert(validationErrors.mobilenumber);
+    console.log(validationerrors.mobilenumber);
+    return;
   }
-  //alert("checking database");
+  alert("checking database");
     const url = 'https://localhost:7041/api/Login/GetUserByMobileNumber';
     const data = {
       userId: 0,
@@ -207,17 +229,37 @@ const Login = ({}) => {
             userFound: response.data.userFound,
           };
           console.log(sendData);
-          if(sendData.userFound === true){
+          if(sendData.userFound === true)
+          {
+            
             //alert("user found redirecting to otp gen");
             getOtp(mobilenumber);
             toast.success("user found redirecting to otp gen");
           }
-          else if(sendData.userFound === false){
-            alert("user   not found");
-            toast.error("Invalid User");
-            return;
+          else if(sendData.userFound === false)
+          {
+            alert("user not found");
+            toast.error("New User");
+
+               const sendData2 = 
+              {
+               userId: response.data.userId,
+               userTypeId: response.data.userTypeId,
+               username: response.data.mobile,
+               firstName: response.data.mobile,
+               lastName: response.data.mobile,
+               mobile: response.data.mobile,
+               email: response.data.email,
+               userFound: response.data.userFound,
+              };
+              alert("send data 2 assignined");
+
+            localStorage.setItem('userdata', JSON.stringify(sendData2));
+            navigate('/home2');
           }
+          alert("send data assigned");
           localStorage.setItem('userdata', JSON.stringify(sendData));
+          navigate('/home2');
       } 
       else 
       {
@@ -291,13 +333,15 @@ const Login = ({}) => {
       };
       const verifyOtp = async (e) => {
         e.preventDefault();
+        alert("verifyotp");
         setError("");
         if (otp === "" || otp === null) return;
         try {
           await result.confirm(otp);
           alert("opt verified");
+          verifymobilenumber();
          
-          navigate('/home2');
+          
         } catch (err) {
           setError(err.message);
         }
@@ -405,7 +449,7 @@ const provider=new GoogleAuthProvider();
 
   signInWithPopup(auth, provider)
   .then((result) => {
-    
+    alert("Sign in with Google")
     const user = result.user;
     
     console.log({user});
@@ -416,7 +460,7 @@ const provider=new GoogleAuthProvider();
     console.log(error);
   });
   
-  console.log("Signup using google");
+  //console.log("Signup using google");
 
 };
 
@@ -460,7 +504,7 @@ const provider=new GoogleAuthProvider();
         <div>{resultMessage}</div>
         {error && <Alert variant="danger">{error}</Alert>}
           <div>
-            <Form className='MobileLoginForm' onSubmit={verifymobilenumber} style={{ display: !flag ? "block" : "none" }}>
+            <Form className='MobileLoginForm' onSubmit={handlesendOTP} style={{ display: !flag ? "block" : "none" }}>
               <p>Phone No</p>
               <div style={{display:'flex'}}>
               <div>

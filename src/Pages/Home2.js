@@ -1,12 +1,10 @@
-
 import { useState,useEffect } from 'react';
-
 import React from 'react';
 import '../Css/Home2.css';
 import banner from '../Images/Home/Rectangle 1403.png';
 import HorizontalScroll from "react-horizontal-scrolling";
 import Nav from '../Components/Nav';
-import { useLoginAuth } from '../Components/UserAuthContext';
+//import { useLoginAuth } from '../Components/UserAuthContext';
 import { Link, useAsyncError, useNavigate } from "react-router-dom";
 import {FaRegUser} from 'react-icons/fa'
 import { Navigate } from 'react-router-dom';
@@ -18,7 +16,8 @@ import Pomegranate from '../Images/Dummy/Promogranate.png';
 import HatsunGhee from '../Images/Dummy/Hatsun_Ghee.jpg';
 import HeritageCowGhee  from  '../Images/Dummy/heritage_cow_ghee.jpg';
 import HeritageCurd1 from '../Images/Dummy/Heritage_Curd_1 copy.jpg';
-import { useUserAuth } from '../Context/UserAuthContext';
+import {useUserAuth} from '../Context/UserAuthContext';
+
 
 
 
@@ -28,7 +27,7 @@ import "react-multi-carousel/lib/styles.css";
 
 const Home2 = () => {
 
-  const { isUserLoggedIn } = useUserAuth(); // Get the isUserLoggedIn state from the context
+  const { isUserLoggedIn,setIsUserLoggedIn } = useUserAuth(); // Get the isUserLoggedIn state from the context
   console.log("isUserLoggedIn : ",isUserLoggedIn)
 
   const responsive = {
@@ -63,7 +62,7 @@ const Home2 = () => {
   const [addressdata,setAddressData]= useState({});
   const [wishlistadata,setWishListData]= useState([]);
 
-  const {isLoginauthenticated, setIsLoginauthenticated}= useLoginAuth();
+  const {isLoginauthenticated, setIsLoginauthenticated}= useUserAuth();
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [userid,setUserId]=useState('');
@@ -122,7 +121,7 @@ const Home2 = () => {
   console.log('wishlistdata  hompeage',wishlistadata);
 
   // alert('home2 isLoginauthenticated', isLoginauthenticated);
-  console.log(isLoginauthenticated);
+  //console.log(isLoginauthenticated);
 console.log(addressdata);
 
   const HandleProductsByCategory = (category) => {
@@ -143,7 +142,6 @@ console.log(addressdata);
         <div className='banner'>
             <img class="bannner-img" src={banner} alt='banner' />
         </div>
- {/*} <img src="" alt='dummyimage'/> */}
 
         <div className='Button-Fields'>
             

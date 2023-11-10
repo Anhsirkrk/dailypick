@@ -6,15 +6,16 @@ import OrderHistory from '../Components/OrderHistory';
 import Address from '../Components/Address';
 import Security from '../Components/Security';
 import ContactUs from '../Components/ContactUs';
+import {useUserAuth} from '../Context/UserAuthContext';
 
-import { useLoginAuth } from '../Components/UserAuthContext';
+//import { useLoginAuth } from '../Components/UserAuthContext';
 import {useNavigate } from "react-router-dom";
 
 
 const Profile = () => {
 
 
-  const {isLoginauthenticated, setIsLoginauthenticated}= useLoginAuth();
+  const {isUserLoggedIn, setIsUserLoggedIn}= useUserAuth();
   const [username, setUsername] = useState('');
  
 
@@ -42,14 +43,14 @@ const Profile = () => {
         localStorage.removeItem('userdata');
         localStorage.removeItem('isLoggedIn');
         setUsername('');
-        console.log('nav.js before setting to false', isLoginauthenticated);
-        if(isLoginauthenticated===true)
+        console.log('nav.js before setting to false', isUserLoggedIn);
+        if(isUserLoggedIn===true)
         {
-          setIsLoginauthenticated(false);
-          console.log('nav.js before setting to false',isLoginauthenticated);
+          setIsUserLoggedIn(false);
+          console.log('nav.js before setting to false',isUserLoggedIn);
          window.location.href='/popup';
          window.history.replaceState(null,'','/popup');
-         console.log(isLoginauthenticated);
+         console.log(isUserLoggedIn);
         }
       }
 
