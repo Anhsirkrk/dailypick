@@ -200,7 +200,7 @@ getOtp(mobilenumber);
     const url = 'https://localhost:7041/api/Login/GetUserByMobileNumber';
     const data = {
       userId: 0,
-      userTypeId: 0,
+      userTypeId: 1,
       username: "",
       password: "",
       firstname: "",
@@ -211,12 +211,15 @@ getOtp(mobilenumber);
       userFound: true,
       resultMessage: ""
     };
+    console.log("axios data",data);
+    alert("axios data assigned");
     try {
       const response = await axios.post(url, data);
+      alert("axios done");
       console.log(response.data);
-      if (response.status === 200) 
+      if (response.status === 200)  
       {
-        //alert("satus 200");
+        alert("satus 200");
           const sendData = 
           {
             userId: response.data.userId,
@@ -233,8 +236,10 @@ getOtp(mobilenumber);
           {
             
             //alert("user found redirecting to otp gen");
-            getOtp(mobilenumber);
-            toast.success("user found redirecting to otp gen");
+            alert("send data assigned");
+            localStorage.setItem('userdata', JSON.stringify(sendData));
+            navigate('/home2');
+           
           }
           else if(sendData.userFound === false)
           {
@@ -253,16 +258,16 @@ getOtp(mobilenumber);
                userFound: response.data.userFound,
               };
               alert("send data 2 assignined");
+              console.log("sendata2",sendData2);
 
             localStorage.setItem('userdata', JSON.stringify(sendData2));
             navigate('/home2');
           }
-          alert("send data assigned");
-          localStorage.setItem('userdata', JSON.stringify(sendData));
-          navigate('/home2');
+          
       } 
       else 
       {
+        alert("axios error");
         setResultMessage("An unknown error occurred");
       }
     } catch(error) {

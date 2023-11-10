@@ -77,7 +77,7 @@ const Nav = () => {
     // Get item from local storage on component mount
     const recieveddata = localStorage.getItem('userdata');
     const storeddata=(JSON.parse(recieveddata));
-    console.log(storeddata);
+    console.log("nav : storeddata",storeddata);
 
     setNoofproductsinwhislist(localStorage.getItem('noofproductsinwhislist'));
     
