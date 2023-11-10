@@ -12,11 +12,18 @@ import { Button } from 'react-bootstrap';
 // import { Redirect } from 'react-router-dom';
 import { useUserAuth } from '../Context/UserAuthContext';
 import { faL } from '@fortawesome/free-solid-svg-icons';
+import { getAuth, signOut } from "firebase/auth";
+
+
+
+
+
 const Nav = () => {
 
 
 
   const { isUserLoggedIn,setIsUserLoggedIn } = useUserAuth(); // Updated
+  const { logOut} = useUserAuth();
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [isOpen, setIsOpen] = useState(false);
@@ -82,20 +89,28 @@ const Nav = () => {
   }, []);
 
  
+
+  
+
   const handlesignout = async (e) => {
     e.preventDefault();
-    localStorage.removeItem('userdata');
-    localStorage.removeItem('isLoggedIn');
-    setUsername('');
-    console.log('nav.js before setting to false', isUserLoggedIn);
-    if(isUserLoggedIn===true)
-    {
-      setIsUserLoggedIn(false);
-      console.log('nav.js before setting to false',isUserLoggedIn);
-       //return <Redirect to="/popup" />;
-      //navigate('/popup');
-     window.location.href='/popup';
-     window.history.replaceState(null,'','/popup');
+
+    try {
+      await logOut();
+      localStorage.removeItem('userdata');
+      localStorage.removeItem('isLoggedIn');
+      setUsername('');
+      console.log('nav.js before setting to false', isUserLoggedIn);
+
+      if (isUserLoggedIn === true) {
+        setIsUserLoggedIn(false);
+        console.log('nav.js before setting to false', isUserLoggedIn);
+        window.location.href = '/popup';
+        window.history.replaceState(null, '', '/popup');
+      }
+    } catch (error) {
+      console.error('Error during sign-out:', error);
+      // Handle the error as needed
     }
   }
 
