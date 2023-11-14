@@ -87,6 +87,12 @@ const Login = ({}) => {
     console.log("loginwithotpshow has changed:", loginwithotpshow);
   }, [loginwithotpshow,loginwithemail,registrationform,mobilenumber]);
 
+
+  useEffect(() => {
+    // Perform any actions you want when loginwithotpshow changes here
+    console.log("loginwithotpshow has changed:", loginwithotpshow);
+  }, []);
+
   const resendOTP = () => {
     alert("resend otp hitted");
     console.log(timerActive)
@@ -174,12 +180,6 @@ getOtp(mobilenumber);
 
 
 }
-
-
-
- 
-
-
 
   const verifymobilenumber = async (e) => {
     
@@ -276,6 +276,7 @@ getOtp(mobilenumber);
     }
   
   };
+
   console.log('login  page user data',localStorage.getItem('userdata'));
 
   const UserRegistration = async (e)=>{
@@ -299,63 +300,66 @@ getOtp(mobilenumber);
     }
   }
 
-    const getOtp = async (mobilenumber) => {
-      alert("get opt hitted");
-        console.log(mobilenumber);
-        setError("");
-        if (mobilenumber === "" || mobilenumber === undefined)
-          return setError("Please enter a valid phone mobilenumber!");
-        try {
-          const response = await setUpRecaptha(mobilenumber);
-          setResult(response);
-          setFlag(true);
-          setTimer(5);
-          setTimerActive(true);
-        } catch (err) {
-          setError(err.message);
-        }
-      };
-
-      const getresendOtp = async (e) => {
-        alert("hitted getresendOtp");
-        console.log(mobilenumber);
-        setError("");
-        if (mobilenumber === "" || mobilenumber === undefined){
-        alert("num is invalid or undefined");
-          return setError("Please enter a valid phone mobilenumber!");
-        }
-        try { 
-          alert("hitted try in get resend otp");
-          const response = await setUpRecaptha(mobilenumber);
-          alert(" hitted set up recptcha ");
-          setResult(response);
-          setFlag(true);
-          setTimer(5);
-          setTimerActive(true);
-        } catch (err) {
-          setError(err.message);
-        }
-      };
-      const verifyOtp = async (e) => {
-        e.preventDefault();
-        alert("verifyotp");
-        setError("");
-        if (otp === "" || otp === null) return;
-        try {
-          await result.confirm(otp);
-          alert("opt verified");
-          verifymobilenumber();
-         
-          
-        } catch (err) {
-          setError(err.message);
-        }
-      };
-      const ContinueAsaGuest=async(e)=>{
-        navigate('/ContinueAsaGuest');
+  const getOtp = async (mobilenumber) => {
+    alert("get opt hitted");
+      console.log(mobilenumber);
+      setError("");
+      if (mobilenumber === "" || mobilenumber === undefined)
+        return setError("Please enter a valid phone mobilenumber!");
+      try {
+        const response = await setUpRecaptha(mobilenumber);
+        setResult(response);
+        setFlag(true);
+        setTimer(5);
+        setTimerActive(true);
+      } catch (err) {
+        setError(err.message);
       }
+  };
+
+  const getresendOtp = async (e) => {
+    alert("hitted getresendOtp");
+    console.log(mobilenumber);
+    setError("");
+    if (mobilenumber === "" || mobilenumber === undefined){
+    alert("num is invalid or undefined");
+      return setError("Please enter a valid phone mobilenumber!");
+    }
+    try { 
+      alert("hitted try in get resend otp");
+      const response = await setUpRecaptha(mobilenumber);
+      alert(" hitted set up recptcha ");
+      setResult(response);
+      setFlag(true);
+      setTimer(5);
+      setTimerActive(true);
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  const verifyOtp = async (e) => {
+    e.preventDefault();
+    alert("verifyotp");
+    setError("");
+    if (otp === "" || otp === null) return;
+    try {
+      await result.confirm(otp);
+      alert("opt verified");
+      verifymobilenumber();
+     
+      
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  const ContinueAsaGuest=async(e)=>{
+    navigate('/ContinueAsaGuest');
+  }
 
   console.log(mobilenumber);
+
   const showloginwithEmail = () => {
     setloginwithotpshow(prevState => {
       console.log('Before setting loginwithotpshow:', prevState);
@@ -392,7 +396,7 @@ getOtp(mobilenumber);
         return false;
       });
       console.log('After setting registrationform:', registrationform);
-  }
+  };
  
   const showregistartionform =()=>{
     setloginwithotpshow(prevState => {
@@ -410,7 +414,8 @@ getOtp(mobilenumber);
         return true;
       });
       console.log('After setting registrationform:', registrationform);
-  }
+  };
+
   const showpasswordresetform =()=>{
     setPasswordResetShow(prevState => {
       console.log('Before setting passwordresershow:', prevState);
@@ -433,16 +438,12 @@ getOtp(mobilenumber);
     });
     console.log('After setting registrationform:', registrationform);
 
-  }
+  };
+
   const handleOtpCancel =()=>{
       navigate('/');
       console.log('After clicking cancel:');
-  }
-  useEffect(() => {
-    // Perform any actions you want when loginwithotpshow changes here
-    console.log("loginwithotpshow has changed:", loginwithotpshow);
-  }, []);
-
+  };
 
 //sign-in with google
 
@@ -470,12 +471,6 @@ const provider=new GoogleAuthProvider();
 };
 
 // signup google end
-
-
-
-
-
-
 
   return (
 <>
@@ -579,7 +574,7 @@ const provider=new GoogleAuthProvider();
           
           <p style={{marginTop:'20px'}}><a>Don't have an account yet?</a>&nbsp; &nbsp;<a onClick={showregistartionform} style={{ color:'#024172',textDecoration:'underline', fontWeight:'bold'}}>Register for Free</a></p>
           <Button className='ContinueAsaGuestButton' onClick={ContinueAsaGuest} style={{textDecoration:'none'}}> Continue As a Guest ---  </Button>
-          <Button className='signinwithemailbutton' onClick={SignUpUsingGoogle}> continue with google</Button>
+          <Button className='Google_Signin_btn' onClick={SignUpUsingGoogle}> Continue with Google</Button>
           </div>
     
         </div> 
