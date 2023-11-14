@@ -2,15 +2,14 @@
 .ContinueAsaGuestButton{
   font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   background: none;
-color:black;
+  color:black;
   padding-top: 20px;
-   font-size: 15px;
-   font-weight: 600;
-   cursor:pointer;
-   border: none;
-   transition: background-color 0.3s;
-   text-decoration: underline;
-
+  font-size: 15px;
+  font-weight: 600;
+  cursor:pointer;
+  border: none;
+  transition: background-color 0.3s;
+  text-decoration: underline;
 }
 .countrycodeinput::placeholder {
   font-weight: bold;
@@ -455,4 +454,24 @@ color:#024172;
 /* Style the select arrow (if needed) */
 .PhoneInputCountrySelectArrow {
   /* Customize the style of the select arrow */
+}
+
+
+.Google_Signin_btn{
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease-in-out;
+
+  /* Google Sign-In specific styles */
+  background-color: #f44242; /* Google Blue */
+  color: #fff; /* White text */
+}
+.Google_Signin_btn:hover {
+  background-color: #357ae8; /* Darker shade of Google Blue on hover */
 }
