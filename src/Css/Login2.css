@@ -469,8 +469,8 @@ color:#024172;
   transition: background-color 0.3s ease-in-out;
 
   /* Google Sign-In specific styles */
-  background-color: #f44242; /* Google Blue */
-  color: #fff; /* White text */
+  background-color: #024172; /* Google Blue */
+  color: white; /* White text */
 }
 .Google_Signin_btn:hover {
   background-color: #357ae8; /* Darker shade of Google Blue on hover */
