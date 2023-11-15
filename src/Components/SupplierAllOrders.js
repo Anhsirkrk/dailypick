@@ -6,8 +6,8 @@ import '../Css/SupplierAllOrders.css';
 
 const SupplierAllOrders = () => {
     const today = new Date();
-  const [supplierId,setSupplierId]= useState('1');
-  const [ordersdata,setOrdersData]=useState([]);
+    const [supplierId,setSupplierId]= useState('1');
+    const [ordersdata,setOrdersData]=useState([]);
     const [selectedStatus, setSelectedStatus] = useState('');
     const [filtereddata,setFilteredData]=useState([]);
     const [sortDirection, setSortDirection] = useState('asc'); // Default to descending
@@ -120,8 +120,8 @@ const SupplierAllOrders = () => {
       setFromDate(''); // Reset fromDate to empty string
       setTODate(''); // Reset toDate to empty string
       setSelectedStatus("");
-      setFilteredData(filtereddata); // Reset filtered data to original orders data
-      setDateFiltereddata(filtereddata);
+      setFilteredData(ordersdata); // Reset filtered data to original orders data
+      setDateFiltereddata(ordersdata);
     };
 
     const handlesearchorderid = (seacrhedid) => {
@@ -154,7 +154,7 @@ const SupplierAllOrders = () => {
     return (
       <div>
         
-      <h4 className='SupplierAllorders-heading'>All Orderssss</h4>
+      <h4 className='SupplierAllorders-heading'>All Orders</h4>
 <div className='SupplierAllOrdersErrorsdiv'>
 <p>{ordersearcherror}</p>
 
