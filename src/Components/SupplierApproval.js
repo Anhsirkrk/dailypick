@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import  Table  from 'react-bootstrap/Table';
 import Card from 'react-bootstrap/Card';
+import '../Css/SupplierApproval.css';
+import { MdCurrencyRupee } from "react-icons/md";
 import axios from 'axios';
 import pic from '../Images/Dummy/Heritage_Milk_1.png';
 
@@ -129,12 +131,12 @@ const filtereddata=[
   return (
     <div>
       <div>
-      <Table>
+      <Table className='Supplier-Approval-Table'>
         <thead>
-          <tr >
+          <tr>
             <th>Select</th>
             <th>Product</th>
-            <th>Order Id Type</th>
+            <th>OrderId</th>
             <th>Subscription Type</th>
             <th>Start Date</th>
             <th>End Date No</th>
@@ -147,10 +149,11 @@ const filtereddata=[
             <tr key={order.id}>
               <td>{order.id}</td>
               <td> 
-                  <Card className='Paymentstatus-product-card'>
-                    <Card.Img className='Paymentstatus-product-card-image' variant="top" src={`data:image/jpeg;base64,${order.Img}`} alt={order.Title} />
-                    <Card.Body className='Paymentstatus-product-card-body'>
-                      <Card.Title className='Paymentstatus-product-card-title'><h4 className='payment-product-title'>{order.Price}</h4></Card.Title>
+                  <Card className='Supplier-product-card'>
+                  {/* <Card.Img className='Supplier-product-card-image' variant="top" src={`data:image/jpeg;base64,${order.Img}`} alt={order.Title} /> */}
+                    <Card.Img className='Supplier-product-card-image' variant="top" src={order.Img} alt={order.Title} />
+                    <Card.Body className='Supplier-product-card-body'>
+                      <Card.Title className='Supplier-product-card-title'><h4 className='Supplier-product-title'>{order.Title}</h4><h4 className='Supplier-product-title'><MdCurrencyRupee />{order.Price}</h4></Card.Title>
                     </Card.Body>
                   </Card>
               </td>

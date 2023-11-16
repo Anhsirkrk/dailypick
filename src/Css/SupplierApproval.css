@@ -1,0 +1,43 @@
+.Supplier-Approval-Table{
+    width:100%;
+    table-layout:fixed;
+}
+.Supplier-Approval-Table th,
+.Supplier-Approval-Table td {
+  text-align: center; /* Center-align content in table cells */
+  padding: 8px; /* Add padding for better spacing */
+}
+
+.Supplier-product-card{
+    display: flex;
+    width: 220px;
+    height: 80px;
+    border-radius: 7.5px;
+    background-color: #f1f1f1;
+    border: 0.4px solid #848484;
+    box-sizing: border-box;
+    text-align: center;
+    color: #191919;
+    font-family: Poppins;
+    margin-top: 10px;
+}
+.Supplier-product-card-image{
+    width: 100px;
+    height: 80px;
+    border-radius: 7.5px;
+    padding:2px;
+}
+.Supplier-product-card-body{
+    width: 150px;
+}
+.Supplier-product-card-title{
+    text-align: center;
+}
+.Supplier-product-title{
+    position: relative;
+    font-size: 15px;
+    font-weight: 500;
+    font-family: Poppins;
+    color: #171717;
+    text-align: left;
+}
