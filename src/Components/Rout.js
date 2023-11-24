@@ -22,24 +22,20 @@ console.log(userAuth);
   return (
     <>
         <Routes>
-          <Route path="/popup" element={<Popup key={Math.random()} />} // Add a random key to force re-render
-/>
+//user          
+          <Route path="/*" element={<Navigate to="/popup" replace />} />  
+          <Route path="/popup" element={<Popup key={Math.random()} />} />
           <Route path='/login2' element={<Login2 />} />
           <Route path='/home2' element={<Home2/>} shouldNavigate={() => isUserLoggedIn}/>
           <Route path='/products' element={<Products/>} shouldNavigate={() => isUserLoggedIn}/>
-          <Route path='/singleproduct' element={<SingleProduct/>} shouldNavigate={() => isUserLoggedIn}/>
-          <Route path="/*" element={<Navigate to="/popup" replace />} />
+          <Route path='/singleproduct' element={<SingleProduct/>} shouldNavigate={() => isUserLoggedIn}/> 
           <Route path="/location" element={<Location/>} shouldNavigate={() => isUserLoggedIn}/>
           <Route path='/profile' element={<Profile/>} shouldNavigate={() => isUserLoggedIn}/>
           <Route path='/mysusbcription' element={<MySubscriptions/>} shouldNavigate={() => isUserLoggedIn}/>
           <Route path='/mycart' element={<MyCart/>} shouldNavigate={() => isUserLoggedIn}/>
           <Route path='/mywishlist' element={<MyWishlist/>}  shouldNavigate={() => isUserLoggedIn}/>
           <Route path='/paymentstatus' element={<PaymentStatus/>} shouldNavigate={() => isUserLoggedIn}/>
-
-
-
-
-
+//suppler
           <Route path='/supplierhomepage' element={<SupplierHomepage/>}/>
         </Routes>
     </>
