@@ -1,6 +1,8 @@
 .Supplier-Approval-Table{
     width:100%;
-    table-layout:fixed;
+}
+.Supplier-Approval-Table-thead{
+    
 }
 .Supplier-Approval-Table th,
 .Supplier-Approval-Table td {
