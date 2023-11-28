@@ -75,7 +75,7 @@ const Regisatrtion = () => {
   };
 
 
-  const registerUser = async () => {
+  const registerUserwithFb = async () => {
     alert("firabse reg user hited");
   
 
@@ -89,6 +89,7 @@ const Regisatrtion = () => {
       alert("user reg in fb");
       const user = userCredential.user;
       console.log("User registered successfully:", user);
+      navigate('/login2');
       // Redirect to a success page or perform other actions as needed.
     } catch (error) {
       setError(error.message);
@@ -344,7 +345,7 @@ const Regisatrtion = () => {
        if(recieveddata.isusercreated === true)
        {
         alert("going for fb reg user");
-        registerUser();
+        registerUserwithFb();
          toast.success(recieveddata.resultMessage);
 
          navigate('/Login2');

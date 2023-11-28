@@ -3,12 +3,13 @@ import { getAuth ,GoogleAuthProvider} from "firebase/auth";
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyA5sLM5dARu-3_GoAjQ35eExvYSzifKyio",
-  authDomain: "auth2-3164b.firebaseapp.com",
-  projectId: "auth2-3164b",
-  storageBucket: "auth2-3164b.appspot.com",
-  messagingSenderId: "364576135010",
-  appId: "1:364576135010:web:8f2e85d219583f8d7f7e3b", 
+  apiKey: "AIzaSyC36daDP3UYMj5n1q91DL-9G964nEEzf8c",
+  authDomain: "dailylife-85ddf.firebaseapp.com",
+  projectId: "dailylife-85ddf",
+  storageBucket: "dailylife-85ddf.appspot.com",
+  messagingSenderId: "569950165342",
+  appId: "1:569950165342:web:eca6c3d9e1b6cc3e8017cf", 
+  measurementId: "G-D54PYTDDEP",
     appVerificationDisabledForTesting: false
   };
 // Initialize Firebase

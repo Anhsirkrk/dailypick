@@ -27,6 +27,7 @@ import UerRegistrationPage from '../Pages/Regisatrtion';
 import Popup from './PopUp';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import { auth } from '../firebase'; 
+import { checkemailexists } from './Regisatrtion'; 
 
 
 const Login = ({}) => {
@@ -58,6 +59,8 @@ const Login = ({}) => {
   const [isPhoneNumberValid, setIsPhoneNumberValid] = useState(true);
   const [validationerrors,setValidationErrors]=useState('');
   const [message,setMessage]= useState('');
+  const [isemailexist,setIsmailExist]=useState(false);
+
 
   useEffect(() => {
     let interval;
@@ -124,7 +127,8 @@ const Login = ({}) => {
 
       if (email && password) {
         await logIn(email, password);
-        navigate("/home2");
+checkemailexists();
+       
       } else {
         setError("Please enter both email and password.");
       }
@@ -234,7 +238,7 @@ getOtp(mobilenumber);
           console.log(sendData);
           if(sendData.userFound === true)
           {
-            
+            alert("existing user");
             //alert("user found redirecting to otp gen");
             alert("send data assigned");
             localStorage.setItem('userdata', JSON.stringify(sendData));
@@ -243,16 +247,16 @@ getOtp(mobilenumber);
           }
           else if(sendData.userFound === false)
           {
-            alert("user not found");
+            alert("user not found, NEW USER ");
             toast.error("New User");
 
                const sendData2 = 
               {
                userId: response.data.userId,
                userTypeId: response.data.userTypeId,
-               username: response.data.mobile,
-               firstName: response.data.mobile,
-               lastName: response.data.mobile,
+               username: response.data.username,
+               firstName: response.data.firstname,
+               lastName: response.data.lastname,
                mobile: response.data.mobile,
                email: response.data.email,
                userFound: response.data.userFound,
@@ -451,16 +455,17 @@ const [isLoggedIn, setIsLoggedIn]=useState(true);
  
 const SignUpUsingGoogle=()=>{
 
+  alert("hitted  SignUpUsingGoogle");
 const provider=new GoogleAuthProvider();
 
   signInWithPopup(auth, provider)
   .then((result) => {
     alert("Sign in with Google")
-    const user = result.user;
-    
+    const user = result.user.email;
     console.log({user});
     setIsUserLoggedIn(true);
-    navigate('/home2');
+    
+    handlingemailwithsignupwithgoogle(user);
   }).catch((error) => {
     
     console.log(error);
@@ -470,7 +475,213 @@ const provider=new GoogleAuthProvider();
 
 };
 
+const handlingemailwithsignupwithgoogle=async (user)=>{
+  alert("handlingemailwithsignupwithgoogle  hitted");
+  alert(user);
+  alert("hitted checkemail exist");
+  alert("checking email ")
+  const url = 'https://localhost:7041/api/Login/GetUserByEmails';
+  const data = {
+    userId: 0,
+    userTypeId: 0,
+    username: "",
+    password: "",
+    firstname: "",
+    lastname: "",
+    mobile: "",
+    email: user,
+    isActive: true,
+    userFound: true,
+    resultMessage: ""
+  };
+  console.log(data);
+  try {
+    alert("trying axios  for checking email");
+    const response = await axios.post(url, data);
+    console.log(response.data);
+    if (response.status === 200) 
+    {
+      alert("email data checked");
+        const sendData = 
+        {
+          userId: response.data.userId,
+          userTypeId: response.data.userTypeId,
+          username: response.data.username,
+          firstName: response.data.firstname,
+          lastName: response.data.lastname,
+          mobile: response.data.mobile,
+          email: response.data.email,
+          userFound: response.data.userFound,
+        };
+        console.log(sendData);
+        if(sendData.userFound === true)
+        {
+          alert("email  already exists");
+          alert("send data assigned");
+          localStorage.setItem('userdata', JSON.stringify(sendData));
+          setIsLoggedIn(true);
+          navigate('/home2');
+        }
+        else if(sendData.userFound === false)
+        {
+          alert("email does not exist");
+          alert("enter for axios for creating  new user with email");
+          try {
+            alert("entered to createuser  with gmail whil signing iwth google");
+            const url = 'https://localhost:7041/api/User/CreateUser';
+            const data = {
+              userId: 0,
+              userTypeId:'1',
+              username: "",
+              password: "",
+              firstname: "",
+              lastname: 'null',
+              mobile:"",
+              email:user,
+              isActive:true,
+              userFound:true,
+              resultMessage:"",
+              isusercreated:true
+            };
+        console.log(data);
+            const response = await axios.post(url, data);
+            console.log(response.data);
+        
+            if (response.status === 200) 
+            {
+             alert("axios 200");
+            
+              const recieveddata = 
+              {
+               userId: response.data.userId,
+               userTypeId: response.data.userTypeId,
+               username: response.data.username,
+               firstName: response.data.firstname,
+               lastName: response.data.lastname,
+               mobile: response.data.mobile,
+               email: response.data.email,
+               userFound: response.data.userFound,
+               isusercreated: response.data.isusercreated,
+               resultMessage:response.data.resultMessage
+              };
+              console.log(recieveddata);
+        
+              if(recieveddata.isusercreated === true)
+              {
+                alert("send data 2 assignined");
+                console.log("recieveddata fo new user",recieveddata);
+  
+              localStorage.setItem('userdata', JSON.stringify(recieveddata));
+              navigate('/home2');
+             }
+              else if(recieveddata.isusercreated === false)
+              {
+               alert("user reg axios faileed");
+                toast.error(recieveddata.resultMessage);
+                setError("Account creation was not successful, Try again Later");
+              }
+            }
+            else 
+            {
+             alert("user reg axios else faileed");
+       
+              setResultMessage("An unknown error occurred");
+            }
+          } 
+          catch(error)
+           {
+             alert("user reg axios catch faileed");
+       
+            setResultMessage('An error occurred while processing your request.');
+            console.error(error);
+          }
+        }
+    
+    else 
+    {
+      //alert("got error while checking email");
+      return null;
+    }
+  }
+}
+   catch(error) {
+    //alert("got error while checking email");
+    setResultMessage('An error occurred while processing your request.');
+    console.error(error);
+    return null;
+  }
+}
+
+
 // signup google end
+
+const checkemailexists = async (e) => {
+  alert(email);
+  alert("hitted checkemail exist");
+  alert("checking email ")
+  const url = 'https://localhost:7041/api/Login/GetUserByEmails';
+  const data = {
+    userId: 0,
+    userTypeId: 0,
+    username: "",
+    password: "",
+    firstname: "",
+    lastname: "",
+    mobile: "",
+    email: email,
+    isActive: true,
+    userFound: true,
+    resultMessage: ""
+  };
+  try {
+    alert("trying axios");
+    const response = await axios.post(url, data);
+    console.log(response.data);
+    if (response.status === 200) 
+    {
+      alert("email data checked");
+        const sendData = 
+        {
+          userId: response.data.userId,
+          userTypeId: response.data.userTypeId,
+          username: response.data.username,
+          firstName: response.data.firstname,
+          lastName: response.data.lastname,
+          mobile: response.data.mobile,
+          email: response.data.email,
+          userFound: response.data.userFound,
+        };
+        console.log(sendData);
+        if(sendData.userFound === true)
+        {
+          alert("email  already exists");
+          alert("send data assigned");
+          localStorage.setItem('userdata', JSON.stringify(sendData));
+          setIsLoggedIn(true);
+          navigate('/home2');
+        }
+        else if(sendData.userFound === false)
+        {
+          alert("got error , user was not found in data , but email and password  was verified ")
+          toast.error("try again later");
+        }
+    } 
+    else 
+    {
+      //alert("got error while checking email");
+      return null;
+    }
+  }
+   catch(error) {
+    //alert("got error while checking email");
+    setResultMessage('An error occurred while processing your request.');
+    console.error(error);
+    return null;
+  }
+
+};
+
+
 
   return (
 <>
