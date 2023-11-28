@@ -83,7 +83,17 @@ const Nav = () => {
     
 
     if (storeddata) {
-      setUsername(storeddata.firstName);
+      if(storeddata.username!=null){
+        setUsername(storeddata.firstName);
+      }
+      if(storeddata.mobile!=null){
+        setUsername(storeddata.mobile);
+      }
+      if(storeddata.email!=null){
+        setUsername(storeddata.email);
+      }
+
+
     }
     console.log(username);
   }, []);
