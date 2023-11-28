@@ -1,6 +1,9 @@
 import React, { useState,useEffect } from 'react';
 import { BiEdit } from 'react-icons/bi';
 import axios from 'axios';
+import validation from '../Components/validations';
+import 'react-toastify/dist/ReactToastify.css';
+import {ToastContainer,toast } from 'react-toastify';
 
 
 const ProfileDetails = () => {
@@ -23,7 +26,11 @@ const ProfileDetails = () => {
 
   const [error, setError] = useState(null);
 
+  const [validationerrors,setValidationErrors]=useState({});
 
+  const [ismobilenumberexist,setIsMobileNumberExist]=useState(false);
+  const [isemailexist,setIsmailExist]=useState(false);
+  const [resultMessage, setResultMessage] = useState(""); // Define setResultMessage
   
 
   useEffect(() => {
@@ -100,7 +107,52 @@ const ProfileDetails = () => {
   };
 
   const updateUserDetails = async () => {
-    try {
+    
+
+      var numberexists= await checkmobilenumberexists(updatedMobile);
+   if(numberexists === true)
+   {
+        //toast.error("mobile number exists");
+        alert("mobile number already exists");
+        validationerrors.mobilenumber ="Mobile number already exists";
+       // alert(`valerr mob:${validationerrors.mobilenumber}`);
+        setIsMobileNumberExist(true);
+        return;
+   }
+   else if(numberexists === false)
+   {
+    //toast.success("mobile number is new");
+     alert("mobile number is new");
+      setIsMobileNumberExist(false);
+   }
+
+   
+   var emailexists = await checkemailexists(updatedEmail);
+   if(emailexists === true)
+   {
+    toast.error("email exists");
+        alert('isemailexist');
+        validationerrors.email ="email already exists";
+        //alert(`valerr mob:${validationerrors.email}`);
+        setIsmailExist(true);
+        return;
+    }
+    else if( emailexists === false)
+    {
+      //toast.success("email is new");
+      alert("email is new "); 
+      setIsmailExist(false);
+    }
+    else if(emailexists === null)
+    {
+      //toast.error("got error while checking email")
+      alert("got error while checking email"); 
+      setResultMessage('An error occurred while processing your request.');
+      return;
+    }
+    if(isemailexist === false && ismobilenumberexist === false )
+    {
+      try {
       const response = await axios.post(
         `https://localhost:7041/api/User/UpdateUserDetails`,
         {
@@ -168,10 +220,160 @@ const ProfileDetails = () => {
       setError('Error updating user details. Please try again later.');
       console.error('Error updating user details:', error);
     }
+  }
   };
+
+
+
+  const validateemail= async(email)=>{
+    const values ={email}
+    const validationErrors = validation(values,['email']);
+    console.log(validationErrors.email);
+    setValidationErrors((prevState) => ({
+      ...prevState,
+      email: validationErrors.email,
+    }));
+  }
+  const validatemobile= async(mobilenumber)=>{
+    const values ={mobilenumber}
+    const validationErrors = validation(values,['mobilenumber']);
+    console.log(validationErrors.mobilenumber);
+    setValidationErrors((prevState) => ({
+      ...prevState,
+      mobilenumber: validationErrors.mobilenumber,
+    }));
+  }
+  const checkmobilenumberexists = async (mobilenumber) => {
+    alert("checking mobile number");
+    const url = 'https://localhost:7041/api/Login/GetUserByMobileNumber';
+    const data = {
+      userId: 0,
+      userTypeId: 0,
+      username: "",
+      password: "",
+      firstname: "",
+      lastname: "",
+      mobile: mobilenumber,
+      email: "",
+      isActive: true,
+      userFound: true,
+      resultMessage: ""
+    };
+    try {
+      const response = await axios.post(url, data);
+      console.log(response.data);
+      if (response.status === 200) 
+      {
+        //alert("mobile number checked");
+          const sendData = 
+          {
+            userId: response.data.userId,
+            userTypeId: response.data.userTypeId,
+            username: response.data.username,
+            firstName: response.data.firstname,
+            lastName: response.data.lastname,
+            mobile: response.data.mobile,
+            email: response.data.email,
+            userFound: response.data.userFound,
+          };
+          console.log(sendData);
+          if(sendData.userFound === true)
+          {
+            //alert("mobile number already exists");
+            toast.error("mobile number already exists");
+            setValidationErrors(prevState => ({
+                    ...prevState,
+                    mobilenumber: "Mobile number already exists"
+                  }));
+                return true;
+          }
+          else if(sendData.userFound === false)
+          {
+            //alert("mobile nmumber is new");
+            return false;
+          }
+      } 
+      else 
+      {
+        //alert("got error whilo echecking mob number");
+        return null;
+      }
+    }
+     catch(error) {
+      //alert("got error whilo echecking mob number");
+      setResultMessage('An error occurred while processing your request.');
+      console.error(error);
+    }
+  
+  };
+  const checkemailexists = async (email) => {
+    alert("checkinmg  email ")
+    const url = 'https://localhost:7041/api/Login/GetUserByEmails';
+    const data = {
+      userId: 0,
+      userTypeId: 0,
+      username: "",
+      password: "",
+      firstname: "",
+      lastname: "",
+      mobile: "",
+      email: email,
+      isActive: true,
+      userFound: true,
+      resultMessage: ""
+    };
+    try {
+      const response = await axios.post(url, data);
+      console.log(response.data);
+      if (response.status === 200) 
+      {
+        //alert("email data checked");
+          const sendData = 
+          {
+            userId: response.data.userId,
+            userTypeId: response.data.userTypeId,
+            username: response.data.username,
+            firstName: response.data.firstname,
+            lastName: response.data.lastname,
+            mobile: response.data.mobile,
+            email: response.data.email,
+            userFound: response.data.userFound,
+          };
+          console.log(sendData);
+          if(sendData.userFound === true)
+          {
+            //alert("email  already exists");
+            //toast.error("email already exists");
+            setValidationErrors(prevState => ({
+                    ...prevState,
+                    email: "email  already exists"
+                  }));
+                return true;
+          }
+          else if(sendData.userFound === false)
+          {
+            return false;
+          }
+      } 
+      else 
+      {
+        //alert("got error while checking email");
+        return null;
+      }
+    }
+     catch(error) {
+      //alert("got error while checking email");
+      setResultMessage('An error occurred while processing your request.');
+      console.error(error);
+      return null;
+    }
+  
+  };
+
 
   return (
     <div>
+      <ToastContainer/>
       <div className='profile-top'>
         <div className='heading-bar'>
           <h2 className='profile-head'> Profile</h2>
@@ -184,7 +386,7 @@ const ProfileDetails = () => {
           <div className='profile-first-row'>
             <div>
               <label htmlFor="name">FirstName</label><br></br>
-              <input type="text" className="profile-textbox" name="firstname" value={updatedFirstname} onChange={(e) => setUpdatedFirstname(e.target.value)} disabled={!isEditMode} />
+              <input type="text" className="profile-textbox" name="firstname" value={updatedFirstname} onChange={(e) => setUpdatedFirstname(e.target.value)}  disabled={!isEditMode} />
             </div>
             <div>
               <label htmlFor="name">LastName</label><br></br>
@@ -195,11 +397,11 @@ const ProfileDetails = () => {
           <div className='profile-first-row'>
           <div>
               <label htmlFor="email">Email</label><br></br>
-              <input type="email" className="profile-textbox" name="email" value={updatedEmail} onChange={(e) => setUpdatedEmail(e.target.value)} disabled={!isEditMode} />
+              <input type="email" className="profile-textbox" name="email" value={updatedEmail} onChange={(e) => {setUpdatedEmail(e.target.value); validateemail(e.target.value);}}  disabled={!isEditMode} />
             </div>
             <div>
             <label htmlFor="phone">Mobile Number</label><br></br>
-            <input type="text" className="profile-textbox" name="mobile" value={updatedMobile} onChange={(e) => setUpdatedMobile(e.target.value)} disabled={!isEditMode} />
+            <input type="text" className="profile-textbox" name="mobile" value={updatedMobile} onChange={(e) => {setUpdatedMobile(e.target.value); validatemobile(e.target.value);}}  disabled={!isEditMode} />
           </div>
           </div>
           <br></br>

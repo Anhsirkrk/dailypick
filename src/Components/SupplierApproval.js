@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import  Table  from 'react-bootstrap/Table';
 import Card from 'react-bootstrap/Card';
 import '../Css/SupplierApproval.css';
@@ -8,7 +8,7 @@ import pic from '../Images/Dummy/Heritage_Milk_1.png';
 
 const SupplierApproval = () => {
 
-// const [filtereddata,setFiltereddata]=useState([]);
+ const [filteredlist,setFilteredlist]=useState([]);
 
 const filtereddata=[
   {
@@ -125,9 +125,52 @@ const filtereddata=[
     Img: './Images/Fruits/Promogranate.png'
 },
 ];
+useEffect(()=>{
+  GetApprovalPendingList();
+},[])
+
+
+const GetApprovalPendingList = async () => {
+  const supplierId = 1;
+  const url = `https://localhost:7041/api/Supplier/GetSupplierOrderDetailsBySupplierId?supplierId=${supplierId}`;
+  try {
+    const response = await axios.get(url);
+    console.log(response.data)
+    if (response.status === 200) {
+      
+      const filteredOrders = response.data.filter(order => {
+        return order.orderStatus === 'Approval Pending from Supplier';
+      });
+      setFilteredlist(filteredOrders);
+      
+    }
+  } catch (error) {
+    console.error("Error fetching order history:", error);
+  }
+}
 
 
 
+const UpdateApprovalPendingList=async()=>{
+try{
+  const response = await axios.get('https://localhost:7041/api/Supplier/UpdatetheOrderStatusBySupplier',
+    {
+      params: {
+        supplierId: 0,
+        orderStatus: "string",
+        orderIds: 0
+      },
+      headers: {
+        'accept': 'text/plain',
+        'Content-Type': 'application/json',
+      },
+    }
+  );
+}
+catch(error){
+  console.log(error);
+}
+}
   return (
     <div>
       <div>
