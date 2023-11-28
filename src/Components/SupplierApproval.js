@@ -132,7 +132,7 @@ const filtereddata=[
     <div>
       <div>
       <Table className='Supplier-Approval-Table'>
-        <thead>
+        <thead className='Supplier-Approval-Table-thead'>
           <tr>
             <th>Select</th>
             <th>Product</th>

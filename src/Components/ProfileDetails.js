@@ -137,9 +137,29 @@ const ProfileDetails = () => {
           firstname: updatedFirstname,
           isActive:isActive
         };
-
-        localStorage.setItem('userdata', JSON.stringify(UpdatedData));
+        // localStorage.removeItem('userdata');
         console.log(UpdatedData);
+        const recieveddata = localStorage.getItem('userdata');
+        console.log("nav : storeddata",recieveddata);
+        if(recieveddata){
+          const userdata=JSON.parse(recieveddata); 
+          userdata.userId=userId;   
+          userdata.userTypeId=userTypeId;
+          userdata.username=updatedUsername;
+          userdata.firstName=updatedFirstname;
+          userdata.lastName=updatedLastname;
+          userdata.email=updatedEmail;
+          userdata.mobile=updatedMobile;
+          userdata.isActive=isActive;
+
+          localStorage.setItem('userdata',JSON.stringify(userdata));
+
+        }
+        else{
+          console.log('no userdata found in local storage')
+        }
+
+
         
       } else {
         console.error('Failed to update user details:', response.data);

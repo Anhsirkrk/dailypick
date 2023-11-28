@@ -74,8 +74,10 @@ const Nav = () => {
   console.log(location);
 
   useEffect(() => {
+    
     // Get item from local storage on component mount
     const recieveddata = localStorage.getItem('userdata');
+    console.log("nav : storeddata",recieveddata);
     const storeddata=(JSON.parse(recieveddata));
     console.log("nav : storeddata",storeddata);
 
@@ -83,15 +85,19 @@ const Nav = () => {
     
 
     if (storeddata) {
-      if(storeddata.username!=null){
+      if(storeddata.username!=""){
         setUsername(storeddata.firstName);
+        
       }
-      if(storeddata.mobile!=null){
+      else if(storeddata.mobile!=""){
         setUsername(storeddata.mobile);
+        
       }
-      if(storeddata.email!=null){
+      else if(storeddata.email!=""){
         setUsername(storeddata.email);
+        
       }
+
 
 
     }
