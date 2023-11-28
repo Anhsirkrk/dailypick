@@ -36,12 +36,13 @@ const ProfileDetails = () => {
       setUserId(parsedData.userId,);
     }
     GetUserdetails();
-  }, [isEditMode]);
+  }, [userId]);
   
  
 
   const GetUserdetails = async () => {
     try {
+      console.log(userId);
       const response = await axios.get(
         `https://localhost:7041/api/User/GetUserDetailsByUserId`,
         {
