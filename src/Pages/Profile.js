@@ -17,6 +17,7 @@ const Profile = () => {
 
   const {isUserLoggedIn, setIsUserLoggedIn}= useUserAuth();
   const [username, setUsername] = useState('');
+  const [updatedFirstname, setUpdatedFirstname] = useState('');
   
 
     const [contentType, setContentType] = useState('profiledetails');
@@ -63,9 +64,9 @@ const Profile = () => {
         <div className='profile-heading'>
             <h2>My Account</h2>
         </div>
-        {/* <div className='profile-name'>
+         <div className='profile-name'>
             <h4>Hello {updatedFirstname}</h4>
-        </div> */}
+        </div> 
         <div className='profile-container'>
             <div className='column-1'>
                 <div className='account-list'>

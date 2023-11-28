@@ -85,6 +85,8 @@ const ProfileDetails = () => {
       // Call the API to update user details
       await updateUserDetails();
       // After successful save, exit edit mode
+
+//receivedData.firstname=updatedFirstname;
       setIsEditMode(false);
       // Show a success message or update UI as needed
       //After Sucessful updation we he to get the user new details
@@ -122,6 +124,22 @@ const ProfileDetails = () => {
 
       if (response.status === 200) {
         console.log('User details updated successfully:', response.data);
+        const UpdatedData = 
+        {
+          userId:userId,
+          userTypeId:userTypeId,
+          email: updatedEmail,
+          mobile: updatedMobile,
+          ResultMessage: 'Success',
+          lastname: updatedLastname, // Add these lines to include required fields
+          Password: updatedPassword,
+          Username: updatedUsername,
+          firstname: updatedFirstname,
+          isActive:isActive
+        };
+
+        localStorage.setItem('userdata', JSON.stringify(UpdatedData));
+        console.log(UpdatedData);
         
       } else {
         console.error('Failed to update user details:', response.data);
