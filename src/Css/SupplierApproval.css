@@ -1,9 +1,7 @@
 .Supplier-Approval-Table{
     width:100%;
 }
-.Supplier-Approval-Table-thead{
-    
-}
+
 .Supplier-Approval-Table th,
 .Supplier-Approval-Table td {
   text-align: center; /* Center-align content in table cells */

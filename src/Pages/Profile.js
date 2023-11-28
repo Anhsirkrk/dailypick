@@ -20,7 +20,7 @@ const Profile = () => {
   const [updatedFirstname, setUpdatedFirstname] = useState('');
   
 
-    const [contentType, setContentType] = useState('profiledetails');
+  const [contentType, setContentType] = useState('profiledetails');
 
     const renderContent = () => {
         switch (contentType) {
