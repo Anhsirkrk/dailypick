@@ -102,18 +102,22 @@ const SubscriptionModal = ({ product,Priceofselectedproduct,subscriptiontypes,ha
   console.log(selectedproductPrice);
   console.log(selectedSizeofproduct);
   console.log(subscriptionTypesData);
+  useEffect(() => {
+    // Trigger handleStartDateEndDate when 'selectedCard' changes
+  
+    handleStartDateEndDate(subscriptionStartDate);
+  }, [selectedCard, subscriptionStartDate]);
 
   const handleCardClick = (cardId) => {
-    setSelectedCard(cardId);
-    // Use a callback function to ensure that the state is updated correctly
-    SetSelectedsetSubscriptionplan(cardId);
-    handleStartDateEndDate(subscriptionStartDate);
+    setSelectedCard(prevCardId => cardId);
+    SetSelectedsetSubscriptionplan(prevSubscriptionPlan => cardId);
+    //handleStartDateEndDate(subscriptionStartDate);
   };
   
   console.log(`selecetdplan ${selectedsubscriptionplan}`);
 
   const handleSubscribe = () => {
-    //alert(subscriptionEndDate);
+ 
     // Implement your logic for subscribing here
     if(timeSlotSelected!=null){
     if(subscriptionStartDate!=null){
@@ -198,23 +202,19 @@ else{
   }
 
   const handleStartDateEndDate =(date)=>{
-  
-   // alert(date);
-   // alert(selectedsubscriptionplan);
-    if(selectedsubscriptionplan){
-
+    if(date && selectedsubscriptionplan)
+    {
+      // alert(selectedsubscriptionplan);
+      // const sec = selectedCard;
+      // console.log(sec);
    
     if(selectedsubscriptionplan===1)
     {
-      // const formattedDate = formatDate(date);
       setSelectedsubscriptionStartDate(date);
       setSelectedsubscriptionEndDate(date);
-      //alert(`plan -1`);
     }
     if(selectedsubscriptionplan===2)
     {
-      // const formattedDate = formatDate(date);
-      // setSelectedsubscriptionStartDate(formattedDate);
       setSelectedsubscriptionStartDate(date);
       const endDate = new Date(date.getTime() + (7 * 24 * 60 * 60 * 1000));
       setSelectedsubscriptionEndDate(endDate);
@@ -224,8 +224,6 @@ else{
     }
     if(selectedsubscriptionplan===3)
     {
-      // const formattedDate = formatDate(date);
-      // setSelectedsubscriptionStartDate(formattedDate);
       setSelectedsubscriptionStartDate(date);
       const endDate = new Date(date.getTime() + (30 * 24 * 60 * 60 * 1000));
       setSelectedsubscriptionEndDate(endDate);
@@ -236,7 +234,7 @@ else{
   }
   else
   {
-    alert("select any subscription plan");
+    // alert("select any subscription plan");
   }
       }
 
@@ -250,13 +248,13 @@ else{
       //   return '';
       // }; 
 
-
+     console.log("subscription end datae :",subscriptionEndDate);
       console.log('date+7',subscriptionEndDate);
   
   useEffect(()=>{
    updatingprices();
-
-  },[handleDropdownChange,handlequantitydecrement,handlequantityincrement,handleStartDateEndDate]);
+//handleStartDateEndDate();
+  },[handleDropdownChange,handlequantitydecrement,handlequantityincrement,handleStartDateEndDate,handleCardClick]);
 
 
 
