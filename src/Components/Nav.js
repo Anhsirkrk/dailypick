@@ -85,15 +85,21 @@ const Nav = () => {
     
 
     if (storeddata) {
-      if(storeddata.username!=""){
-        setUsername(storeddata.firstName);
+      alert("stored data atrue");
+      if(storeddata.username){
+        setUsername(storeddata.username);
         
       }
-      else if(storeddata.mobile!=""){
+      else if(storeddata.firstname){
+        setUsername(storeddata.firstname);
+        
+      }
+      else if(storeddata.mobile){
+        alert("mb");
         setUsername(storeddata.mobile);
         
       }
-      else if(storeddata.email!=""){
+      else if(storeddata.email){
         setUsername(storeddata.email);
         
       }
