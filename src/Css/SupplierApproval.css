@@ -4,8 +4,8 @@
 
 .Supplier-Approval-Table th,
 .Supplier-Approval-Table td {
-  text-align: center; /* Center-align content in table cells */
-  padding: 8px; /* Add padding for better spacing */
+  text-align: center;
+  padding: 20px; 
 }
 
 .Supplier-product-card{
@@ -40,4 +40,33 @@
     font-family: Poppins;
     color: #171717;
     text-align: left;
+}
+.Supplier-Button-Field{
+    
+}
+.Supplier-Approval-Button{
+    position: relative;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    height: 32px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    text-align: center;
+    font-size: 16px;
+    color: #089d5c;
+    font-family: Poppins;
+}
+.Supplier-Reject-Button{
+    border-radius: 4px;
+    background-color: #fff;
+    border: 1px solid #ebe9e9;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 4px 16px;
+    color: #ce1d11;
 }

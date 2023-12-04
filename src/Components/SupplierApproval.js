@@ -200,7 +200,14 @@ catch(error){
                     </Card.Body>
                   </Card>
               </td>
-              <td>{order.date}</td>
+              <td>order id</td>
+              <td>Subscriptiontype</td>
+              <td>start date</td>
+              <td>end date</td>
+              <td className='Supplier-Button-Field'>
+                <button className='Supplier-Approval-Button' type='button'>Approve</button>
+                <button className='Supplier-Reject-Button' type='button'>Reject</button>
+              </td>
             </tr>
           ))} 
         </tbody>
