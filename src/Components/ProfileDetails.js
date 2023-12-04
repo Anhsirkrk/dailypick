@@ -84,7 +84,6 @@ const ProfileDetails = () => {
     }
   };
   
-
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     setIsSaving(true);
@@ -108,8 +107,10 @@ const ProfileDetails = () => {
 
   const updateUserDetails = async () => {
     
-
-      var numberexists= await checkmobilenumberexists(updatedMobile);
+if (updatedUsername!==updatedMobile){
+  var numberexists= await checkmobilenumberexists(updatedMobile);
+}
+      
    if(numberexists === true)
    {
         //toast.error("mobile number exists");
@@ -125,9 +126,10 @@ const ProfileDetails = () => {
      alert("mobile number is new");
       setIsMobileNumberExist(false);
    }
+   if (updatedUsername!==updatedEmail){
+    var emailexists = await checkemailexists(updatedEmail);
+  }
 
-   
-   var emailexists = await checkemailexists(updatedEmail);
    if(emailexists === true)
    {
     toast.error("email exists");
@@ -223,8 +225,6 @@ const ProfileDetails = () => {
   }
   };
 
-
-
   const validateemail= async(email)=>{
     const values ={email}
     const validationErrors = validation(values,['email']);
@@ -233,7 +233,8 @@ const ProfileDetails = () => {
       ...prevState,
       email: validationErrors.email,
     }));
-  }
+  };
+
   const validatemobile= async(mobilenumber)=>{
     const values ={mobilenumber}
     const validationErrors = validation(values,['mobilenumber']);
@@ -242,7 +243,8 @@ const ProfileDetails = () => {
       ...prevState,
       mobilenumber: validationErrors.mobilenumber,
     }));
-  }
+  };
+
   const checkmobilenumberexists = async (mobilenumber) => {
     alert("checking mobile number");
     const url = 'https://localhost:7041/api/Login/GetUserByMobileNumber';
@@ -306,6 +308,7 @@ const ProfileDetails = () => {
     }
   
   };
+
   const checkemailexists = async (email) => {
     alert("checkinmg  email ")
     const url = 'https://localhost:7041/api/Login/GetUserByEmails';
