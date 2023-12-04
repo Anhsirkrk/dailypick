@@ -76,9 +76,7 @@ const Regisatrtion = () => {
 
 
   const registerUserwithFb = async () => {
-    alert("firabse reg user hited");
-  
-
+    //alert("firabse reg user hited");
     if (password !== confirmpassword) {
       setError("Passwords do not match.");
       return;
@@ -86,16 +84,88 @@ const Regisatrtion = () => {
 
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      alert("user reg in fb");
+      console.log(userCredential);
+      //alert("user reg in fb");
       const user = userCredential.user;
-      console.log("User registered successfully:", user);
-      navigate('/login2');
-      // Redirect to a success page or perform other actions as needed.
+      console.log("User registered successfully in FB:", user);
+     // alert(user.uid);
+     // alert("user creation done at FB");
+      if( user.uid != null){
+        createuserwithmobileandemaildetails();
+      }
     } catch (error) {
       setError(error.message);
       console.error("Error registering user:", error);
     }
   };
+
+  const createuserwithmobileandemaildetails =async()=>{
+    try {
+     // alert("entered to createuser");
+      const url = 'https://localhost:7041/api/User/CreateUser';
+      const data = {
+        userId: 0,
+        userTypeId:'1',
+        username: email,
+        password: password,
+        firstname: name,
+        lastname: 'null',
+        mobile:mobilenumber,
+        email:email,
+        isActive:true,
+        userFound:true,
+        resultMessage:"",
+        isusercreated:true
+      };
+  
+      const response = await axios.post(url, data);
+      console.log(response.data);
+  
+      if (response.status === 200) 
+      {
+       //alert("axios 200");
+        const recieveddata = 
+        {
+          isusercreated: response.data.isusercreated,
+          resultMessage:response.data.resultMessage
+        };
+        console.log(recieveddata);
+  
+        if(recieveddata.isusercreated === true)
+        {
+        // alert("user aslo created  in database after reg in FB");
+         navigate('/Login2');
+       
+         toast.success(recieveddata.resultMessage, {
+          autoClose: 25000, // 5000 milliseconds = 5 seconds
+        });
+        window.location.reload();
+ // Reload the page after navigation
+
+         
+        }
+        else if(recieveddata.isusercreated === false)
+        {
+        // alert("user reg axios faileed");
+          toast.error(recieveddata.resultMessage);
+          setError("Account creation was not successful, Try again Later");
+        }
+      } 
+      else 
+      {
+      // alert("user reg axios else faileed");
+ 
+        setResultMessage("An unknown error occurred");
+      }
+    } 
+    catch(error)
+     {
+      // alert("user reg axios catch faileed");
+ 
+      setResultMessage('An error occurred while processing your request.');
+      console.error(error);
+    }
+  }
   
 
   const validateemail= async(email)=>{
@@ -119,7 +189,7 @@ const Regisatrtion = () => {
   
 
   const checkemailexists = async (email) => {
-    alert("checkinmg  email ")
+   // alert("checkinmg  email ")
     const url = 'https://localhost:7041/api/Login/GetUserByEmails';
     const data = {
       userId: 0,
@@ -183,11 +253,11 @@ const Regisatrtion = () => {
   };
 
   const checkmobilenumberexists = async (mobilenumber) => {
-    alert("checking mobile number");
+   // alert("checking mobile number");
     const url = 'https://localhost:7041/api/Login/GetUserByMobileNumber';
     const data = {
       userId: 0,
-      userTypeId: 0,
+      userTypeId: 2,
       username: "",
       password: "",
       firstname: "",
@@ -196,14 +266,18 @@ const Regisatrtion = () => {
       email: "",
       isActive: true,
       userFound: true,
-      resultMessage: ""
+      resultMessage: "",
+      CreateNewUserIfUserdoesntexist :false
     };
+
     try {
+     // alert("hitted axios for mob checking");
+      console.log(data);
       const response = await axios.post(url, data);
       console.log(response.data);
       if (response.status === 200) 
       {
-        //alert("mobile number checked");
+      //  alert("mobile number checked");
           const sendData = 
           {
             userId: response.data.userId,
@@ -218,8 +292,9 @@ const Regisatrtion = () => {
           console.log(sendData);
           if(sendData.userFound === true)
           {
-            //alert("mobile number already exists");
+         // alert("mobile number already exists");
             toast.error("mobile number already exists");
+            setIsMobileNumberExist(true);
             setValidationErrors(prevState => ({
                     ...prevState,
                     mobilenumber: "Mobile number already exists"
@@ -228,7 +303,8 @@ const Regisatrtion = () => {
           }
           else if(sendData.userFound === false)
           {
-            //alert("mobile nmumber is new");
+           // alert("mobile nmumber is new");
+            setIsMobileNumberExist(false);
             return false;
           }
       } 
@@ -247,9 +323,9 @@ const Regisatrtion = () => {
   };
   
   const UserRegistration = async (e)=>{
-    alert("user reg hitted");
+   // alert("user reg hitted");
       e.preventDefault();
-      alert("user reg hitted");
+     // alert("user reg hitted");
       const values={name,email,mobilenumber,password,confirmpassword};
       //alert("check console 243 for values");
       console.log(values);
@@ -269,7 +345,7 @@ const Regisatrtion = () => {
    if(numberexists === true)
    {
         //toast.error("mobile number exists");
-        alert("mobile number already exists");
+       // alert("mobile number already exists");
         validationerrors.mobilenumber ="Mobile number already exists";
        // alert(`valerr mob:${validationerrors.mobilenumber}`);
         setIsMobileNumberExist(true);
@@ -278,14 +354,14 @@ const Regisatrtion = () => {
    else if(numberexists === false)
    {
     //toast.success("mobile number is new");
-     alert("mobile number is new");
+     //alert("mobile number is new");
       setIsMobileNumberExist(false);
    }
    var emailexists = await checkemailexists(email);
    if(emailexists === true)
    {
     toast.error("email exists");
-        alert('isemailexist');
+        //alert('isemailexist');
         validationerrors.email ="email already exists";
         //alert(`valerr mob:${validationerrors.email}`);
         setIsmailExist(true);
@@ -294,13 +370,13 @@ const Regisatrtion = () => {
     else if( emailexists === false)
     {
       //toast.success("email is new");
-      alert("email is new "); 
+     // alert("email is new "); 
       setIsmailExist(false);
     }
     else if(emailexists === null)
     {
-      //toast.error("got error while checking email")
-      alert("got error while checking email"); 
+      toast.error("got error while checking email")
+     // alert("got error while checking email"); 
       setResultMessage('An error occurred while processing your request.');
       return;
     }
@@ -310,67 +386,16 @@ const Regisatrtion = () => {
  console.log(isemailexist, ismobilenumberexist) ;
  if(isemailexist === false && ismobilenumberexist === false )
  {
-  alert("enter for axios");
-   try {
-     alert("entered to createuser");
-     const url = 'https://localhost:7041/api/User/CreateUser';
-     const data = {
-       userId: 0,
-       userTypeId:'1',
-       username: email,
-       password: password,
-       firstname: name,
-       lastname: 'null',
-       mobile:mobilenumber,
-       email:email,
-       isActive:true,
-       userFound:true,
-       resultMessage:"",
-       isusercreated:true
-     };
- 
-     const response = await axios.post(url, data);
-     console.log(response.data);
- 
-     if (response.status === 200) 
-     {
-      alert("axios 200");
-       const recieveddata = 
-       {
-         isusercreated: response.data.isusercreated,
-         resultMessage:response.data.resultMessage
-       };
-       console.log(recieveddata);
- 
-       if(recieveddata.isusercreated === true)
-       {
-        alert("going for fb reg user");
-        registerUserwithFb();
-         toast.success(recieveddata.resultMessage);
-
-         navigate('/Login2');
-       }
-       else if(recieveddata.isusercreated === false)
-       {
-        alert("user reg axios faileed");
-         toast.error(recieveddata.resultMessage);
-         setError("Account creation was not successful, Try again Later");
-       }
-     } 
-     else 
-     {
-      alert("user reg axios else faileed");
-
-       setResultMessage("An unknown error occurred");
-     }
-   } 
-   catch(error)
-    {
-      alert("user reg axios catch faileed");
-
-     setResultMessage('An error occurred while processing your request.');
-     console.error(error);
-   }
+  try{
+   // alert("enter for fb treg user");
+    registerUserwithFb();
+  }
+  catch(error){
+   // alert("creating user failed ");
+    console.log("creating user failed error ", error);
+  }
+  
+   
  }
  
    }
