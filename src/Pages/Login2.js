@@ -234,6 +234,7 @@ getOtp(mobilenumber);
             mobile: response.data.mobile,
             email: response.data.email,
             userFound: response.data.userFound,
+            CreateNewUserIfUserdoesntexist : false
           };
           console.log(sendData);
           if(sendData.userFound === true)
@@ -260,6 +261,7 @@ getOtp(mobilenumber);
                mobile: response.data.mobile,
                email: response.data.email,
                userFound: response.data.userFound,
+               CreateNewUserIfUserdoesntexist : true
               };
               alert("send data 2 assignined");
               console.log("sendata2",sendData2);
