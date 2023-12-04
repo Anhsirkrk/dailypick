@@ -1,4 +1,4 @@
-import React, { useState,useEffect }  from 'react';
+import React, { useState,useEffect}  from 'react';
 import '../Css/Login2.css';
 import { Link,json,useAsyncError, useNavigate } from 'react-router-dom';
 import { Form, Alert } from "react-bootstrap";
@@ -97,7 +97,7 @@ const Login = ({}) => {
   }, []);
 
   const resendOTP = () => {
-    alert("resend otp hitted");
+   // alert("resend otp hitted");
     console.log(timerActive)
     if (!timerActive) {
       setTimer(5);
@@ -111,7 +111,7 @@ const Login = ({}) => {
   };
 
   const handleEmailPasswordLogin = async (e) => {
-    alert("handleEmailPasswordLogin hitted")
+   // alert("handleEmailPasswordLogin hitted")
     e.preventDefault();
     const values={email,password};
     console.log(values);
@@ -119,8 +119,10 @@ const Login = ({}) => {
     if(!(validationErrors.email)== '' || !(validationErrors.password)=='' )
     {
       setValidationErrors(validationErrors);
-      alert('lg val er mail' + validationErrors.email);
-      alert('lg val er pas' + validationErrors.password);
+     // alert('lg val er mail' + validationErrors.email);
+     // alert('lg val er pas' + validationErrors.password);
+     toast.error(validationErrors.email);
+     toast.error(validationErrors.password);
       return;
     }
     try {
@@ -165,7 +167,7 @@ checkemailexists();
 
 const handlesendOTP=async(e)=>{
 e.preventDefault();
-alert("handlesendOTP Hitted!!!!")
+//alert("handlesendOTP Hitted!!!!")
   const values={mobilenumber};
 
     console.log(values);
@@ -173,8 +175,9 @@ alert("handlesendOTP Hitted!!!!")
   console.log(validationErrors);
   if(!(validationErrors.mobilenumber) == '')
   {
-    alert("val err");
+    //alert("val err");
     setValidationErrors(validationErrors);
+    toast.error(validationErrors.mobilenumber);
     // alert(validationErrors.mobilenumber);
     console.log(validationerrors.mobilenumber);
     return;
@@ -194,13 +197,14 @@ getOtp(mobilenumber);
     console.log(validationErrors);
   if(!(validationErrors.mobilenumber) == '')
   {
-    alert("val err");
+    //alert("val err");
     setValidationErrors(validationErrors);
+    toast.error(validationErrors.mobilenumber);
     // alert(validationErrors.mobilenumber);
     console.log(validationerrors.mobilenumber);
     return;
   }
-  alert("checking database");
+ // alert("checking database");
     const url = 'https://localhost:7041/api/Login/GetUserByMobileNumber';
     const data = {
       userId: 0,
@@ -216,14 +220,14 @@ getOtp(mobilenumber);
       resultMessage: ""
     };
     console.log("axios data",data);
-    alert("axios data assigned");
+   // alert("axios data assigned");
     try {
       const response = await axios.post(url, data);
-      alert("axios done");
+    //  alert("axios done");
       console.log(response.data);
       if (response.status === 200)  
       {
-        alert("satus 200");
+       // alert("satus 200");
           const sendData = 
           {
             userId: response.data.userId,
@@ -239,17 +243,17 @@ getOtp(mobilenumber);
           console.log(sendData);
           if(sendData.userFound === true)
           {
-            alert("existing user");
+          //  alert("existing user");
             //alert("user found redirecting to otp gen");
-            alert("send data assigned");
+            //alert("send data assigned");
             localStorage.setItem('userdata', JSON.stringify(sendData));
             navigate('/home2');
            
           }
           else if(sendData.userFound === false)
           {
-            alert("user not found, NEW USER ");
-            toast.error("New User");
+            //alert("user not found, NEW USER ");
+            //toast.error("New User");
 
                const sendData2 = 
               {
@@ -263,7 +267,7 @@ getOtp(mobilenumber);
                userFound: response.data.userFound,
                CreateNewUserIfUserdoesntexist : true
               };
-              alert("send data 2 assignined");
+             // alert("send data 2 assignined");
               console.log("sendata2",sendData2);
 
             localStorage.setItem('userdata', JSON.stringify(sendData2));
@@ -273,7 +277,7 @@ getOtp(mobilenumber);
       } 
       else 
       {
-        alert("axios error");
+       // alert("axios error");
         setResultMessage("An unknown error occurred");
       }
     } catch(error) {
@@ -291,11 +295,11 @@ getOtp(mobilenumber);
       console.log(values);
     const validationErrors = validation(values);
     console.log(validationErrors);
-    alert('lg vl ' + validationErrors.name);
-    alert('lg vl ' + validationErrors.email);
-    alert('lg vl ' + validationErrors.mobilenumber);
-    alert('lg vl ' + validationErrors.password);
-    alert('lg vl ' + validationErrors.confirmpassword);
+   // alert('lg vl ' + validationErrors.name);
+    //alert('lg vl ' + validationErrors.email);
+    //alert('lg vl ' + validationErrors.mobilenumber);
+    //alert('lg vl ' + validationErrors.password);
+    //alert('lg vl ' + validationErrors.confirmpassword);
 
     if(Object.keys(validationErrors).length>0){
     {
@@ -307,7 +311,7 @@ getOtp(mobilenumber);
   }
 
   const getOtp = async (mobilenumber) => {
-    alert("get opt hitted");
+   // alert("get opt hitted");
       console.log(mobilenumber);
       setError("");
       if (mobilenumber === "" || mobilenumber === undefined)
@@ -324,17 +328,18 @@ getOtp(mobilenumber);
   };
 
   const getresendOtp = async (e) => {
-    alert("hitted getresendOtp");
+   // alert("hitted getresendOtp");
     console.log(mobilenumber);
     setError("");
     if (mobilenumber === "" || mobilenumber === undefined){
-    alert("num is invalid or undefined");
+   // alert("num is invalid or undefined");
+    toast.error("mob num is invalid or undefined");
       return setError("Please enter a valid phone mobilenumber!");
     }
     try { 
-      alert("hitted try in get resend otp");
+    //  alert("hitted try in get resend otp");
       const response = await setUpRecaptha(mobilenumber);
-      alert(" hitted set up recptcha ");
+    //  alert(" hitted set up recptcha ");
       setResult(response);
       setFlag(true);
       setTimer(5);
@@ -346,12 +351,12 @@ getOtp(mobilenumber);
 
   const verifyOtp = async (e) => {
     e.preventDefault();
-    alert("verifyotp");
+   // alert("verifyotp");
     setError("");
     if (otp === "" || otp === null) return;
     try {
       await result.confirm(otp);
-      alert("opt verified");
+    //  alert("opt verified");
       verifymobilenumber();
      
       
@@ -457,12 +462,12 @@ const [isLoggedIn, setIsLoggedIn]=useState(true);
  
 const SignUpUsingGoogle=()=>{
 
-  alert("hitted  SignUpUsingGoogle");
+ // alert("hitted  SignUpUsingGoogle");
 const provider=new GoogleAuthProvider();
 
   signInWithPopup(auth, provider)
   .then((result) => {
-    alert("Sign in with Google")
+   // alert("Sign in with Google")
     const user = result.user.email;
     console.log({user});
     setIsUserLoggedIn(true);
@@ -478,10 +483,10 @@ const provider=new GoogleAuthProvider();
 };
 
 const handlingemailwithsignupwithgoogle=async (user)=>{
-  alert("handlingemailwithsignupwithgoogle  hitted");
-  alert(user);
-  alert("hitted checkemail exist");
-  alert("checking email ")
+ // alert("handlingemailwithsignupwithgoogle  hitted");
+ // alert(user);
+ // alert("hitted checkemail exist");
+ // alert("checking email ")
   const url = 'https://localhost:7041/api/Login/GetUserByEmails';
   const data = {
     userId: 0,
@@ -498,12 +503,12 @@ const handlingemailwithsignupwithgoogle=async (user)=>{
   };
   console.log(data);
   try {
-    alert("trying axios  for checking email");
+  //  alert("trying axios  for checking email");
     const response = await axios.post(url, data);
     console.log(response.data);
     if (response.status === 200) 
     {
-      alert("email data checked");
+    //  alert("email data checked");
         const sendData = 
         {
           userId: response.data.userId,
@@ -518,16 +523,16 @@ const handlingemailwithsignupwithgoogle=async (user)=>{
         console.log(sendData);
         if(sendData.userFound === true)
         {
-          alert("email  already exists");
-          alert("send data assigned");
+         // alert("email  already exists");
+         // alert("send data assigned");
           localStorage.setItem('userdata', JSON.stringify(sendData));
           setIsLoggedIn(true);
           navigate('/home2');
         }
         else if(sendData.userFound === false)
         {
-          alert("email does not exist");
-          alert("enter for axios for creating  new user with email");
+        //  alert("email does not exist");
+         // alert("enter for axios for creating  new user with email");
           try {
             alert("entered to createuser  with gmail whil signing iwth google");
             const url = 'https://localhost:7041/api/User/CreateUser';
@@ -551,7 +556,7 @@ const handlingemailwithsignupwithgoogle=async (user)=>{
         
             if (response.status === 200) 
             {
-             alert("axios 200");
+             //alert("axios 200");
             
               const recieveddata = 
               {
@@ -570,7 +575,7 @@ const handlingemailwithsignupwithgoogle=async (user)=>{
         
               if(recieveddata.isusercreated === true)
               {
-                alert("send data 2 assignined");
+               // alert("send data 2 assignined");
                 console.log("recieveddata fo new user",recieveddata);
   
               localStorage.setItem('userdata', JSON.stringify(recieveddata));
@@ -578,22 +583,22 @@ const handlingemailwithsignupwithgoogle=async (user)=>{
              }
               else if(recieveddata.isusercreated === false)
               {
-               alert("user reg axios faileed");
+              // alert("user reg axios faileed");
                 toast.error(recieveddata.resultMessage);
                 setError("Account creation was not successful, Try again Later");
               }
             }
             else 
             {
-             alert("user reg axios else faileed");
+             //alert("user reg axios else faileed");
        
               setResultMessage("An unknown error occurred");
             }
           } 
           catch(error)
            {
-             alert("user reg axios catch faileed");
-       
+             //alert("user reg axios catch faileed");
+             toast.error("user registration axios failed");
             setResultMessage('An error occurred while processing your request.');
             console.error(error);
           }
@@ -602,12 +607,14 @@ const handlingemailwithsignupwithgoogle=async (user)=>{
     else 
     {
       //alert("got error while checking email");
+      toast.error("error while checking email");
       return null;
     }
   }
 }
    catch(error) {
     //alert("got error while checking email");
+    toast.error("error while checking email");
     setResultMessage('An error occurred while processing your request.');
     console.error(error);
     return null;
@@ -618,9 +625,9 @@ const handlingemailwithsignupwithgoogle=async (user)=>{
 // signup google end
 
 const checkemailexists = async (e) => {
-  alert(email);
-  alert("hitted checkemail exist");
-  alert("checking email ")
+  //alert(email);
+  //alert("hitted checkemail exist");
+  //alert("checking email ")
   const url = 'https://localhost:7041/api/Login/GetUserByEmails';
   const data = {
     userId: 0,
@@ -636,12 +643,12 @@ const checkemailexists = async (e) => {
     resultMessage: ""
   };
   try {
-    alert("trying axios");
+   // alert("trying axios");
     const response = await axios.post(url, data);
     console.log(response.data);
     if (response.status === 200) 
     {
-      alert("email data checked");
+     // alert("email data checked");
         const sendData = 
         {
           userId: response.data.userId,
@@ -656,15 +663,15 @@ const checkemailexists = async (e) => {
         console.log(sendData);
         if(sendData.userFound === true)
         {
-          alert("email  already exists");
-          alert("send data assigned");
+         // alert("email  already exists");
+          //alert("send data assigned");
           localStorage.setItem('userdata', JSON.stringify(sendData));
           setIsLoggedIn(true);
           navigate('/home2');
         }
         else if(sendData.userFound === false)
         {
-          alert("got error , user was not found in data , but email and password  was verified ")
+          //alert("got error , user was not found in data , but email and password  was verified ")
           toast.error("try again later");
         }
     } 
