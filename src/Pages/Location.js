@@ -16,6 +16,7 @@ import { Link, useAsyncError, useNavigate } from "react-router-dom";
 import { Country, State, City }  from 'country-state-city';
 import { AiOutlineLine } from 'react-icons/ai';
 import { useLocation } from 'react-router-dom';
+import { IoArrowBack } from "react-icons/io5";
 
 const Location = () => {
 
@@ -73,6 +74,10 @@ const Location = () => {
     const [orderUserSubscriptionId,setorderUserSubscriptionId]=useState('');
     const [ orderpaymentstatus,setOrderpaymentStatus]= useState('');
     const [ orderpaymenttransactionid,setorderPaymenttransactionid]= useState('');
+    const [selectedproduct,setselectedproduct] = useState([]);
+    const [selectedprice,setselectedprice]= useState('');
+
+    
 
     const location = useLocation();
 
@@ -183,7 +188,7 @@ const TodayDate = currentDate.toISOString().split('T')[0]; // This will format i
     }
   }
 
-  
+   
   useEffect(() => {
     if (locationData) {
       setLatitude(locationData.latitude);
@@ -703,6 +708,22 @@ console.log('order payment status', response.data.transactionId);
   }
   console.log(supplierdata);
 
+  useEffect(()=>{
+
+    alert("local getted");  
+    var selectedproduct = localStorage.getItem('selectedproductandSelectedPrice'); 
+    var selectedproductprice = localStorage.getItem('selectedproductprice');
+    setselectedproduct(selectedproduct);
+    setselectedprice(selectedproductprice);
+      console.log("loc sel pro",selectedproduct);
+  console.log("loc sel pro pri",selectedproductprice);
+  },[]);
+
+  const handlebackbtntomodal =()=>{
+    alert("hitted back btn");
+    navigate('/products');
+  }
+
  
 
 console.log(Country.getAllCountries())
@@ -746,6 +767,9 @@ const quantityofproduct = localStorage.getItem('quantityofproduct');
      <span style={{  fontSize: '18px' }}>Items (1 item)</span>
      <AiOutlineLine style={{ transform: 'rotate(90deg)',fontSize:'31px', display: 'flex', alignItems: 'center' }} /> 
      <span style={{  fontSize: '18px',display:'flex', alignItems:'center' }}>Amount :  <span style={{fontSize:'25px', fontStyle:'normal', fontWeight:'600'}}> $ {totalamount}</span></span> 
+    </div>
+    <div className='backtosubmodaldiv'>
+        <Button className='backtosubmodalbtn' onClick={handlebackbtntomodal}> <IoArrowBack /> Back   </Button>
     </div>
     <div className='location-heading '><h2>Location Information</h2></div>
     <div className='locationAndAdressArea'>
@@ -988,6 +1012,13 @@ const quantityofproduct = localStorage.getItem('quantityofproduct');
     </div>
        
       </div>
+     {/*} {openModal && selectedProduct && (
+        <SubscriptionModal
+          product={selectedProduct}
+          Priceofselectedproduct={selectedProduct.selectedPrice}
+          handleClose={handleCloseModal}
+        />
+     )} */}
 
 
 
