@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react';
 import Nav from '../Components/Nav';
-import { useNavigate } from 'react-router-dom';
+import { json, useNavigate } from 'react-router-dom';
 import { AiOutlineHeart, AiOutlineCloseCircle } from 'react-icons/ai';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { BsEye } from 'react-icons/bs';
@@ -134,9 +134,15 @@ useEffect(() => {
       setSelectedProduct({ ...curElm, selectedPrice }); // Include selectedPrice in the selectedProduct object
       setShowModal(true);
       setIsModalOpen(true);
+      localStorage.setItem("selectedproductandSelectedPrice", JSON.stringify(curElm));
+      localStorage.setItem("selectedproductprice",JSON.stringify(selectedPrice));
+      var selproduct = (localStorage.getItem('selectedproductandSelectedPrice'));
+      var selproductprice = (localStorage.getItem('selectedproductprice'));
+      console.log("selectedProdutcprice:",selproductprice);
     };
-    console.log(selectedProduct);
-
+   // console.log("selectedprice",selectedProduct.productName);
+    console.log("selectedProdutc:",selectedProduct);
+  
     const handleCloseModal = () => {
       setShowModal(false);
       setSelectedProduct(null);

@@ -97,8 +97,8 @@ const SubscriptionModal = ({ product,Priceofselectedproduct,subscriptiontypes,ha
       setSelectedproductPrice(selectedPrice);
       setSelectedSizeofproduct(selectedSize);
       GetSubscriptioTypes();
-
   },[]);
+
   console.log(selectedproductPrice);
   console.log(selectedSizeofproduct);
   console.log(subscriptionTypesData);
@@ -238,15 +238,7 @@ else{
   }
       }
 
-      // const formatDate = (date) => {
-      //   if (date) {
-      //     return `${String(date.getDate()).padStart(2, '0')}-${
-      //       String(date.getMonth() + 1).padStart(2, '0')}-${
-      //       date.getFullYear()
-      //     }`;
-      //   } 
-      //   return '';
-      // }; 
+     
 
      console.log("subscription end datae :",subscriptionEndDate);
       console.log('date+7',subscriptionEndDate);

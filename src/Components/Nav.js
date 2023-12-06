@@ -85,7 +85,7 @@ const Nav = () => {
     
 
     if (storeddata) {
-      alert("stored data atrue");
+     // alert("stored data atrue");
       if(storeddata.username){
         setUsername(storeddata.username);
         
