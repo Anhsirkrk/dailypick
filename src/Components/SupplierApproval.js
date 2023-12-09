@@ -4,7 +4,6 @@ import Card from 'react-bootstrap/Card';
 import '../Css/SupplierApproval.css';
 import { MdCurrencyRupee } from "react-icons/md";
 import axios from 'axios';
-import pic from '../Images/Dummy/Heritage_Milk_1.png';
 
 const SupplierApproval = () => {
 
@@ -69,6 +68,9 @@ try{
         },
       }
   );
+  if(response.status===200){
+    GetApprovalPendingList();
+  }
   
 }
 catch(error){
