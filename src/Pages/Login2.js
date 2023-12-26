@@ -27,7 +27,7 @@ import UerRegistrationPage from '../Pages/Regisatrtion';
 import Popup from './PopUp';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import { auth } from '../firebase'; 
-import { checkemailexists } from './Regisatrtion'; 
+//import { checkemailexists } from './Regisatrtion'; 
 
 
 const Login = ({}) => {
@@ -129,7 +129,7 @@ const Login = ({}) => {
 
       if (email && password) {
         await logIn(email, password);
-checkemailexists();
+        checkemailexists();
        
       } else {
         setError("Please enter both email and password.");
@@ -189,7 +189,7 @@ getOtp(mobilenumber);
 }
 
   const verifymobilenumber = async (e) => {
-    
+    alert("verifymobilenumber hitted");
     const values={mobilenumber};
 
     console.log(values);
@@ -204,11 +204,11 @@ getOtp(mobilenumber);
     console.log(validationerrors.mobilenumber);
     return;
   }
- // alert("checking database");
+ alert("checking database");
     const url = 'https://localhost:7041/api/Login/GetUserByMobileNumber';
     const data = {
       userId: 0,
-      userTypeId: 1,
+      userTypeId:2,
       username: "",
       password: "",
       firstname: "",
@@ -220,30 +220,36 @@ getOtp(mobilenumber);
       resultMessage: ""
     };
     console.log("axios data",data);
-   // alert("axios data assigned");
+    alert("axios data assigned");
     try {
       const response = await axios.post(url, data);
-    //  alert("axios done");
+     alert("axios done");
       console.log(response.data);
       if (response.status === 200)  
       {
-       // alert("satus 200");
+        alert(response.data.token);
+        const user = response.data.user;
+        const Token= response.data.token
+           // Store the token in local storage or a state variable for later use
+  localStorage.setItem('token',JSON.stringify(Token));
+  alert("mobile number checked");
           const sendData = 
           {
-            userId: response.data.userId,
-            userTypeId: response.data.userTypeId,
-            username: response.data.username,
-            firstName: response.data.firstname,
-            lastName: response.data.lastname,
-            mobile: response.data.mobile,
-            email: response.data.email,
-            userFound: response.data.userFound,
-            CreateNewUserIfUserdoesntexist : false
+            userId: response.data.user.userId,
+            userTypeId: response.data.user.userTypeId,
+            username: response.data.user.username,
+            firstName: response.data.user.firstname,
+            lastName: response.data.user.lastname,
+            mobile: response.data.user.mobile,
+            email: response.data.user.email,
+            userFound: response.data.user.userFound,
+            CreateNewUserIfUserdoesntexist: response.data.user.createNewUserIfUserdoesntexist
           };
+          alert("send data mapped");
           console.log(sendData);
           if(sendData.userFound === true)
           {
-          //  alert("existing user");
+          alert("existing user");
             //alert("user found redirecting to otp gen");
             //alert("send data assigned");
             localStorage.setItem('userdata', JSON.stringify(sendData));
@@ -281,6 +287,7 @@ getOtp(mobilenumber);
         setResultMessage("An unknown error occurred");
       }
     } catch(error) {
+      console.error("get mob data errror ",error);
       setResultMessage('An error occurred while processing your request.');
       console.error(error);
     }
@@ -351,12 +358,12 @@ getOtp(mobilenumber);
 
   const verifyOtp = async (e) => {
     e.preventDefault();
-   // alert("verifyotp");
+    alert("verifyotp");
     setError("");
     if (otp === "" || otp === null) return;
     try {
       await result.confirm(otp);
-    //  alert("opt verified");
+    alert("opt verified");
       verifymobilenumber();
      
       
@@ -503,22 +510,30 @@ const handlingemailwithsignupwithgoogle=async (user)=>{
   };
   console.log(data);
   try {
-  //  alert("trying axios  for checking email");
+    alert("trying axios  for checking email");
     const response = await axios.post(url, data);
+    alert("axios done");
     console.log(response.data);
+    
     if (response.status === 200) 
     {
-    //  alert("email data checked");
+      
+      alert(response.data.token);
+      const user = response.data.user;
+      const Token= response.data.token
+      // Store the token in local storage or a state variable for later use
+  localStorage.setItem('token',JSON.stringify(Token));
+      alert("email data checked");
         const sendData = 
         {
-          userId: response.data.userId,
-          userTypeId: response.data.userTypeId,
-          username: response.data.username,
-          firstName: response.data.firstname,
-          lastName: response.data.lastname,
-          mobile: response.data.mobile,
-          email: response.data.email,
-          userFound: response.data.userFound,
+          userId: user.userId,
+    userTypeId: user.userTypeId,
+    username: user.username,
+    firstName: user.firstname,
+    lastName: user.lastname,
+    mobile: user.mobile,
+    email: user.email,
+    userFound: user.userFound,
         };
         console.log(sendData);
         if(sendData.userFound === true)
@@ -643,35 +658,40 @@ const checkemailexists = async (e) => {
     resultMessage: ""
   };
   try {
-   // alert("trying axios");
+   alert("trying axios");
     const response = await axios.post(url, data);
     console.log(response.data);
     if (response.status === 200) 
     {
-     // alert("email data checked");
+     alert("email data checked");
+     alert(response.data.token);
+     const user = response.data.user;
+     const Token= response.data.token
+        // Store the token in local storage or a state variable for later use
+localStorage.setItem('token',JSON.stringify(Token));
         const sendData = 
         {
-          userId: response.data.userId,
-          userTypeId: response.data.userTypeId,
-          username: response.data.username,
-          firstName: response.data.firstname,
-          lastName: response.data.lastname,
-          mobile: response.data.mobile,
-          email: response.data.email,
-          userFound: response.data.userFound,
+          userId: response.data.user.userId,
+          userTypeId: response.data.user.userTypeId,
+          username: response.data.user.username,
+          firstName: response.data.user.firstname,
+          lastName: response.data.user.lastname,
+          mobile: response.data.user.mobile,
+          email: response.data.user.email,
+          userFound: response.data.user.userFound,
         };
         console.log(sendData);
         if(sendData.userFound === true)
         {
-         // alert("email  already exists");
-          //alert("send data assigned");
+          alert("email  already exists");
+          alert("send data assigned");
           localStorage.setItem('userdata', JSON.stringify(sendData));
           setIsLoggedIn(true);
           navigate('/home2');
         }
         else if(sendData.userFound === false)
         {
-          //alert("got error , user was not found in data , but email and password  was verified ")
+          alert("got error , user was not found in data , but email and password  was verified ")
           toast.error("try again later");
         }
     } 

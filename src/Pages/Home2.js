@@ -76,28 +76,69 @@ const Home2 = () => {
       const storeduserdata = JSON.parse(storeddata);
       setUsername(storeduserdata.firstName);
       setUserId(storeduserdata.userId);
+      setIsUserLoggedIn(true);
       
     }
   }, []);
 
 
-  const GetDailyNeed=()=>{
-    const  url="https://localhost:7041/api/Admin/GetDetailsAndImagesOfCategories";
-    axios.post(url)
-    .then((result)=>{
+  const GetDailyNeed = () => {
+    const url = "https://localhost:7041/api/Admin/GetDetailsAndImagesOfCategories";
+    const token = localStorage.getItem('token');
+    console.log("from getdailyneed",token);
+    //alert(token);
+
+    const bearer = `bearer`+ " " + token;
+    const tokenStartIndex = 8; // Assuming the token starts after "bearer "
+    const formattedBearer = `bearer`+ " " +bearer.substring(tokenStartIndex, bearer.length - 1); // Remove the last character (quote)
+    
+
+alert(formattedBearer);
+console.log(formattedBearer);
+
+    if(token){
+  
+      axios.get(url, {
+        headers: {
+          
+          'Authorization': formattedBearer,
+          'Content-Type': 'application/json',
+          // Add other necessary headers
+        },
+            })
+    .then((result) => {
       console.log('API Response:', result.data); 
       setDailyneeds(result.data);
- 
     })
-    .catch((error)=>{
+    .catch((error) => {
       console.log(error);
-    })
-  }
+    });}
+    else{
+      alert("token value null");
+    }
+  };
 
   const GetBrands=()=>{
     const  url="https://localhost:7041/api/Admin/GetDetailsAndImagesOfBrands";
-    axios.post(url)
-    .then((result)=>{
+    const token = localStorage.getItem('token');
+    console.log("from getdailyneed",token);
+    //alert(token);
+    const bearer = `bearer` + " " + token;
+    const tokenStartIndex = 8; // Assuming the token starts after "bearer "
+    const formattedBearer = `bearer`+ " "+ bearer.substring(tokenStartIndex, bearer.length - 1); // Remove the last character (quote)
+    
+    
+    alert(formattedBearer);
+    console.log(formattedBearer);
+    
+        axios.get(url, {
+      headers: {
+          
+        'Authorization': formattedBearer,
+        'Content-Type': 'application/json',
+        // Add other necessary headers
+      },
+    }).then((result)=>{
       console.log('API Response:', result.data); 
       setBrands(result.data);
  
