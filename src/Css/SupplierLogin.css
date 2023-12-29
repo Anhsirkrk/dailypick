@@ -1,0 +1,114 @@
+.Sp-login-page{
+    position: relative;
+    background: linear-gradient(90deg, #62e2fb 0.01%, #49c5dd);
+    background-attachment: fixed;
+    width: 100vw; 
+    height: 100vh; 
+}
+.Sp-login-container{
+    display:flex;
+    flex-direction: row;
+}
+.Sp-login-image{
+    position: relative;
+    border-radius: 0px 0px 288px 0px;
+    width:650px;
+    height: 350px;
+    margin-left: 20px;
+    
+}
+/* .Sp-login-page-container{
+    box-shadow: 0px 4px 70px rgba(0, 0, 0, 0.1);
+    width:500px;
+    height: 700px;
+    margin-top: 50px;
+    border-radius: 40px;
+    background-color: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(30px);
+} */
+
+/* login with email */
+.Sp-LoginBox_container{
+    background: rgba(255, 255, 255, 0.30);
+    width: 400px;
+    height: 600px;
+    max-width: 500px;
+    max-height: 800px;
+    margin-left: 100px;
+      align-self: flex-end;
+      border-radius: 8%;
+      margin-top: 80px;
+     
+  }
+  .Sp-Login_contant{
+    /* height:400px ; */
+    padding: 10px;
+    height: auto;
+}
+.Sp-LoginContainerHeader{
+    font-size: larger;
+    font-weight: 500;
+    padding-top: 20px;
+    display: flex;
+  margin-right: 30px;
+  align-items: center;
+  justify-content: center;
+  height: 25px;
+ 
+}
+.Sp-Login2-form{
+    padding: 20px;
+}
+.Sp-MobileLoginForm p{
+    padding: 0;
+    margin:0px 0px 0px 5px;
+    font-size: small;
+  }
+  .Sp-phoneinputdiv{
+    display: flex;
+  }
+  .Sp-email-input ,.Sp-name-input{
+    border: 1px solid #ccc; /* Customize the input border */
+    border-radius: 5px; /* Customize border radius */
+    padding: 10px; /* Customize padding */
+    margin: 5px 0px 15px 5px;
+    display: flex;
+    align-self: flex-start;
+  width: 300px; /* Customize the width of the input */
+  height: 25px;
+  font-size:small;
+  font-weight: 600;
+  }
+  .Sp-password-input-container {
+    position: relative;
+  }
+  .Sp-password-input {
+    border: 1px solid #ccc; /* Customize the input border */
+    border-radius: 5px; /* Customize border radius */
+    padding: 10px; /* Customize padding */
+    margin: 5px 0px 15px 5px;
+    display: flex;
+    align-self: flex-start;
+  width: 300px; /* Customize the width of the input */
+  height: 25px;
+  font-size:medium;
+  font-weight: 600;
+   /* padding-right: 40px;  Adjust the padding as needed */
+  }
+  .Sp-LoginConatiner_Bottomdiv{
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+    justify-content: center;
+
+}
+.Sp-password-icon {
+    position: absolute;
+    top: 50%;
+    right: 10px; /* Adjust the position as needed */
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+
+
+
