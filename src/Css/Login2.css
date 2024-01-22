@@ -437,14 +437,6 @@ color:#024172;
   align-self: flex-start;
   width: 25px;
 }
-.PhoneInputInput {
-
-}
-
-/* Style the country image container */
-.PhoneInputCountryIcon {/* Remove border around the country image container */
-  /*margin-right: 10px;  Add margin to separate it from the input */
-}
 
 /* Style the country image */
 .PhoneInputCountryIconImg {
@@ -452,10 +444,7 @@ color:#024172;
   height: 30px; /*  Customize the height of the country image */
 }
 
-/* Style the select arrow (if needed) */
-.PhoneInputCountrySelectArrow {
-  /* Customize the style of the select arrow */
-}
+
 
 
 .Google_Signin_btn{
