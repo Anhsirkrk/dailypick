@@ -15,6 +15,17 @@ const Address = () => {
   const receivedData = localStorage.getItem('usersavedaddress');
   const savedAddressesData = JSON.parse(receivedData) || [];
 
+  const token = localStorage.getItem('token');
+  console.log("from getdailyneed",token);
+  //alert(token);
+  const bearer = `bearer` + " " + token;
+  const tokenStartIndex = 8; // Assuming the token starts after "bearer "
+  const formattedBearer = `bearer`+ " "+ bearer.substring(tokenStartIndex, bearer.length - 1); // Remove the last character (quote)
+  
+  
+  //alert(formattedBearer);
+  console.log(formattedBearer);
+
   useEffect(() => {
     // Fetch user data and set it to state
     const storedUserData = JSON.parse(localStorage.getItem('userdata'));

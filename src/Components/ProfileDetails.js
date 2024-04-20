@@ -31,6 +31,17 @@ const ProfileDetails = () => {
   const [ismobilenumberexist,setIsMobileNumberExist]=useState(false);
   const [isemailexist,setIsmailExist]=useState(false);
   const [resultMessage, setResultMessage] = useState(""); // Define setResultMessage
+
+  const token = localStorage.getItem('token');
+  console.log("from getdailyneed",token);
+  //alert(token);
+  const bearer = `bearer` + " " + token;
+  const tokenStartIndex = 8; // Assuming the token starts after "bearer "
+  const formattedBearer = `bearer`+ " "+ bearer.substring(tokenStartIndex, bearer.length - 1); // Remove the last character (quote)
+  
+  
+  //alert(formattedBearer);
+  console.log(formattedBearer);
   
 
   useEffect(() => {
@@ -57,8 +68,9 @@ const ProfileDetails = () => {
             userId: userId,
           },
           headers: {
-            'accept': 'text/plain',
+            'Authorization': formattedBearer,
             'Content-Type': 'application/json',
+            // Add other necessary headers
           },
         }
       );

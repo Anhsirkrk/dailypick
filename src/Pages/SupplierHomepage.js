@@ -11,7 +11,16 @@ const SupplierHomepage = () => {
 
   const [contentType, setContentType]=useState('SupplierHome');
   const [selectedOption, setSelectedOption] = useState('SupplierHome');
-
+  const token = localStorage.getItem('token');
+  console.log("from getdailyneed",token);
+  //alert(token);
+  const bearer = `bearer` + " " + token;
+  const tokenStartIndex = 8; // Assuming the token starts after "bearer "
+  const formattedBearer = `bearer`+ " "+ bearer.substring(tokenStartIndex, bearer.length - 1); // Remove the last character (quote)
+  
+  
+  //alert(formattedBearer);
+  console.log(formattedBearer);
 
 
   const handleOptionClick = (option) => {

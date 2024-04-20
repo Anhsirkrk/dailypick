@@ -92,6 +92,17 @@ const TodayDate = currentDate.toISOString().split('T')[0]; // This will format i
  console.log(orderProductEnddate);
  console.log(TodayDate);
 
+ const token = localStorage.getItem('token');
+ console.log("from getdailyneed",token);
+ //alert(token);
+ const bearer = `bearer` + " " + token;
+ const tokenStartIndex = 8; // Assuming the token starts after "bearer "
+ const formattedBearer = `bearer`+ " "+ bearer.substring(tokenStartIndex, bearer.length - 1); // Remove the last character (quote)
+ 
+ 
+ //alert(formattedBearer);
+ console.log(formattedBearer);
+
     useEffect(()=>{ 
         const orderProductId = localStorage.getItem('order-selectedproductId');
         const orderProductIndiviudalprice = localStorage.getItem('order-productindividualprice');
@@ -160,17 +171,23 @@ const TodayDate = currentDate.toISOString().split('T')[0]; // This will format i
 
     const gettingSavedAddresses= async()=>{
         // alert("getting saved addre hitted");
-        const url="https://localhost:7041/api/User/GetTheUserAdressDetails";
+        const url=`https://localhost:7041/api/User/GetTheUserAdressDetails?userd=${userid}`;
         const data={
-          userId:userid
+          userd:userid
         }
+     // alert("address sending userid",userid);
         console.log(data);
         try{
-        // alert("enetered to axios");
-          const response = await axios.get(url, { params: data });
+         //alert("enetered to getting saved address axios");
+          const response = await axios.get(url, {
+            headers: {
+              'Authorization': formattedBearer,
+              'Content-Type': 'application/json',
+              // Add other necessary headers
+            },} );
           console.log(response.data);
           localStorage.setItem('usersavedaddress',JSON.stringify(response.data));
-        // alert("get address axios completed");
+       //  alert("get address axios completed");
           if (response.status === 200) 
           {
             setSavedAddresses(response.data);
@@ -218,7 +235,7 @@ const TodayDate = currentDate.toISOString().split('T')[0]; // This will format i
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
-          alert("got cords");
+         // alert("got cords");
           console.log('Current Coordinates:', latitude, longitude);
           setLatitude(latitude);
           setLongitude(longitude);
@@ -294,7 +311,7 @@ const TodayDate = currentDate.toISOString().split('T')[0]; // This will format i
           }
           try 
           {
-           // alert("entered to axios");
+           alert("entered to adding new address  axios");
             const url = 'https://localhost:7041/api/User/AddingAdressDetails';
             const data = {
               addressId: 0,
@@ -310,14 +327,20 @@ const TodayDate = currentDate.toISOString().split('T')[0]; // This will format i
               username:personnameofAddress,
               mobileNumber:mobilenumofAddress 
             };
+            const Headers = {
+              'Authorization': formattedBearer,
+              'Content-Type': 'application/json',
+              // Add other necessary headers
+            };
             console.log(data);
-            //alert('axios data ready');
-            const response = await axios.post(url, data);
-            console.log(response.data);
-            //alert("axios completed");
+            alert(formattedBearer);
+           // alert('axios data ready');
+            const response = await axios.post(url, data,{headers: Headers});
+            console.log(response);
+            alert("axios completed");
             if (response.status === 200) 
             {
-             // alert("axios 200");
+             alert("axios 200");
               const seladdrid= response.data.addressId;
               setSelectedAddressId(response.data.addressId);
               const settingadressdata={
@@ -447,14 +470,19 @@ adjustedEndDate.setDate(adjustedEndDate.getDate() + 1); // Add one day
                           supplierId:orderselectedSupplierId,  
                         }
                         console.log("createorderIdfororder:",data);
+                        const Headers = {
+                          'Authorization': formattedBearer,
+                          'Content-Type': 'application/json',
+                          // Add other necessary headers
+                        };
                         try{
-                          const response = await axios.post(url,data);
+                          const response = await axios.post(url,data,{headers:Headers});
                         console.log(response.data);
-                        // alert("orderId axios completed");
+                        alert("orderId axios completed");
                         if (response.status === 200) 
                         {
-                          // alert("axios 200");
-                          // alert(response.data.supplier.orderId);
+                          alert("axios 200");
+                           alert(response.data.supplier.orderId);
                           setOrderOrderId(response.data.supplier.orderId);
                           console.log('orderId',response.data.supplier.orderId);  
                           localStorage.setItem('order-SelectedProductOrderId',response.data.supplier.orderId); 
@@ -469,7 +497,7 @@ adjustedEndDate.setDate(adjustedEndDate.getDate() + 1); // Add one day
                         } 
                         else 
                         {
-                          // alert("orderid axios not  200");
+                           alert("orderid axios not  200");
                           setResultMessage("order Not created");
                         }
 
@@ -518,7 +546,7 @@ adjustedEndDate.setDate(adjustedEndDate.getDate() + 1); // Add one day
                 console.log(orderselectedSupplierId);
   
    const createpaymentIdandUserSubscrtiptionId = async(currentorderid)=>{
-    // alert(currentorderid);
+     alert(currentorderid);
     if(currentorderid)
     {
      try{
@@ -532,19 +560,25 @@ adjustedEndDate.setDate(adjustedEndDate.getDate() + 1); // Add one day
           paymentstatus:'completed'
           }
           console.log(data);
-          const response =await axios.post(url,data);
+          const Headers = {
+            'Authorization': formattedBearer,
+            'Content-Type': 'application/json',
+            // Add other necessary headers
+          };
+          const response =await axios.post(url,data,{headers:Headers});
           console.log(response.data);
 
           console.log('order payment status', response.data.paymentStatus);
 console.log('order payment status', response.data.transactionId);
 
-          // alert('insert payment axios completed');
+          alert('insert payment axios completed');
           if(response.status===200)
           {
-            //alert('paymentid :', response.data.paymentId );
+            alert(" userpayment response is 200")
+            alert('paymentid :', response.data.paymentId );
             setOrderpaymentId(response.data.paymentId);
             console.log('ord pay id:', response.data.paymentId);
-            // alert('paymnt console  485 ');
+            alert('paymnt console  485 ');
             localStorage.setItem('order-SelectedProductPaymentId',response.data.paymentId);
             const orderpamentidsetteddata = localStorage.getItem('order-SelectedProductPaymentId');
               console.log(orderpamentidsetteddata);
@@ -628,8 +662,14 @@ console.log('order payment status', response.data.transactionId);
         addressId:'0',
         supplierOrderID:'0'
        }
+       
        console.log("createsupplierorderId sendibg data :",data);
-        const response = await axios.post(url,data);
+       const Headers = {
+        'Authorization': formattedBearer,
+        'Content-Type': 'application/json',
+        // Add other necessary headers
+      };
+        const response = await axios.post(url,data,{headers:Headers});
         console.log(response.data);
 
         // alert('create supl order axios done');
@@ -652,10 +692,6 @@ console.log('order payment status', response.data.transactionId);
     console.log(err);
   }
    }
-
-   
-  
-
 
   const handleToggleAddreessForm = () => {
     setShowForm(prevState => !prevState);
@@ -692,7 +728,13 @@ console.log('order payment status', response.data.transactionId);
     const url="https://localhost:7041/api/Supplier/GetAllSuppliers";
     try{
      // alert('hit try');
-      const response = await axios.get(url);
+      const response = await axios.get(url, {
+        headers: {
+            
+          'Authorization': formattedBearer,
+          'Content-Type': 'application/json',
+          // Add other necessary headers
+        },});
      // alert('axios done');
       console.log(response.data);
       if(response.status===200){

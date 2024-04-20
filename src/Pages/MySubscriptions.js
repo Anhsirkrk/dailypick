@@ -39,6 +39,16 @@ const MySubscriptions =()=>{
 
      const [showSubscriptionDataIndex, setShowSubscriptionDataIndex] = useState(null);
 
+     const token = localStorage.getItem('token');
+     console.log("from getdailyneed",token);
+     //alert(token);
+     const bearer = `bearer` + " " + token;
+     const tokenStartIndex = 8; // Assuming the token starts after "bearer "
+     const formattedBearer = `bearer`+ " "+ bearer.substring(tokenStartIndex, bearer.length - 1); // Remove the last character (quote)
+     
+     
+     //alert(formattedBearer);
+     console.log(formattedBearer);
 
      const location = useLocation();
      const navigate = useNavigate();
@@ -68,33 +78,80 @@ const MySubscriptions =()=>{
         navigate('/products');
       }
 
-        
+
       const GetSubscriptionsList = async () => {
         alert(userid);
-        if (userid) {
-        
-          const url = `https://localhost:7041/api/User/GetUserSubscribedProducts?userid=${userid}`;
+        if(userid){
+          if(userid)
+    {    
+          try{
 
-          const data = {
-            userId:userid,
-          }
-          try {
-             alert("hitte get subsc tyry");
-            const response = await axios.get(url);
-            console.log('API Response:', response.data); 
-            // const parsedData = JSON.parse(response.data);
-               // Update the wishlist data state
-               setSubscriptionListData(response.data);
-               setFilteredProduct(response.data);
-               
+            const url = `https://localhost:7041/api/User/GetUserSubscribedProducts?userid=${userid}`;
+        
+          axios.get(url, {
+            headers: {
+                
+              'Authorization': formattedBearer,
+              'Content-Type': 'application/json',
+              // Add other necessary headers
+            },
+          }).then((result)=>{
+            console.log('API Response:', result.data); 
+            setSubscriptionListData(result.data);
+            setFilteredProduct(result.data);
             localStorage.removeItem('subscriptionlistdata');
-            localStorage.setItem('subscriptionlistdata', JSON.stringify(response.data));
-          } catch (error) {
-            alert("hitte getsubscList catch");
-            console.error('Getsubscriptionlist axios error', error);
-          }
+            localStorage.setItem('subscriptionlistdata', JSON.stringify(result.data));
+       
+          })
+          .catch((error)=>{
+            console.log(error);
+          })
         }
+          catch (error) {
+                  alert("hitte getsubscList catch");
+                  console.error('Getsubscriptionlist axios error', error);
+               }
+              }
+              else{
+                alert("jwt token not found");
+              }
+        
+      }
+      else{
+        alert("user id not found");
+      }
+     
       };
+      console.log('setsubscriptionlistdata',subscriptionlistData);
+
+        
+      // const GetSubscriptionsList = async () => {
+      //   alert(userid);
+      //   if (userid) {
+        
+         
+      //     const url = `https://localhost:7041/api/User/GetUserSubscribedProducts?userid=${userid}`;
+
+      //     const data = {
+      //       userId:userid,
+      //     }
+      //     try {
+      //        alert("hitte get subsc tyry");
+      //       const response = await axios.get(url);
+      //       console.log('API Response:', response.data); 
+      //       // const parsedData = JSON.parse(response.data);
+      //          // Update the wishlist data state
+      //          setSubscriptionListData(response.data);
+      //          setFilteredProduct(response.data);
+               
+      //       localStorage.removeItem('subscriptionlistdata');
+      //       localStorage.setItem('subscriptionlistdata', JSON.stringify(response.data));
+      //     } catch (error) {
+      //       alert("hitte getsubscList catch");
+      //       console.error('Getsubscriptionlist axios error', error);
+      //     }
+      //   }
+      // };
       console.log('setsubscriptionlistdata',subscriptionlistData);
 
     // const handlesusbcriptiondata=(index)=>{

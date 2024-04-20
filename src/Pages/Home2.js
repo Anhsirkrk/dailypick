@@ -61,12 +61,23 @@ const Home2 = () => {
   const [imageUrl,setImageurl]=useState('');
   const [addressdata,setAddressData]= useState({});
   const [wishlistadata,setWishListData]= useState([]);
-
+  const [userdata,setUserData]=useState('');
   const {isLoginauthenticated, setIsLoginauthenticated}= useUserAuth();
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [userid,setUserId]=useState('');
   const [username, setUsername] = useState('');
+
+  const token = localStorage.getItem('token');
+  console.log("from getdailyneed",token);
+  //alert(token);
+  const bearer = `bearer` + " " + token;
+  const tokenStartIndex = 8; // Assuming the token starts after "bearer "
+  const formattedBearer = `bearer`+ " "+ bearer.substring(tokenStartIndex, bearer.length - 1); // Remove the last character (quote)
+  
+  
+  //alert(formattedBearer);
+  console.log(formattedBearer);
 
   useEffect(() => {
     // Check if user data is stored in local storage
@@ -74,33 +85,24 @@ const Home2 = () => {
     if (storeddata) {
       // If user data is available, update state with username and userid
       const storeduserdata = JSON.parse(storeddata);
+      console.log(storeduserdata);
+      setUserData(storeduserdata);
       setUsername(storeduserdata.firstName);
       setUserId(storeduserdata.userId);
-      setIsUserLoggedIn(true);
-      
+      setIsUserLoggedIn(true);     
     }
   }, []);
+  console.log(userdata);
+
+
 
 
   const GetDailyNeed = () => {
     const url = "https://localhost:7041/api/Admin/GetDetailsAndImagesOfCategories";
-    const token = localStorage.getItem('token');
-    console.log("from getdailyneed",token);
-    //alert(token);
-
-    const bearer = `bearer`+ " " + token;
-    const tokenStartIndex = 8; // Assuming the token starts after "bearer "
-    const formattedBearer = `bearer`+ " " +bearer.substring(tokenStartIndex, bearer.length - 1); // Remove the last character (quote)
-    
-
-alert(formattedBearer);
-console.log(formattedBearer);
-
     if(token){
   
       axios.get(url, {
-        headers: {
-          
+        headers: { 
           'Authorization': formattedBearer,
           'Content-Type': 'application/json',
           // Add other necessary headers
@@ -120,17 +122,6 @@ console.log(formattedBearer);
 
   const GetBrands=()=>{
     const  url="https://localhost:7041/api/Admin/GetDetailsAndImagesOfBrands";
-    const token = localStorage.getItem('token');
-    console.log("from getdailyneed",token);
-    //alert(token);
-    const bearer = `bearer` + " " + token;
-    const tokenStartIndex = 8; // Assuming the token starts after "bearer "
-    const formattedBearer = `bearer`+ " "+ bearer.substring(tokenStartIndex, bearer.length - 1); // Remove the last character (quote)
-    
-    
-    alert(formattedBearer);
-    console.log(formattedBearer);
-    
         axios.get(url, {
       headers: {
           

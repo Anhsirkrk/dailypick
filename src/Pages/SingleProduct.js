@@ -15,6 +15,17 @@ const SingleProduct = (productId) => {
     const images = [pic, pic1, pic, pic, pic1, pic, pic1, pic, pic1, pic]; // Simplified images array
     const image = [pic, pic, pic];
 
+    const token = localStorage.getItem('token');
+    console.log("from getdailyneed",token);
+    //alert(token);
+    const bearer = `bearer` + " " + token;
+    const tokenStartIndex = 8; // Assuming the token starts after "bearer "
+    const formattedBearer = `bearer`+ " "+ bearer.substring(tokenStartIndex, bearer.length - 1); // Remove the last character (quote)
+    
+    
+    //alert(formattedBearer);
+    console.log(formattedBearer);
+
 const [product,setProduct]=useState('');
 
     useEffect(()=>{
@@ -30,10 +41,21 @@ const Getproduct=async (productId)=>{
         Id:productId
     }
     try{
-        const response= await axios.post(url,data);
-        if(response.status === 200){
-            setProduct(response.data)
-        }
+
+        axios.get(url,data, {
+            headers: { 
+              'Authorization': formattedBearer,
+              'Content-Type': 'application/json',
+              // Add other necessary headers
+            }, })
+        .then((result) => {
+          console.log('API Response:', result.data); 
+          setProduct(result.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+       
 
     }
     catch(error){
