@@ -96,11 +96,11 @@ const Regisatrtion = () => {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       console.log(userCredential);
-      //alert("user reg in fb");
+      alert("user reg in fb");
       const user = userCredential.user;
       console.log("User registered successfully in FB:", user);
-     // alert(user.uid);
-     // alert("user creation done at FB");
+     alert(user.uid);
+      alert("user creation done at FB");
       if( user.uid != null){
         createuserwithmobileandemaildetails();
       }
@@ -112,7 +112,7 @@ const Regisatrtion = () => {
 
   const createuserwithmobileandemaildetails =async()=>{
     try {
-     // alert("entered to createuser");
+      alert("entered to createuser in db");
       const url = 'https://localhost:7041/api/User/CreateUser';
       const data = {
         userId: 0,
@@ -128,13 +128,13 @@ const Regisatrtion = () => {
         resultMessage:"",
         isusercreated:true
       };
-  
+      alert("send data mapped");
       const response = await axios.post(url, data);
       console.log(response.data);
   
       if (response.status === 200) 
       {
-       //alert("axios 200");
+       alert("axios 200");
         const recieveddata = 
         {
           isusercreated: response.data.isusercreated,
@@ -144,7 +144,7 @@ const Regisatrtion = () => {
   
         if(recieveddata.isusercreated === true)
         {
-        // alert("user aslo created  in database after reg in FB");
+         alert("user aslo created  in database after reg in FB");
          navigate('/Login2');
        
          toast.success(recieveddata.resultMessage, {
@@ -157,14 +157,14 @@ const Regisatrtion = () => {
         }
         else if(recieveddata.isusercreated === false)
         {
-        // alert("user reg axios faileed");
+        alert("user reg axios faileed");
           toast.error(recieveddata.resultMessage);
           setError("Account creation was not successful, Try again Later");
         }
       } 
       else 
       {
-      // alert("user reg axios else faileed");
+      alert("user reg axios else faileed");
  
         setResultMessage("An unknown error occurred");
       }
