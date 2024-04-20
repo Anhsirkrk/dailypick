@@ -10,6 +10,7 @@ import {
   signInWithPhoneNumber,
 } from "firebase/auth";
 import { auth } from "../firebase";
+import { faL } from "@fortawesome/free-solid-svg-icons";
 
 const userAuthContext = createContext();
 const googleProvider = new GoogleAuthProvider();
@@ -23,9 +24,11 @@ export function UserAuthContextProvider({ children }) {
     return signInWithEmailAndPassword(auth, email, password);
   }
   function signUp(email, password) {
+    //alert("createuserwithemailand pass word hitted i fb ");
     return createUserWithEmailAndPassword(auth, email, password);
   }
   function logOut() {
+    setIsUserLoggedIn(false);
     return signOut(auth);
   }
   function googleSignIn() {

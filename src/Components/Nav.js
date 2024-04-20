@@ -129,6 +129,7 @@ const Nav = () => {
       console.log('nav.js before setting to false', isUserLoggedIn);
 
       if (isUserLoggedIn === true) {
+        
         setIsUserLoggedIn(false);
         console.log('nav.js before setting to false', isUserLoggedIn);
         window.location.href = '/popup';
