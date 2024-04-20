@@ -76,9 +76,9 @@ color: black;
   max-width: 500px;
   max-height: 800px;
   margin-left: 100px;
-    align-self: flex-end;
-    border-radius: 5%;
-    height: auto;
+  align-self: flex-end;
+  border-radius: 5%;
+  height: auto;
 }
 .password-input-container {
   position: relative;
@@ -331,7 +331,8 @@ color:#024172;
 }
 .Login2-form{
     padding: 20px;
-}.LoginContainerHeader{
+}
+.LoginContainerHeader{
     font-size: larger;
     font-weight: 500;
     padding-top: 20px;
@@ -436,14 +437,6 @@ color:#024172;
   align-self: flex-start;
   width: 25px;
 }
-.PhoneInputInput {
-
-}
-
-/* Style the country image container */
-.PhoneInputCountryIcon {/* Remove border around the country image container */
-  /*margin-right: 10px;  Add margin to separate it from the input */
-}
 
 /* Style the country image */
 .PhoneInputCountryIconImg {
@@ -451,10 +444,7 @@ color:#024172;
   height: 30px; /*  Customize the height of the country image */
 }
 
-/* Style the select arrow (if needed) */
-.PhoneInputCountrySelectArrow {
-  /* Customize the style of the select arrow */
-}
+
 
 
 .Google_Signin_btn{

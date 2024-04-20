@@ -12,6 +12,8 @@ import MyCart from '../Pages/MyCart';
 import MyWishlist from '../Pages/MyWishList';
 import PaymentStatus from '../Pages/PaymentStatus'
 import SupplierHomepage from '../Pages/SupplierHomepage';
+import SupplierLogin from '../Pages/SupplierLogin';
+import SupplierRegistration from '../Pages/SupplierRegistration';
 import { useUserAuth } from '../Context/UserAuthContext'; // Import the UserAuthContext
 
 const Rout = () => {
@@ -37,6 +39,8 @@ console.log(userAuth);
           <Route path='/paymentstatus' element={<PaymentStatus/>} shouldNavigate={() => isUserLoggedIn}/>
 //suppler
           <Route path='/supplierhomepage' element={<SupplierHomepage/>}/>
+          <Route path='/supplierlogin' element={<SupplierLogin/>}/>
+          <Route path='/supplierregistration' element={<SupplierRegistration/>}/>
         </Routes>
     </>
   )

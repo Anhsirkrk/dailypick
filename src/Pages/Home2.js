@@ -1,7 +1,7 @@
 import { useState,useEffect } from 'react';
 import React from 'react';
 import '../Css/Home2.css';
-import banner from '../Images/Home/Rectangle 1403.png';
+//import banner from '../Images/Home/Rectangle 1403.png';
 import HorizontalScroll from "react-horizontal-scrolling";
 import Nav from '../Components/Nav';
 //import { useLoginAuth } from '../Components/UserAuthContext';
@@ -97,6 +97,11 @@ const Home2 = () => {
 
 
 
+
+alert("formated bearer",formattedBearer);
+console.log("formated bearer",formattedBearer);
+
+
   const GetDailyNeed = () => {
     const url = "https://localhost:7041/api/Admin/GetDetailsAndImagesOfCategories";
     if(token){
@@ -122,6 +127,20 @@ const Home2 = () => {
 
   const GetBrands=()=>{
     const  url="https://localhost:7041/api/Admin/GetDetailsAndImagesOfBrands";
+
+
+    const token = localStorage.getItem('token');
+    console.log("from getdailyneed",token);
+    //alert(token);
+    const bearer = `bearer` + " " + token;
+    const tokenStartIndex = 8; // Assuming the token starts after "bearer "
+    const formattedBearer = `bearer`+ " "+ bearer.substring(tokenStartIndex, bearer.length - 1); // Remove the last character (quote)
+      
+    
+    alert("formated bearer",formattedBearer);
+    console.log("formated bearer",formattedBearer);
+    
+
         axios.get(url, {
       headers: {
           
@@ -172,7 +191,7 @@ console.log(addressdata);
         <Nav/> 
         <div className='pagecontent'>
         <div className='banner'>
-            <img class="bannner-img" src={banner} alt='banner' />
+            {/* <img class="bannner-img" src={banner} alt='banner' /> */}
         </div>
 
         <div className='Button-Fields'>
