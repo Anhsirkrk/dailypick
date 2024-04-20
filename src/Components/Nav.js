@@ -88,22 +88,22 @@ const Nav = () => {
       console.log(storeddata);
      // alert("stored data atrue");
       if(storeddata.firstName){
-        alert("username if ihitted");
+        //alert("username if ihitted");
         setUsername(storeddata.firstName);
         
       }
       else if(storeddata.firstname){
-        alert("firstname if ihitted");
+        //alert("firstname if ihitted");
         setUsername(storeddata.firstname);
         
       }
       else if(storeddata.mobile){
-        alert("mobile if ihitted");
+        //alert("mobile if ihitted");
         setUsername(storeddata.mobile);
         
       }
       else if(storeddata.email){
-        alert("email if ihitted");
+        //alert("email if ihitted");
         setUsername(storeddata.email);
         
       }

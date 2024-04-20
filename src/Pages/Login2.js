@@ -189,7 +189,7 @@ getOtp(mobilenumber);
 }
 
   const verifymobilenumber = async (e) => {
-    alert("verifymobilenumber hitted");
+   // alert("verifymobilenumber hitted");
     const values={mobilenumber};
 
     console.log(values);
@@ -220,10 +220,10 @@ getOtp(mobilenumber);
       resultMessage: ""
     };
     console.log("axios data",data);
-    alert("axios data assigned");
+   // alert("axios data assigned");
     try {
       const response = await axios.post(url, data);
-     alert("axios done");
+    // alert("axios done");
       console.log(response.data);
       if (response.status === 200)  
       {
@@ -243,9 +243,10 @@ getOtp(mobilenumber);
             mobile: response.data.user.mobile,
             email: response.data.user.email,
             userFound: response.data.user.userFound,
-            CreateNewUserIfUserdoesntexist: response.data.user.createNewUserIfUserdoesntexist
+            CreateNewUserIfUserdoesntexist: response.data.user.createNewUserIfUserdoesntexist,
+            cartId:response.data.user.cartId,
           };
-          alert("send data mapped");
+         // alert("send data mapped");
           console.log(sendData);
           if(sendData.userFound === true)
           {
@@ -271,7 +272,8 @@ getOtp(mobilenumber);
                mobile: response.data.mobile,
                email: response.data.email,
                userFound: response.data.userFound,
-               CreateNewUserIfUserdoesntexist : true
+               CreateNewUserIfUserdoesntexist : true,
+               cartId:response.data.user.cartId,
               };
              // alert("send data 2 assignined");
               console.log("sendata2",sendData2);
@@ -358,12 +360,12 @@ getOtp(mobilenumber);
 
   const verifyOtp = async (e) => {
     e.preventDefault();
-    alert("verifyotp");
+   // alert("verifyotp");
     setError("");
     if (otp === "" || otp === null) return;
     try {
       await result.confirm(otp);
-    alert("opt verified");
+    //alert("opt verified");
       verifymobilenumber();
      
       
@@ -679,6 +681,7 @@ localStorage.setItem('token',JSON.stringify(Token));
           mobile: response.data.user.mobile,
           email: response.data.user.email,
           userFound: response.data.user.userFound,
+          cartId:response.data.user.cartId,
         };
         console.log(sendData);
         if(sendData.userFound === true)

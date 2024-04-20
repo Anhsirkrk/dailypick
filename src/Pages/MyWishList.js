@@ -35,6 +35,15 @@ const MyWishlist =()=>{
 
      const location = useLocation();
      const navigate = useNavigate();
+
+ 
+     const token = localStorage.getItem('token');
+     console.log("from getdailyneed",token);
+     //alert(token);
+  
+     const bearer = `bearer` + " " + token;
+     const tokenStartIndex = 8; // Assuming the token starts after "bearer "
+     const formattedBearer = `bearer`+ " "+ bearer.substring(tokenStartIndex, bearer.length - 1); // Remove the last character (quote)
     
     //  useEffect(()=>{ 
     //   const selectedSize = filteredProduct.priceOfEachUnits;
@@ -85,40 +94,97 @@ const MyWishlist =()=>{
         navigate('/products');
       }
 
+
+
+
       const GetWishList = async () => {
         // alert(userid);
-        if (userid) {
+    
           const url = `https://localhost:7041/api/Wishlist/GetUserWishlistProducts?userid=${userid}`;
           try {
-            // alert("hitte getwishkist tyry");
-            const response = await axios.get(url);
-            console.log('API Response:', response.data); 
-            // const parsedData = JSON.parse(response.data);
-               // Update the wishlist data state
-               setWishListData(response.data);
-               setFilteredProduct(response.data);
-               console.log(filteredProduct.length);
-               localStorage.setItem('noofproductsinwhislist',filteredProduct.length);
-               
-               const initialSelectedSizes = {};
-               const initialSelectedPrices ={};
-            
-               response.data.forEach(item => {
-                initialSelectedSizes[item.productId] = item.sizeOfEachUnits[0];
-                initialSelectedPrices[item.productId] = item.priceOfEachUnits[0]; // Assuming the first price is the default
-              });
 
+            axios.get(url, {
+              headers: {
+                  
+                'Authorization': formattedBearer,
+                'Content-Type': 'application/json',
+                // Add other necessary headers
+              },
+            }).then((result)=>{
+              console.log('API Response:', result.data); 
+              setWishListData(result.data);
+              setFilteredProduct(result.data);
+              console.log(filteredProduct.length);
+              localStorage.setItem('noofproductsinwhislist',filteredProduct.length);
+              const initialSelectedSizes = {};
+              const initialSelectedPrices ={};
+           
+              result.data.forEach(item => {
+               initialSelectedSizes[item.productId] = item.sizeOfEachUnits[0];
+               initialSelectedPrices[item.productId] = item.priceOfEachUnits[0]; // Assuming the first price is the default
+              });
               setSelectedSizes(initialSelectedSizes);
               setSelectedPrices(initialSelectedPrices);
             localStorage.removeItem('wishlistdata');
-            localStorage.setItem('wishlistdata', JSON.stringify(response.data));
-          } catch (error) {
-            alert("hitte getwishkist catch");
-            console.error('GetWishList axios error', error);
+            localStorage.setItem('wishlistdata', JSON.stringify(result.data));
+
+            })
+            .catch((error)=>{
+              console.log(error);
+            })
           }
-        }
+          catch(error){
+            alert("hitte getsubscList catch");
+            console.error('Getsubscriptionlist axios error', error);
+          }
+
+           
+
+              
+      
+        
       };
       console.log('setwishlistdata',wishlistData);
+
+
+
+
+
+
+      // const GetWishList = async () => {
+      //   // alert(userid);
+      //   if (userid) {
+      //     const url = `https://localhost:7041/api/Wishlist/GetUserWishlistProducts?userid=${userid}`;
+      //     try {
+      //       // alert("hitte getwishkist tyry");
+      //       const response = await axios.get(url);
+      //       console.log('API Response:', response.data); 
+      //       // const parsedData = JSON.parse(response.data);
+      //          // Update the wishlist data state
+      //          setWishListData(response.data);
+      //          setFilteredProduct(response.data);
+      //          console.log(filteredProduct.length);
+      //          localStorage.setItem('noofproductsinwhislist',filteredProduct.length);
+               
+      //          const initialSelectedSizes = {};
+      //          const initialSelectedPrices ={};
+            
+      //          response.data.forEach(item => {
+      //           initialSelectedSizes[item.productId] = item.sizeOfEachUnits[0];
+      //           initialSelectedPrices[item.productId] = item.priceOfEachUnits[0]; // Assuming the first price is the default
+      //         });
+
+      //         setSelectedSizes(initialSelectedSizes);
+      //         setSelectedPrices(initialSelectedPrices);
+      //       localStorage.removeItem('wishlistdata');
+      //       localStorage.setItem('wishlistdata', JSON.stringify(response.data));
+      //     } catch (error) {
+      //       alert("hitte getwishkist catch");
+      //       console.error('GetWishList axios error', error);
+      //     }
+      //   }
+      // };
+      // console.log('setwishlistdata',wishlistData);
       const handleaddorremovewishlist= async (Pid)=>{
         // Id.preventDefault();
         //alert(Pid);
@@ -136,7 +202,14 @@ const MyWishlist =()=>{
             }
             const url="https://localhost:7041/api/Wishlist/CreateWishlist";
             try{
-              const response = await axios.post(url,data );
+              const response = await axios.post(url,data, {
+                headers: {
+                    
+                  'Authorization': formattedBearer,
+                  'Content-Type': 'application/json',
+                  // Add other necessary headers
+                }
+              } );
               //alert("axios done");
               console.log(response);
               if(response.status === 200)
@@ -163,7 +236,14 @@ const MyWishlist =()=>{
             }
              const url="https://localhost:7041/api/Wishlist/CreateWishlist";
              try{
-              const response = await axios.post(url,data );
+              const response = await axios.post(url,data,{
+                headers: {
+                    
+                  'Authorization': formattedBearer,
+                  'Content-Type': 'application/json',
+                  // Add other necessary headers
+                }
+              } );
               //alert("axios done");
               console.log(response);
               if(response.status === 200)

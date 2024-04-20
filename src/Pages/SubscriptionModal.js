@@ -60,6 +60,17 @@ const SubscriptionModal = ({ product,Priceofselectedproduct,subscriptiontypes,ha
    const [subscriptionEndDate, setSelectedsubscriptionEndDate] = useState('');
    const [timeSlotSelected, setTimeSlotSelected] = useState('Morning');
 
+   const token = localStorage.getItem('token');
+   console.log("from getdailyneed",token);
+   //alert(token);
+   const bearer = `bearer` + " " + token;
+   const tokenStartIndex = 8; // Assuming the token starts after "bearer "
+   const formattedBearer = `bearer`+ " "+ bearer.substring(tokenStartIndex, bearer.length - 1); // Remove the last character (quote)
+   
+   
+   //alert(formattedBearer);
+   console.log(formattedBearer);
+
 
    const subscriptionWithId1 = subscriptionTypesData.find(subscription => subscription.subscriptionId === 1);
    const subscriptionName1 = subscriptionWithId1 ? subscriptionWithId1.subscriptionType1 : '';
@@ -79,8 +90,15 @@ const SubscriptionModal = ({ product,Priceofselectedproduct,subscriptiontypes,ha
 
 
  const GetSubscriptioTypes =()=>{
-  const URL= "https://localhost:7041/api/Admin/GetSubscriptionTypes";
-  axios.get(URL)
+  const url= "https://localhost:7041/api/Admin/GetSubscriptionTypes";
+  axios.get(
+url, {
+      headers: {
+          
+        'Authorization': formattedBearer,
+        'Content-Type': 'application/json',
+        // Add other necessary headers
+      },})
   .then((result)=>{
     const susbcription = result.data;
     setsubscriptionTypesData(susbcription);

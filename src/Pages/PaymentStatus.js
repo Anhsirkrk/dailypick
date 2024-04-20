@@ -54,6 +54,17 @@ const [selectedsubscriptionplan, setSelectedSubscriptionPlan] = useState('');
 
 const [storeddata,setStoreddata]=useState([]);
 
+const token = localStorage.getItem('token');
+console.log("from getdailyneed",token);
+//alert(token);
+const bearer = `bearer` + " " + token;
+const tokenStartIndex = 8; // Assuming the token starts after "bearer "
+const formattedBearer = `bearer`+ " "+ bearer.substring(tokenStartIndex, bearer.length - 1); // Remove the last character (quote)
+
+
+//alert(formattedBearer);
+console.log(formattedBearer);
+
 
 
 
@@ -157,22 +168,35 @@ console.log(productIndividualPrice);
 console.log(useremail);
 
 const SendEmail = async () => {
+ 
+ 
   if (storeddata.userId && paymentStatus && totalAmounttobePaid && useremail) {
     try {
     
-const url = `https://localhost:7041/api/Payment/PaymentStatusEmail?userid=${storeddata.userId}&status=${paymentStatus}&amount=${totalAmounttobePaid.toString()}&email=${useremail}`;
+const url = `https://localhost:7041/api/Payment/PaymentStatusEmail`;
+const data={
+  userid:storeddata.userId,
+  paymentStatus:paymentStatus,
+  amount:totalAmounttobePaid.toString(),
+  email:useremail
+}
 
-      const response = await axios.post(url, {
-        headers: {
+alert(" headers done ");  
+alert(formattedBearer);
+      const response = await axios.post(url,data,{
+        headers: { 
+          'Authorization': formattedBearer,
           'Content-Type': 'application/json',
-        },
-      });
-        //alert('axioos done');
+          // Add other necessary headers
+        }
+            });
+        alert('axioos done');
         console.log("Email sent successfully:", response);
     
     } 
     catch (error)
      {
+      alert('axioos not done');
       console.error("Error sending email:", error);
     }
   } else {
@@ -181,6 +205,7 @@ const url = `https://localhost:7041/api/Payment/PaymentStatusEmail?userid=${stor
 };
 
    const handlemail =()=>{
+    
     SendEmail();
    }
 
